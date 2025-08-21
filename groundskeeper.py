@@ -13,6 +13,7 @@ from core.game_service import GameService
 from core.tracking_service import TrackingService
 from core.gpio_service import GPIOService
 from core.control_service import ControlService
+from core.loading_service import LoadingService
 
 from models.mood import Mood
 from views.view import View
@@ -21,6 +22,7 @@ from views.joke import JokeView
 from views.update import UpdateView
 from views.settings import SettingsView
 from views.games import GamesView
+from views.loading import LoadingView
 from configs.config import Config
 
 class StandbyScreenApp:
@@ -37,6 +39,8 @@ class StandbyScreenApp:
         self.tracking_service = TrackingService(self.state_file, self.theme_service)
         self.gpio_service = GPIOService(config.GPIO_PINS)
         self.control_service = ControlService(root)
+        self.loading_service = LoadingService()
+        self.turbo_mode = False
 
         if not self.theme_service.themes:
             raise RuntimeError("Could not load any themes.")
@@ -57,9 +61,11 @@ class StandbyScreenApp:
             'show_settings': self.show_settings,
             'start_snake': self.start_snake,
             'set_active_theme': self.set_active_theme,
-            'reset_all_items': self.reset_all_items
+            'reset_all_items': self.reset_all_items,
+            'toggle_turbo_mode': self.toggle_turbo_mode,
+            'get_loading_service': lambda: self.loading_service
         }
-        self.view = View(root, callbacks, config, self.control_service, [AffirmationView, JokeView, UpdateView, SettingsView, GamesView])
+        self.view = View(root, callbacks, config, self.control_service, [AffirmationView, JokeView, UpdateView, SettingsView, GamesView, LoadingView])
         self.show_standby_screen()
         self.periodic_check()
         self.gpio_service.start()
@@ -69,6 +75,23 @@ class StandbyScreenApp:
         self.tracking_service._save_tracked_items()
         self.gpio_service.stop()
         self.root.destroy()
+        
+    def show_loading_and_run(self, target_function):
+        """Displays the loading screen, then runs the target function after a delay."""
+        delay = 0 if self.turbo_mode else self.config.LATENCY_MS
+        
+        if delay > 0:
+            self.view.show_screen('LoadingView')
+            self.root.after(delay, target_function)
+        else:
+            target_function()
+
+    def toggle_turbo_mode(self):
+        self.turbo_mode = not self.turbo_mode
+        print(f"Turbo mode {'ENABLED' if self.turbo_mode else 'DISABLED'}")
+        settings_screen = self.view.screens.get('SettingsView')
+        if settings_screen:
+            settings_screen.update_turbo_button_state(self.turbo_mode)
 
     def brighten_screen(self):
         if self.inactivity_job_id: self.root.after_cancel(self.inactivity_job_id)
@@ -136,37 +159,50 @@ class StandbyScreenApp:
         self.dim_screen()
 
     def show_main_menu(self):
-        self.brighten_screen()
-        if self.inactivity_job_id: self.root.after_cancel(self.inactivity_job_id)
-        self.view.show_screen('MainMenuView')
-        self.root.deiconify()
+        def _action():
+            self.brighten_screen()
+            self.view.show_screen('MainMenuView')
+            self.root.deiconify()
+        self.show_loading_and_run(_action)
 
     def show_affirmation(self):
-        self.brighten_screen()
-        self.view.show_screen('AffirmationView')
+        def _action():
+            self.brighten_screen()
+            self.view.show_screen('AffirmationView')
+        self.show_loading_and_run(_action)
 
     def show_joke(self):
-        self.brighten_screen()
-        self.view.show_screen('JokeView')
+        def _action():
+            self.brighten_screen()
+            self.view.show_screen('JokeView')
+        self.show_loading_and_run(_action)
         
     def show_updater(self):
-        self.brighten_screen()
-        self.view.show_screen('UpdateView')
+        def _action():
+            self.brighten_screen()
+            self.view.show_screen('UpdateView')
+        self.show_loading_and_run(_action)
         
     def show_settings(self):
-        self.brighten_screen()
-        self.view.show_screen('SettingsView')
+        def _action():
+            self.brighten_screen()
+            self.view.show_screen('SettingsView')
+        self.show_loading_and_run(_action)
 
     def check_for_updates(self):
         pass
 
     def show_games(self):
-        self.brighten_screen()
-        self.view.show_screen('GamesView')
+        def _action():
+            self.brighten_screen()
+            self.view.show_screen('GamesView')
+        self.show_loading_and_run(_action)
         
     def show_leaderboard(self):
-        self.brighten_screen()
-        print("Showing leaderboard...")
+        def _action():
+            self.brighten_screen()
+            print("Showing leaderboard...")
+        self.show_loading_and_run(_action)
 
     def start_snake(self):
         self.control_service.deactivate_all_controls()
