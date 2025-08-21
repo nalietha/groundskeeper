@@ -20,7 +20,6 @@ class MainMenuView(Screen):
         
         buttons = {
             "Games": self.callbacks['show_games'], 
-            "Leaderboard": self.callbacks['show_leaderboard'], 
             "Affirmation": self.callbacks['show_affirmation'], 
             "Joke": self.callbacks['show_joke'],
             "Settings": self.callbacks['show_settings']

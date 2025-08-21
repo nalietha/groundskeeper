@@ -3,15 +3,13 @@ from datetime import datetime
 import random
 import json
 import os
-import json
-import os
 
 from core.theme_service import ThemeService
 from core.mood_service import MoodService
 from core.affirmation_service import AffirmationService
 from core.joke_service import JokeService
-from core.update_service import Updater
-from core.joke_service import JokeService
+from core.update_service import UpdateService
+from core.game_service import GameService
 
 from models.mood import Mood
 from views.view import View
@@ -19,7 +17,7 @@ from views.affirmation import AffirmationView
 from views.joke import JokeView
 from views.update import UpdateView
 from views.settings import SettingsView
-from views.joke import JokeView
+from views.games import GamesView
 from configs.config import Config
 
 class StandbyScreenApp:
@@ -29,9 +27,8 @@ class StandbyScreenApp:
         self.theme_service = ThemeService()
         self.affirmation_service = AffirmationService()
         self.joke_service = JokeService()
-        self.updater = Updater(update_url="https://example.com/updates.json") # Replace with your update URL
-        self.state_file = "state.json"
-        self.joke_service = JokeService()
+        self.updater = UpdateService()
+        self.game_service = GameService(config)
         self.state_file = "state.json"
         if not self.theme_service.themes:
             raise RuntimeError("Could not load any themes.")
@@ -53,9 +50,10 @@ class StandbyScreenApp:
             'change_theme': self.change_theme,
             'check_for_updates': self.check_for_updates,
             'show_updater': self.show_updater,
-            'show_settings': self.show_settings
+            'show_settings': self.show_settings,
+            'start_snake': self.start_snake
         }
-        self.view = View(root, callbacks, config, [AffirmationView, JokeView, UpdateView, SettingsView])
+        self.view = View(root, callbacks, config, [AffirmationView, JokeView, UpdateView, SettingsView, GamesView])
         self.show_standby_screen()
         self.periodic_check()
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
@@ -121,8 +119,6 @@ class StandbyScreenApp:
         new_theme = self.theme_service.get_theme(theme_name)
         if new_theme:
             self.current_theme = new_theme
-            self.action_start_time = None
-            self.current_mood_tier_name = None
             print(f"Theme changed to: {self.current_theme.name}")
             self.save_state()
             self.show_standby_screen()
@@ -145,6 +141,7 @@ class StandbyScreenApp:
         self.brighten_screen()
         if self.inactivity_job_id: self.root.after_cancel(self.inactivity_job_id)
         self.view.show_screen('MainMenuView')
+        self.root.deiconify() # Show main window
 
     def show_affirmation(self):
         self.brighten_screen()
@@ -184,19 +181,27 @@ class StandbyScreenApp:
                 if component == "themes":
                     self.theme_service = ThemeService() # Quick reset
                     self.change_theme(self.current_theme.name) # Reload current theme
+                elif component == "jokes":
+                    self.joke_service = JokeService()
+                elif component == "affirmations":
+                    self.affirmation_service = AffirmationService()
         else:
             update_screen.status_label.config(text="You are up to date!")
 
-    def show_joke(self):
+    def show_games(self):
         self.brighten_screen()
-        if self.inactivity_job_id: self.root.after_cancel(self.inactivity_job_id)
-        joke_text = self.joke_service.get_joke(self.current_theme)
-        joke_screen = self.view.screens['JokeView']
-        joke_screen.joke_label.config(text=joke_text)
-        self.view.show_screen('JokeView')
+        self.view.show_screen('GamesView')
+        
+    def show_leaderboard(self):
+        self.brighten_screen()
+        # This is a placeholder for the leaderboard view
+        print("Showing leaderboard...")
 
-    def show_games(self): self.brighten_screen()
-    def show_leaderboard(self): self.brighten_screen()
+    def start_snake(self):
+        self.root.iconify() # Hide main window
+        self.game_service.start_snake(self.current_theme)
+        self.show_main_menu() # Return to main menu after game exits
+
 
 if __name__ == "__main__":
     app_root = tk.Tk()
