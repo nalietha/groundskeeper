@@ -1,6 +1,8 @@
 import tkinter as tk
 from datetime import datetime
 import random
+import json
+import os
 
 from core.theme_service import ThemeService
 from core.mood_service import MoodService
@@ -20,16 +22,46 @@ class StandbyScreenApp:
         self.theme_service = ThemeService()
         self.affirmation_service = AffirmationService()
         self.joke_service = JokeService()
+        self.state_file = "state.json"
         if not self.theme_service.themes:
             raise RuntimeError("Could not load any themes.")
         self.action_start_time = None
         self.current_mood = Mood("Welcome!", "Select a theme and an action.", "👋")
         self.current_mood_tier_name = None
-        self.current_theme = self.theme_service.get_theme(self.config.DEFAULT_THEME) or self.theme_service.get_all_themes()[0]
+        
+        self.load_state()
+
         callbacks = {'show_main_menu': self.show_main_menu, 'start_action': self.start_action, 'show_standby': self.show_standby_screen, 'show_games': self.show_games, 'show_leaderboard': self.show_leaderboard, 'show_affirmation': self.show_affirmation, 'show_joke': self.show_joke, 'get_all_themes': self.theme_service.get_all_themes, 'change_theme': self.change_theme}
         self.view = View(root, callbacks, config, [AffirmationView, JokeView])
         self.show_standby_screen()
         self.periodic_check()
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+    def on_closing(self):
+        self.save_state()
+        self.root.destroy()
+
+    def save_state(self):
+        state = {
+            'last_theme': self.current_theme.name,
+            'action_start_time': self.action_start_time.isoformat() if self.action_start_time else None
+        }
+        with open(self.state_file, 'w') as f:
+            json.dump(state, f)
+
+    def load_state(self):
+        if os.path.exists(self.state_file):
+            with open(self.state_file, 'r') as f:
+                try:
+                    state = json.load(f)
+                    theme_name = state.get('last_theme', self.config.DEFAULT_THEME)
+                    self.current_theme = self.theme_service.get_theme(theme_name) or self.theme_service.get_all_themes()[0]
+                    if state.get('action_start_time'):
+                        self.action_start_time = datetime.fromisoformat(state['action_start_time'])
+                except (json.JSONDecodeError, TypeError):
+                    self.current_theme = self.theme_service.get_theme(self.config.DEFAULT_THEME) or self.theme_service.get_all_themes()[0]
+        else:
+            self.current_theme = self.theme_service.get_theme(self.config.DEFAULT_THEME) or self.theme_service.get_all_themes()[0]
 
     def brighten_screen(self):
         if self.inactivity_job_id: self.root.after_cancel(self.inactivity_job_id)
@@ -69,6 +101,7 @@ class StandbyScreenApp:
             self.action_start_time = None
             self.current_mood_tier_name = None
             print(f"Theme changed to: {self.current_theme.name}")
+            self.save_state()
             self.show_standby_screen()
         self.brighten_screen()
 
@@ -76,6 +109,7 @@ class StandbyScreenApp:
         self.action_start_time = datetime.now()
         self.current_mood_tier_name = None
         print(f"Action '{self.current_theme.action_text}' started.")
+        self.save_state()
         self.periodic_check()
         self.brighten_screen()
 

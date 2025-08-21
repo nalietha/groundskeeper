@@ -1,6 +1,7 @@
 {
   "name": "Donuts",
   "action_text": "Open the Box!",
+  "start_phrase": "Purchased",
   "timer_ms": 14400000,
   "splash_image": "themes/donuts/splash.png",
   "icon": "themes/donuts/icon.png",
