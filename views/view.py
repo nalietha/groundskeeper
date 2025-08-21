@@ -2,10 +2,16 @@ import tkinter as tk
 
 from views.standby import StandbyView
 from views.mainmenu import MainMenuView
+from views.affirmation import AffirmationView
+from views.joke import JokeView
+from views.update import UpdateView
+from views.settings import SettingsView
+from views.games import GamesView
+
 class View:
     def __init__(self, root, callbacks, config, extra_screens=None):
         self.root, self.callbacks, self.config = root, callbacks, config
-        self.root.title("Standby Screen Demo")
+        self.root.title("Groundskeeper")
         self.root.geometry(f"{config.SCREEN_WIDTH}x{config.SCREEN_HEIGHT}")
         scale_factor = config.SCREEN_WIDTH / config.BASE_WIDTH
         self.fonts = {
@@ -25,7 +31,7 @@ class View:
         if extra_screens: all_screens.extend(extra_screens)
         for F in all_screens:
             screen_name = F.__name__
-            frame = F(self.container, callbacks, self.fonts)
+            frame = F(self.container, callbacks, self.fonts, config) # Pass config to screens
             self.screens[screen_name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
