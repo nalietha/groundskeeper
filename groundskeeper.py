@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from datetime import datetime
 import json
 import os
@@ -44,7 +45,7 @@ class StandbyScreenApp:
 
         callbacks = {
             'show_main_menu': self.show_main_menu, 
-            'start_new_item': self.start_new_item, 
+            'confirm_and_start_item': self.confirm_and_start_item, 
             'show_standby': self.show_standby_screen, 
             'show_games': self.show_games, 
             'show_leaderboard': self.show_leaderboard, 
@@ -96,19 +97,29 @@ class StandbyScreenApp:
             start_time_str = tracked_item['start_time'].strftime("%I:%M %p").lstrip('0')
         else:
             mood = Mood("Welcome!", "Start an item from the menu.", "👋")
-            start_time_str = theme.not_started_text # Use the new theme-specific text
+            start_time_str = theme.not_started_text
             
         standby_screen.theme_label.config(text=f"Viewing: {theme.name}")
         standby_screen.last_start_label.config(text=f"{theme.start_phrase} {start_time_str}")
         standby_screen.mood_emoji_label.config(text=mood.emoji)
         standby_screen.mood_catcher_label.config(text=mood.catcher)
         standby_screen.mood_desc_label.config(text=mood.descriptor)
-        standby_screen.action_button.config(text=theme.action_text, command=lambda: self.start_new_item(theme.name))
+        standby_screen.action_button.config(text=theme.action_text, command=lambda: self.confirm_and_start_item(theme.name))
 
-    def start_new_item(self, theme_name):
-        self.tracking_service.start_tracking_item(theme_name)
-        self.active_theme_name = theme_name
-        self.show_standby_screen()
+    def confirm_and_start_item(self, theme_name):
+        is_tracked = any(item['theme_name'] == theme_name for item in self.tracking_service.get_tracked_items())
+        
+        proceed = True
+        if is_tracked:
+            proceed = messagebox.askyesno(
+                title="Confirm Reset",
+                message=f"A timer for '{theme_name}' is already running. Are you sure you want to reset it?"
+            )
+        
+        if proceed:
+            self.tracking_service.start_tracking_item(theme_name)
+            self.active_theme_name = theme_name
+            self.show_standby_screen()
 
     def set_active_theme(self, theme_name):
         self.active_theme_name = theme_name
