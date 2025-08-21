@@ -12,10 +12,10 @@
   },
   "mood_sayings_file": "themes/tea/tea_sayings.json",
   "mood_tiers": [
-    { "name": "Aromatic Bliss", "threshold_minutes": 0 },
-    { "name": "Sippable Serenity", "threshold_minutes": 5 },
-    { "name": "Tepid Tranquility", "threshold_minutes": 20 },
-    { "name": "Cold Comfort", "threshold_minutes": 60 },
-    { "name": "Tannin Stain Terror", "threshold_minutes": 1440 }
+    { "name": "Aromatic Bliss", "threshold_minutes": 0,"emoji": "✨" },
+    { "name": "Sippable Serenity", "threshold_minutes": 5,"emoji": "😊" },
+    { "name": "Tepid Tranquility", "threshold_minutes": 20,"emoji": "😐" },
+    { "name": "Cold Comfort", "threshold_minutes": 60,"emoji": "🤢" },
+    { "name": "Tannin Stain Terror", "threshold_minutes": 1440,"emoji": "💀" }
   ]
 }

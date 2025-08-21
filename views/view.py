@@ -2,14 +2,11 @@ import tkinter as tk
 
 from views.standby import StandbyView
 from views.mainmenu import MainMenuView
-
 class View:
-    def __init__(self, root, callbacks, config):
+    def __init__(self, root, callbacks, config, extra_screens=None):
         self.root, self.callbacks, self.config = root, callbacks, config
         self.root.title("Standby Screen Demo")
         self.root.geometry(f"{config.SCREEN_WIDTH}x{config.SCREEN_HEIGHT}")
-        
-        # --- Dynamic Font Scaling ---
         scale_factor = config.SCREEN_WIDTH / config.BASE_WIDTH
         self.fonts = {
             name: ("Helvetica", int(size * scale_factor), style)
@@ -21,13 +18,14 @@ class View:
                 ("button", config.FONT_SIZES["button"], ""),
             ]
         }
-        
         self.container = tk.Frame(root)
         self.container.pack(expand=True, fill="both")
         self.screens = {}
-        for F in (StandbyView, MainMenuView):
+        all_screens = [StandbyView, MainMenuView]
+        if extra_screens: all_screens.extend(extra_screens)
+        for F in all_screens:
             screen_name = F.__name__
-            frame = F(self.container, callbacks, self.fonts) # Pass fonts to screens
+            frame = F(self.container, callbacks, self.fonts)
             self.screens[screen_name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
@@ -41,5 +39,4 @@ class View:
             widget.configure(bg=bg)
             if not isinstance(widget, (tk.Frame, tk.LabelFrame)): widget.configure(fg=fg)
         except tk.TclError: pass
-        for child in widget.winfo_children():
-            self._apply_theme_recursive(child, bg, fg)
+        for child in widget.winfo_children(): self._apply_theme_recursive(child, bg, fg)

@@ -4,6 +4,7 @@ class Theme:
     def __init__(self, data):
         self.name = data.get("name", "Unknown")
         self.action_text = data.get("action_text", "Start")
+        self.start_phrase = data.get("start_phrase", "Last Start:")
         self.timer_ms = data.get("timer_ms", 60000)
         colors = data.get("colors", {})
         self.colors = {

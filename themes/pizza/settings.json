@@ -12,10 +12,10 @@
   },
   "mood_sayings_file": "themes/pizza/pizza_sayings.json",
   "mood_tiers": [
-    { "name": "Molten Glory", "threshold_minutes": 0 },
-    { "name": "Prime Pickings", "threshold_minutes": 15 },
-    { "name": "The Lukewarm Gamble", "threshold_minutes": 60 },
-    { "name": "Congealed Calamity", "threshold_minutes": 180 },
-    { "name": "Penicillin Farm", "threshold_minutes": 4320 }
+    { "name": "Molten Glory", "threshold_minutes": 0, "emoji": "✨"},
+    { "name": "Prime Pickings", "threshold_minutes": 15, "emoji": "😊"},
+    { "name": "The Lukewarm Gamble", "threshold_minutes": 60, "emoji": "😐"},
+    { "name": "Congealed Calamity", "threshold_minutes": 180, "emoji": "🤢"},
+    { "name": "Penicillin Farm", "threshold_minutes": 4320, "emoji": "💀"}
   ]
 }

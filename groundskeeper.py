@@ -15,37 +15,18 @@ class StandbyScreenApp:
     def __init__(self, root, config):
         self.root, self.config = root, config
         self.inactivity_job_id = None
-        
-        # --- Initialize Services ---
         self.theme_service = ThemeService()
         self.affirmation_service = AffirmationService()
-
         if not self.theme_service.themes:
-            raise RuntimeError("Could not load any themes. Please check the 'themes' directory.")
-        
-        # --- Application State ---
+            raise RuntimeError("Could not load any themes.")
         self.action_start_time = None
-        self.current_mood = Mood("Welcome!", "Select a theme and an action.")
+        self.current_mood = Mood("Welcome!", "Select a theme and an action.", "👋")
         self.current_mood_tier_name = None
         self.current_theme = self.theme_service.get_theme(self.config.DEFAULT_THEME) or self.theme_service.get_all_themes()[0]
-        
-        callbacks = {
-            'show_main_menu': self.show_main_menu, 
-            'start_action': self.start_action, 
-            'show_standby': self.show_standby_screen, 
-            'show_games': self.show_games, 
-            'show_leaderboard': self.show_leaderboard, 
-            'show_affirmation': self.show_affirmation, 
-            'show_joke': self.show_joke, 
-            'get_all_themes': self.theme_service.get_all_themes, 
-            'change_theme': self.change_theme
-        }
-        
-        # Pass the new AffirmationView to the View manager
+        callbacks = {'show_main_menu': self.show_main_menu, 'start_action': self.start_action, 'show_standby': self.show_standby_screen, 'show_games': self.show_games, 'show_leaderboard': self.show_leaderboard, 'show_affirmation': self.show_affirmation, 'show_joke': self.show_joke, 'get_all_themes': self.theme_service.get_all_themes, 'change_theme': self.change_theme}
         self.view = View(root, callbacks, config, [AffirmationView])
         self.show_standby_screen()
         self.periodic_check()
-
 
     def brighten_screen(self):
         if self.inactivity_job_id: self.root.after_cancel(self.inactivity_job_id)
@@ -60,21 +41,20 @@ class StandbyScreenApp:
 
     def periodic_check(self):
         new_mood, new_tier_name = MoodService.get_mood_for_theme(self.current_theme, self.action_start_time)
-        
-        # Only update the saying if the mood tier has changed
         if new_tier_name != self.current_mood_tier_name:
-            print(f"Mood tier changed from '{self.current_mood_tier_name}' to '{new_tier_name}'. Updating saying.")
+            print(f"Mood tier changed from '{self.current_mood_tier_name}' to '{new_tier_name}'.")
             self.current_mood = new_mood
             self.current_mood_tier_name = new_tier_name
-
         self.update_standby_ui()
         self.root.after(60000, self.periodic_check)
 
     def update_standby_ui(self):
         standby_screen = self.view.screens['StandbyView']
         standby_screen.theme_label.config(text=f"Current: {self.current_theme.name}")
-        start_time_str = self.action_start_time.strftime("%I:%M:%S %p") if self.action_start_time else "Not started"
-        standby_screen.last_start_label.config(text=f"Last Start: {start_time_str}")
+        time_format = "%H:%M" if self.config.USE_24H_CLOCK else "%I:%M %p"
+        start_time_str = self.action_start_time.strftime(time_format).lstrip('0') if self.action_start_time else "Not started"
+        standby_screen.last_start_label.config(text=f"{self.current_theme.start_phrase} {start_time_str}")
+        standby_screen.mood_emoji_label.config(text=self.current_mood.emoji)
         standby_screen.mood_catcher_label.config(text=self.current_mood.catcher)
         standby_screen.mood_desc_label.config(text=self.current_mood.descriptor)
         standby_screen.action_button.config(text=self.current_theme.action_text)
@@ -84,15 +64,15 @@ class StandbyScreenApp:
         if new_theme:
             self.current_theme = new_theme
             self.action_start_time = None
-            self.current_mood_tier_name = None # Reset tier tracker
+            self.current_mood_tier_name = None
             print(f"Theme changed to: {self.current_theme.name}")
             self.show_standby_screen()
         self.brighten_screen()
 
     def start_action(self):
         self.action_start_time = datetime.now()
-        self.current_mood_tier_name = None # Reset tier to force an update
-        print(f"Action '{self.current_theme.action_text}' started at {self.action_start_time.strftime('%I:%M:%S %p')}.")
+        self.current_mood_tier_name = None
+        print(f"Action '{self.current_theme.action_text}' started.")
         self.periodic_check()
         self.brighten_screen()
 
@@ -107,18 +87,11 @@ class StandbyScreenApp:
         self.view.show_screen('MainMenuView')
 
     def show_affirmation(self):
-        """Callback to display the daily affirmation screen."""
         self.brighten_screen()
         if self.inactivity_job_id: self.root.after_cancel(self.inactivity_job_id)
-        
-        # Get the affirmation text from the service
         affirmation_text = self.affirmation_service.get_daily_affirmation()
-        
-        # Update the label in the view
         affirmation_screen = self.view.screens['AffirmationView']
         affirmation_screen.affirmation_label.config(text=affirmation_text)
-        
-        # Show the screen
         self.view.show_screen('AffirmationView')
 
     def show_games(self): self.brighten_screen()

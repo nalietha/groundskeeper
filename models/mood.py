@@ -1,6 +1,4 @@
 
 class Mood:
-    """A simple class to hold mood data. (SRP)"""
-    def __init__(self, catcher, message):
-        self.catcher = catcher
-        self.descriptor = message
+    def __init__(self, catcher, descriptor, emoji=""):
+        self.catcher, self.descriptor, self.emoji = catcher, descriptor, emoji

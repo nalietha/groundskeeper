@@ -12,10 +12,10 @@
   },
   "mood_sayings_file": "themes/coffee/list_moods.json",
   "mood_tiers": [
-    { "name": "fresh", "threshold_minutes": 0 },
-    { "name": "good", "threshold_minutes": 30 },
-    { "name": "teetering", "threshold_minutes": 120 },
-    { "name": "stale", "threshold_minutes": 360 },
-    { "name": "moldy", "threshold_minutes": 2880 }
+    { "name": "fresh", "threshold_minutes": 0, "emoji": "✨" },
+    { "name": "good", "threshold_minutes": 30, "emoji": "😊" },
+    { "name": "teetering", "threshold_minutes": 120, "emoji": "😐" },
+    { "name": "stale", "threshold_minutes": 360, "emoji": "🤢" },
+    { "name": "moldy", "threshold_minutes": 2880, "emoji": "💀" }
   ]
 }

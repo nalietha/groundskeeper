@@ -12,10 +12,10 @@
   },
   "mood_sayings_file": "themes/donuts/donuts_sayings.json",
   "mood_tiers": [
-    { "name": "Still Warm", "threshold_minutes": 0 },
-    { "name": "Prime Selection", "threshold_minutes": 10 },
-    { "name": "Only Plain Left", "threshold_minutes": 60 },
-    { "name": "Halfsies & Crumbs", "threshold_minutes": 180 },
-    { "name": "Just a Sad, Empty Box", "threshold_minutes": 240 }
+    { "name": "Still Warm", "threshold_minutes": 0,"emoji": "✨" },
+    { "name": "Prime Selection", "threshold_minutes": 10,"emoji": "😊" },
+    { "name": "Only Plain Left", "threshold_minutes": 60,"emoji": "😐" },
+    { "name": "Halfsies & Crumbs", "threshold_minutes": 180,"emoji": "🤢" },
+    { "name": "Just a Sad, Empty Box", "threshold_minutes": 240,"emoji": "💀" }
   ]
 }
