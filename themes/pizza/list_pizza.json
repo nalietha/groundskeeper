@@ -1,0 +1,112 @@
+{
+  "Molten Glory": [
+    {
+      "catcher": "Lava Alert!",
+      "descriptor": "Warning: May cause lava-related mouth injuries. Worth it."
+    },
+    {
+      "catcher": "Aroma Overload",
+      "descriptor": "The scent is so powerful, the entire accounting department just swooned."
+    },
+    {
+      "catcher": "Peak of Your Day",
+      "descriptor": "This is the highlight of your day. It's all downhill from here."
+    },
+    {
+      "catcher": "The True Round Table",
+      "descriptor": "Behold! The circular conference table we all actually want."
+    },
+    {
+      "catcher": "The Perfect Cheese Pull",
+      "descriptor": "That cheese pull is legally required to be posted on social media."
+    }
+  ],
+  "Prime Pickings": [
+    {
+      "catcher": "Still Wonderful",
+      "descriptor": "Still warm, still wonderful. The window of opportunity is closing."
+    },
+    {
+      "catcher": "The Golden Hour",
+      "descriptor": "It's no longer 'surface of the sun' hot. This is your moment."
+    },
+    {
+      "catcher": "Content Pepperoni",
+      "descriptor": "The pepperoni is starting to curl with quiet satisfaction."
+    },
+    {
+      "catcher": "Go For Seconds",
+      "descriptor": "It is perfectly acceptable to go back for seconds. Or thirds."
+    },
+    {
+      "catcher": "Crust Integrity",
+      "descriptor": "The crust still has integrity. It has not yet known true sorrow."
+    }
+  ],
+  "The Lukewarm Gamble": [
+    {
+      "catcher": "The Microwave Stare-Down",
+      "descriptor": "It's staring at the microwave, daring you to press the button."
+    },
+    {
+      "catcher": "This Slice Has Seen Things",
+      "descriptor": "It's seen things... mostly just Sheila's presentation slides."
+    },
+    {
+      "catcher": "The Cheese Entity",
+      "descriptor": "The cheese has solidified into a single, unified cheese entity."
+    },
+    {
+      "catcher": "A Moment of Contemplation",
+      "descriptor": "Is it sad? Or is it just contemplating its existence in the box?"
+    },
+    {
+      "catcher": "The Box Is A Lie",
+      "descriptor": "The box is now more of a suggestion than a heat-insulating container."
+    }
+  ],
+  "Congealed Calamity": [
+    {
+      "catcher": "Breakfast of Regret",
+      "descriptor": "Good morning! Your cold breakfast of regret is served."
+    },
+    {
+      "catcher": "Structural Cheese",
+      "descriptor": "The cheese is now structurally sound. You could build with it."
+    },
+    {
+      "catcher": "A Promise Broken",
+      "descriptor": "This is what happens when you say 'I'll save it for later'."
+    },
+    {
+      "catcher": "Tastes Like Paperwork",
+      "descriptor": "It tastes like broken promises and cold marinara sauce."
+    },
+    {
+      "catcher": "A Doughy Mass",
+      "descriptor": "The sauce has soaked into the crust, creating a single, doughy mass."
+    }
+  ],
+  "Penicillin Farm": [
+    {
+      "catcher": "It's ALIVE!",
+      "descriptor": "Congratulations, you've cultivated a new, fuzzy lifeform."
+    },
+    {
+      "catcher": "Do Not Open",
+      "descriptor": "Warning: Box may contain science."
+    },
+    {
+      "catcher": "Protected Habitat",
+      "descriptor": "This box is now a protected habitat for rare and interesting molds."
+    },
+    {
+      "catcher": "Biohazard Detected",
+      "descriptor": "Smells like a biohazard and a cry for help."
+    },
+    {
+      "catcher": "It Speaks!",
+      "descriptor": "It has achieved sentience and its first word was 'why?'"
+    }
+  ]
+}

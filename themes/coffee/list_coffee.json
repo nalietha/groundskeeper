@@ -1,0 +1,1012 @@
+{
+  "fresh": [
+    {
+      "catcher": "The Awakening",
+      "descriptor": "The day begins now, and only now."
+    },
+    {
+      "catcher": "God's Whisper",
+      "descriptor": "A divine secret poured into a cup."
+    },
+    {
+      "catcher": "Volcanic Nectar",
+      "descriptor": "Earth's fiery, energetic gift to humanity."
+    },
+    {
+      "catcher": "Morning's First Kiss",
+      "descriptor": "A gentle, warm start to consciousness."
+    },
+    {
+      "catcher": "Liquid Dawn",
+      "descriptor": "Sunrise captured in a porcelain mug."
+    },
+    {
+      "catcher": "Brain Juice",
+      "descriptor": "It lubricates the rusty gears of thought."
+    },
+    {
+      "catcher": "Go-Go Juice",
+      "descriptor": "Activates productive human mode. Now with more go."
+    },
+    {
+      "catcher": "The Good Stuff",
+      "descriptor": "You know it when you taste it."
+    },
+    {
+      "catcher": "Anti-Sleepy Sauce",
+      "descriptor": "A delicious antidote to the siren call of bed."
+    },
+    {
+      "catcher": "Zoom Zoom Fuel",
+      "descriptor": "For when life demands ludicrous speed."
+    },
+    {
+      "catcher": "Monday's Only Hope",
+      "descriptor": "The sole reason to face the week's beginning."
+    },
+    {
+      "catcher": "Brief Respite",
+      "descriptor": "A fleeting moment of peace before the chaos."
+    },
+    {
+      "catcher": "Fleeting Joy",
+      "descriptor": "Enjoy it, for this feeling will not last."
+    },
+    {
+      "catcher": "The Daily Grindstone",
+      "descriptor": "Sharpens the mind for another day of labor."
+    },
+    {
+      "catcher": "Temporary Sanity",
+      "descriptor": "A short-term lease on a stable mental state."
+    },
+    {
+      "catcher": "The Spice Melange",
+      "descriptor": "The brew must flow for consciousness to expand."
+    },
+    {
+      "catcher": "Dilithium Crystals",
+      "descriptor": "It powers the warp core of your soul."
+    },
+    {
+      "catcher": "The Precious",
+      "descriptor": "We wants it, we needs it. Must have it."
+    },
+    {
+      "catcher": "Liquid Luck",
+      "descriptor": "A dose of Felix Felicis for your morning."
+    },
+    {
+      "catcher": "A Cunning Plan",
+      "descriptor": "As cunning as a fox appointed Professor of Cunning."
+    },
+    {
+      "catcher": "Peak Bloom",
+      "descriptor": "The absolute zenith of flavor and aroma."
+    },
+    {
+      "catcher": "Crema Crowned",
+      "descriptor": "A royal sign of a perfectly pulled shot."
+    },
+    {
+      "catcher": "Aromatic Bliss",
+      "descriptor": "Inhaling this is half the experience."
+    },
+    {
+      "catcher": "First Crack's Reward",
+      "descriptor": "The audible proof of perfection has been brewed."
+    },
+    {
+      "catcher": "Bright & Lively",
+      "descriptor": "It dances on the palate with vibrant notes."
+    },
+    {
+      "catcher": "The Quickening",
+      "descriptor": "There can be only one perfect cup."
+    },
+    {
+      "catcher": "Tesseract Brew",
+      "descriptor": "It bends the space-time of your morning."
+    },
+    {
+      "catcher": "The Black Blood of the Earth",
+      "descriptor": "A dark, powerful, and life-giving force."
+    },
+    {
+      "catcher": "Philosopher's Stone",
+      "descriptor": "Turns sleepy lead into productive gold."
+    },
+    {
+      "catcher": "Rocket Fuel",
+      "descriptor": "Cleared for liftoff from your kitchen counter."
+    },
+    {
+      "catcher": "Morning Person Potion",
+      "descriptor": "Transforms nocturnal gremlins into functional daytime beings."
+    },
+    {
+      "catcher": "Liquid Motivation",
+      "descriptor": "The abstract concept of 'get up and go'."
+    },
+    {
+      "catcher": "The Daily Reset",
+      "descriptor": "Ctrl+Alt+Del for your weary brain."
+    },
+    {
+      "catcher": "Sane Person Soup",
+      "descriptor": "Just add water to keep the crazy away."
+    },
+    {
+      "catcher": "The Silmaril",
+      "descriptor": "A perfect creation, containing the light of inspiration."
+    },
+    {
+      "catcher": "Cup of Joe",
+      "descriptor": "Knowing is half the battle; this is the other."
+    },
+    {
+      "catcher": "Hot Brown Morning Potion",
+      "descriptor": "The magic elixir that makes the sun rise."
+    },
+    {
+      "catcher": "Bean Elixir",
+      "descriptor": "A magical concoction derived from humble beans."
+    },
+    {
+      "catcher": "The Architect's Choice",
+      "descriptor": "The preferred fuel for building a better day."
+    },
+    {
+      "catcher": "Liquid Schwartz",
+      "descriptor": "May the Schwartz be with you. All of it."
+    },
+    {
+      "catcher": "Engine Starter",
+      "descriptor": "Turns over the sputtering engine of your mind."
+    },
+    {
+      "catcher": "Velvet Thunder",
+      "descriptor": "A smooth taste with a powerful, roaring kick."
+    },
+    {
+      "catcher": "The Alchemist's Gold",
+      "descriptor": "The result of a perfect elemental transformation."
+    },
+    {
+      "catcher": "Brewer's Pride",
+      "descriptor": "The cup that makes the maker smile."
+    },
+    {
+      "catcher": "Essence of Morning",
+      "descriptor": "The very soul of a new day, distilled."
+    },
+    {
+      "catcher": "Pan-Galactic Gargle Blaster",
+      "descriptor": "Like having brains smashed out by a lemon."
+    },
+    {
+      "catcher": "The Catalyst",
+      "descriptor": "The single element that starts the reaction."
+    },
+    {
+      "catcher": "Jomo",
+      "descriptor": "The Joy of Missing Out on being tired."
+    },
+    {
+      "catcher": "Flow State Fuel",
+      "descriptor": "Unlocks focus, creativity, and pure productivity."
+    },
+    {
+      "catcher": "Glimmer of Hope",
+      "descriptor": "That first sip that says, 'maybe today's okay.'"
+    }
+  ],
+  "good": [
+    {
+      "catcher": "The Standard Bearer",
+      "descriptor": "It holds the line against morning grogginess."
+    },
+    {
+      "catcher": "Ol' Reliable",
+      "descriptor": "It's not fancy, but it always shows up."
+    },
+    {
+      "catcher": "The Daily Driver",
+      "descriptor": "Gets you from point A to point B."
+    },
+    {
+      "catcher": "Workhorse Brew",
+      "descriptor": "Built for function, not for floral notes."
+    },
+    {
+      "catcher": "That's Some Damn Fine Coffee",
+      "descriptor": "And hot! A solid, dependable cup."
+    },
+    {
+      "catcher": "Office Fuel",
+      "descriptor": "The lifeblood of cubicle farms everywhere."
+    },
+    {
+      "catcher": "Acceptable Brown Water",
+      "descriptor": "It meets the minimum requirements for being coffee."
+    },
+    {
+      "catcher": "The Usual Suspect",
+      "descriptor": "Round it up; it does the job."
+    },
+    {
+      "catcher": "Pre-Meeting Fortifier",
+      "descriptor": "Armor for surviving another pointless meeting."
+    },
+    {
+      "catcher": "Parent Power-Up",
+      "descriptor": "A +1 stamina boost for weary parents."
+    },
+    {
+      "catcher": "Sisyphus's Ritual",
+      "descriptor": "Push the boulder. Drink the coffee. Repeat."
+    },
+    {
+      "catcher": "The Daily Requirement",
+      "descriptor": "A mandatory dose to maintain basic functionality."
+    },
+    {
+      "catcher": "Bare Minimum Brew",
+      "descriptor": "It's coffee. That is all. Nothing more."
+    },
+    {
+      "catcher": "Obligatory Cup",
+      "descriptor": "You drink it because you feel you have to."
+    },
+    {
+      "catcher": "Just Another Cup",
+      "descriptor": "Lost in time, like tears in rain."
+    },
+    {
+      "catcher": "Luke's Diner Special",
+      "descriptor": "No cell phones, just a solid, honest brew."
+    },
+    {
+      "catcher": "Standard Issue",
+      "descriptor": "Would you like to know more? Just drink."
+    },
+    {
+      "catcher": "The Blue Stuff",
+      "descriptor": "It has the right flavor, and it's... coffee-colored."
+    },
+    {
+      "catcher": "Regular Joe",
+      "descriptor": "The unassuming hero of every single morning."
+    },
+    {
+      "catcher": "Sustenance Juice",
+      "descriptor": "For survival, not for savoring or enjoyment."
+    },
+    {
+      "catcher": "The Great Equalizer",
+      "descriptor": "Makes everyone in the office equally functional."
+    },
+    {
+      "catcher": "Second Breakfast Blend",
+      "descriptor": "What about elevenses? This works for that, too."
+    },
+    {
+      "catcher": "Committee Coffee",
+      "descriptor": "Designed by a committee to offend no one."
+    },
+    {
+      "catcher": "The Functional Fluid",
+      "descriptor": "Its purpose is to function, not to delight."
+    },
+    {
+      "catcher": "Break Room Blend",
+      "descriptor": "Brewed in a pot of questionable cleanliness."
+    },
+    {
+      "catcher": "The Dependable",
+      "descriptor": "You can always count on it to be... there."
+    },
+    {
+      "catcher": "Middle of the Road Roast",
+      "descriptor": "Perfectly balanced on the centerline of mediocrity."
+    },
+    {
+      "catcher": "The Baseline",
+      "descriptor": "All other coffees are measured against this."
+    },
+    {
+      "catcher": "Table Wine of Coffee",
+      "descriptor": "It's on the table. You can drink it."
+    },
+    {
+      "catcher": "Procedural Brew",
+      "descriptor": "Step 1: Make coffee. Step 2: Drink."
+    },
+    {
+      "catcher": "The Status Quo",
+      "descriptor": "Things are normal. This coffee proves it."
+    },
+    {
+      "catcher": "The NPCs' Drink",
+      "descriptor": "The background coffee that fills every generic mug."
+    },
+    {
+      "catcher": "Anti-Grump Serum",
+      "descriptor": "Temporarily suppresses symptoms of chronic grumpiness."
+    },
+    {
+      "catcher": "Cognitive Lubricant",
+      "descriptor": "Reduces the friction of early morning thoughts."
+    },
+    {
+      "catcher": "The Diplomat",
+      "descriptor": "Inoffensive enough to be served at any gathering."
+    },
+    {
+      "catcher": "Cafeteria Classic",
+      "descriptor": "Tastes exactly like your high school memories."
+    },
+    {
+      "catcher": "The Placeholder",
+      "descriptor": "It fills the mug until better coffee arrives."
+    },
+    {
+      "catcher": "Utility Black",
+      "descriptor": "The default color and flavor setting for coffee."
+    },
+    {
+      "catcher": "Brown Courage",
+      "descriptor": "Just enough bravery to open your email inbox."
+    },
+    {
+      "catcher": "Perfunctory Perk",
+      "descriptor": "It's there, and it has caffeine. Check."
+    },
+    {
+      "catcher": "The Known Quantity",
+      "descriptor": "No surprises, good or bad. A flat line."
+    },
+    {
+      "catcher": "The Monotony",
+      "descriptor": "The same cup, every day, forever and ever."
+    },
+    {
+      "catcher": "Social Lubricant",
+      "descriptor": "Makes small talk with coworkers slightly more bearable."
+    },
+    {
+      "catcher": "The Hump Day Helper",
+      "descriptor": "Gets you over the mid-week productivity slump."
+    },
+    {
+      "catcher": "Norm-core Nectar",
+      "descriptor": "Aggressively, fashionably, deliberately normal and unadorned."
+    },
+    {
+      "catcher": "The Planet Express Delivery",
+      "descriptor": "Good news, everyone! It's coffee."
+    },
+    {
+      "catcher": "Cup o' Noodles of Coffee",
+      "descriptor": "Just add hot water for instant functionality."
+    },
+    {
+      "catcher": "The Default Setting",
+      "descriptor": "If you don't choose, this is what you get."
+    },
+    {
+      "catcher": "Background Buzz",
+      "descriptor": "A low, steady hum of caffeine in your veins."
+    },
+    {
+      "catcher": "Plausible Deniability",
+      "descriptor": "'Yes, I've had my coffee.' Technically true."
+    }
+  ],
+  "teetering": [
+    {
+      "catcher": "Fading Light",
+      "descriptor": "The bright notes are setting over the horizon."
+    },
+    {
+      "catcher": "The Shadow of its Former Self",
+      "descriptor": "It remembers when it used to be great."
+    },
+    {
+      "catcher": "A Memory of Morning",
+      "descriptor": "Vaguely reminiscent of a once-perfect cup."
+    },
+    {
+      "catcher": "The Turning Point",
+      "descriptor": "The moment hope gives way to acceptance."
+    },
+    {
+      "catcher": "Microwaved Desperation",
+      "descriptor": "You're better than this. Or maybe you're not."
+    },
+    {
+      "catcher": "Lukewarm Regret",
+      "descriptor": "Each sip is a reminder of bad decisions."
+    },
+    {
+      "catcher": "Bitter Tears",
+      "descriptor": "The coffee is crying, and so are you."
+    },
+    {
+      "catcher": "Second-Guess Juice",
+      "descriptor": "'I probably should have made a fresh pot.'"
+    },
+    {
+      "catcher": "Procrastinator's Penance",
+      "descriptor": "Your punishment for not drinking it sooner."
+    },
+    {
+      "catcher": "Essence of Compromise",
+      "descriptor": "You've settled, and this is what you get."
+    },
+    {
+      "catcher": "A Faded Photograph",
+      "descriptor": "The colors are washed out, the joy is gone."
+    },
+    {
+      "catcher": "The Long Defeat",
+      "descriptor": "A slow, inevitable slide into mediocrity."
+    },
+    {
+      "catcher": "Hope's Last Gasp",
+      "descriptor": "The final, shuddering breath before it turns stale."
+    },
+    {
+      "catcher": "Liquid Apathy",
+      "descriptor": "It tastes like you've completely stopped caring."
+    },
+    {
+      "catcher": "The Tepid Zone",
+      "descriptor": "A dimension not of flavor nor of heat."
+    },
+    {
+      "catcher": "Luke Warmwalker",
+      "descriptor": "You've let it turn to the lukewarm side."
+    },
+    {
+      "catcher": "The Sunken Place",
+      "descriptor": "You're drinking it, but you can't taste it."
+    },
+    {
+      "catcher": "Not Great, Not Terrible",
+      "descriptor": "The equivalent of a 3.6 Roentgen cup."
+    },
+    {
+      "catcher": "The Gray Stuff",
+      "descriptor": "It's coffee, don't believe me? Ask the dishes."
+    },
+    {
+      "catcher": "Afternoon's Apology",
+      "descriptor": "'Sorry I couldn't be as good as the morning.'"
+    },
+    {
+      "catcher": "Office Carafe Surprise",
+      "descriptor": "You don't know how long it's been there."
+    },
+    {
+      "catcher": "Acrid Acquiescence",
+      "descriptor": "You drink it. You know why. It knows why."
+    },
+    {
+      "catcher": "Flatliner",
+      "descriptor": "The heartbeat of its flavor has ceased."
+    },
+    {
+      "catcher": "The Empty Promise",
+      "descriptor": "It looks like coffee, but the magic is gone."
+    },
+    {
+      "catcher": "Stale Reminder",
+      "descriptor": "A liquid monument to your morning's optimism."
+    },
+    {
+      "catcher": "Existential Brew",
+      "descriptor": "Why are we here? What is flavor?"
+    },
+    {
+      "catcher": "Purgatory Porter",
+      "descriptor": "Not good enough for heaven, not bad for hell."
+    },
+    {
+      "catcher": "The Hangover Helper's Hangover",
+      "descriptor": "The cure now needs a cure of its own."
+    },
+    {
+      "catcher": "Schrödinger's Roast",
+      "descriptor": "Until you taste it, it's both good and bad."
+    },
+    {
+      "catcher": "The Final Boss of the Pot",
+      "descriptor": "The last dregs you have to defeat."
+    },
+    {
+      "catcher": "One-Note Wonder",
+      "descriptor": "The only note left is a dull, flat bass."
+    },
+    {
+      "catcher": "The Diplomatic Incident",
+      "descriptor": "It threatens to ruin relations with your tongue."
+    },
+    {
+      "catcher": "Wasted Potential",
+      "descriptor": "It could have been a contender. Now it's this."
+    },
+    {
+      "catcher": "Ghost of Coffee Past",
+      "descriptor": "A spectral echo of a once vibrant brew."
+    },
+    {
+      "catcher": "The 'It'll Do' Brew",
+      "descriptor": "The official beverage of lowered standards."
+    },
+    {
+      "catcher": "The Sour Note",
+      "descriptor": "Like a beautiful song with one wrong chord."
+    },
+    {
+      "catcher": "Cardboard Character",
+      "descriptor": "Its flavor profile has become two-dimensional."
+    },
+    {
+      "catcher": "The Long Goodbye",
+      "descriptor": "Saying farewell to flavor, one sad sip at a time."
+    },
+    {
+      "catcher": "The Uncanny Valley",
+      "descriptor": "Close enough to coffee to be unsettling."
+    },
+    {
+      "catcher": "A Study in Beige",
+      "descriptor": "All the vibrant colors of taste have vanished."
+    },
+    {
+      "catcher": "Reheated Resentment",
+      "descriptor": "Each zap in the microwave adds more bitterness."
+    },
+    {
+      "catcher": "The Forgotten Friend",
+      "descriptor": "You left it behind, and it has not forgiven."
+    },
+    {
+      "catcher": "The Edge of Darkness",
+      "descriptor": "Teetering on the precipice of becoming drain-pour."
+    },
+    {
+      "catcher": "The Neutral Zone",
+      "descriptor": "No hostile flavors, but no friendly ones either."
+    },
+    {
+      "catcher": "Tuesday Weld",
+      "descriptor": "It's not Monday, it's not Wednesday. It just is."
+    },
+    {
+      "catcher": "The Meh-diator",
+      "descriptor": "It mediates a truce between 'awake' and 'asleep.'"
+    },
+    {
+      "catcher": "The Sigh",
+      "descriptor": "The sound you make after the first sip."
+    },
+    {
+      "catcher": "Almost, But Not Quite",
+      "descriptor": "The definition of a near-miss in a mug."
+    },
+    {
+      "catcher": "The Participation Trophy",
+      "descriptor": "It showed up. That's all that can be said."
+    },
+    {
+      "catcher": "A Vague Notion of Coffee",
+      "descriptor": "It suggests the idea of coffee without delivering."
+    }
+  ],
+  "stale": [
+    {
+      "catcher": "The Betrayal",
+      "descriptor": "How could something once so good become this?"
+    },
+    {
+      "catcher": "Liquid Ruin",
+      "descriptor": "The charred remains of a once-great civilization."
+    },
+    {
+      "catcher": "The Void",
+      "descriptor": "Stare into the abyss, and it tastes back."
+    },
+    {
+      "catcher": "Dead Sea Scrolls",
+      "descriptor": "Ancient, bitter, and tells a tale of woe."
+    },
+    {
+      "catcher": "Burnt Offering",
+      "descriptor": "A sacrifice to the god of bad decisions."
+    },
+    {
+      "catcher": "Punishment Potion",
+      "descriptor": "What you drink when you've been very, very bad."
+    },
+    {
+      "catcher": "Regret Roast",
+      "descriptor": "You'll regret this. Probably immediately."
+    },
+    {
+      "catcher": "Drain Pour",
+      "descriptor": "Its highest and best use is cleansing your pipes."
+    },
+    {
+      "catcher": "Desperation Fuel",
+      "descriptor": "For when the only other option is giving up."
+    },
+    {
+      "catcher": "Rock Bottom Brew",
+      "descriptor": "You've hit the bottom of the pot and your life."
+    },
+    {
+      "catcher": "Liquid Monday",
+      "descriptor": "The pure, unadulterated essence of a terrible day."
+    },
+    {
+      "catcher": "The End of the Line",
+      "descriptor": "Nowhere to go from here but a new pot."
+    },
+    {
+      "catcher": "A Cry for Help",
+      "descriptor": "Drinking this is a sign you need an intervention."
+    },
+    {
+      "catcher": "Gray Water",
+      "descriptor": "I mean, you could drink it. But why?"
+    },
+    {
+      "catcher": "He's Dead, Jim",
+      "descriptor": "All sensors report flavor has ceased to exist."
+    },
+    {
+      "catcher": "The Upside Down",
+      "descriptor": "A dark, cold, and bitter version of our world."
+    },
+    {
+      "catcher": "Mordor Mud",
+      "descriptor": "One does not simply walk away from drinking this."
+    },
+    {
+      "catcher": "Bantha Poodoo",
+      "descriptor": "A wretched hive of scum and villainy."
+    },
+    {
+      "catcher": "A Coffee for Ants?",
+      "descriptor": "This flavor has to be at least three times bigger."
+    },
+    {
+      "catcher": "Essence of Ashtray",
+      "descriptor": "Smoky, but not in a good, peaty scotch way."
+    },
+    {
+      "catcher": "Hot Ham Water",
+      "descriptor": "It has the flavor profile of a culinary mistake."
+    },
+    {
+      "catcher": "Primordial Soup",
+      "descriptor": "Life might evolve in it, but not good life."
+    },
+    {
+      "catcher": "The Penance",
+      "descriptor": "Every sip atones for a past sin."
+    },
+    {
+      "catcher": "The Sobriety Test",
+      "descriptor": "If you drink this willingly, you are not sober."
+    },
+    {
+      "catcher": "Graveyard Shift Grog",
+      "descriptor": "Tastes like 3 AM feels after a 12-hour shift."
+    },
+    {
+      "catcher": "Satan's Mouthwash",
+      "descriptor": "Gargle with this to truly feel alive. And awful."
+    },
+    {
+      "catcher": "The Final Exam",
+      "descriptor": "A test of your will, your stomach, your soul."
+    },
+    {
+      "catcher": "Liquid Sadness",
+      "descriptor": "Distilled tears of everyone who had to drink it."
+    },
+    {
+      "catcher": "The Blight",
+      "descriptor": "It corrupts all it touches, including your tongue."
+    },
+    {
+      "catcher": "Engine Degreaser",
+      "descriptor": "It might be useful for cleaning car parts."
+    },
+    {
+      "catcher": "The War Crime",
+      "descriptor": "This brew violates the Geneva Convention on taste."
+    },
+    {
+      "catcher": "Charred Hopes",
+      "descriptor": "The taste of dreams that have been burnt away."
+    },
+    {
+      "catcher": "The DMV",
+      "descriptor": "Tastes like waiting in line for three hours."
+    },
+    {
+      "catcher": "Dial-Up Internet",
+      "descriptor": "Slow, screechy, and deeply unpleasant to experience."
+    },
+    {
+      "catcher": "Static",
+      "descriptor": "All the flavor has been replaced by white noise."
+    },
+    {
+      "catcher": "The Phantom Menace",
+      "descriptor": "Its very existence is a disappointment to the franchise."
+    },
+    {
+      "catcher": "Cthulhu's Brew",
+      "descriptor": "A taste that can drive a person to madness."
+    },
+    {
+      "catcher": "The Ninth Circle",
+      "descriptor": "The punishment for traitors to good coffee."
+    },
+    {
+      "catcher": "Bio-Hazard",
+      "descriptor": "Should probably be handled with gloves and a mask."
+    },
+    {
+      "catcher": "The Ex",
+      "descriptor": "Bitter, cold, and you really should have thrown it out."
+    },
+    {
+      "catcher": "Swamp Water",
+      "descriptor": "Murky, questionable, with hints of profound regret."
+    },
+    {
+      "catcher": "The Tax Audit",
+      "descriptor": "An unwelcome, unpleasant, and stressful experience."
+    },
+    {
+      "catcher": "Liquid Despair",
+      "descriptor": "The official beverage of giving up on your dreams."
+    },
+    {
+      "catcher": "The Event Horizon",
+      "descriptor": "Past this point, no flavor can escape."
+    },
+    {
+      "catcher": "Dothraki Dishwater",
+      "descriptor": "It is known. To be terrible."
+    },
+    {
+      "catcher": "The Last Airbender Movie",
+      "descriptor": "Everyone agrees it should have never been made."
+    },
+    {
+      "catcher": "Liquid Styrofoam",
+      "descriptor": "Tastes like the cup it's been sitting in."
+    },
+    {
+      "catcher": "Beckett's Brew",
+      "descriptor": "I can't go on. I'll go on. I'll drink it."
+    },
+    {
+      "catcher": "The Anti-Life Equation",
+      "descriptor": "It will strip you of all free will and joy."
+    },
+    {
+      "catcher": "The Roommate's Revenge",
+      "descriptor": "A passive-aggressive act of culinary warfare."
+    }
+  ],
+  "moldy": [
+    {
+      "catcher": "The Elder God",
+      "descriptor": "It slumbers in its dark carafe, dreaming madly."
+    },
+    {
+      "catcher": "Forbidden Concoction",
+      "descriptor": "Do not drink, for it will change you."
+    },
+    {
+      "catcher": "The Anomaly",
+      "descriptor": "A scientific impossibility that defies explanation."
+    },
+    {
+      "catcher": "Nature's Reclamation",
+      "descriptor": "The earth is taking back what was once hers."
+    },
+    {
+      "catcher": "Schrödinger's Lunch",
+      "descriptor": "It is both a beverage and a lifeform."
+    },
+    {
+      "catcher": "Fuzzy Friend",
+      "descriptor": "It has grown a coat to keep it warm."
+    },
+    {
+      "catcher": "Chia Pet",
+      "descriptor": "Ch-ch-ch-chia! Just add neglect."
+    },
+    {
+      "catcher": "The Forbidden Terrarium",
+      "descriptor": "A self-sustaining ecosystem of failure."
+    },
+    {
+      "catcher": "Final Capitulation",
+      "descriptor": "You didn't just lose the battle, you lost the war."
+    },
+    {
+      "catcher": "The Unforgivable",
+      "descriptor": "There is no coming back from this sin."
+    },
+    {
+      "catcher": "A Monument to Neglect",
+      "descriptor": "A fuzzy testament to your own laziness."
+    },
+    {
+      "catcher": "The Last Straw",
+      "descriptor": "The final piece of evidence that you've given up."
+    },
+    {
+      "catcher": "The Thing",
+      "descriptor": "It perfectly imitates coffee, but it is not."
+    },
+    {
+      "catcher": "The Flood",
+      "descriptor": "A parasitic life form bent on consuming all flavor."
+    },
+    {
+      "catcher": "The Last of Us",
+      "descriptor": "Beware the spores when you pour it out."
+    },
+    {
+      "catcher": "Facehugger Fuel",
+      "descriptor": "It wants to latch onto your face. Don't let it."
+    },
+    {
+      "catcher": "The Blob",
+      "descriptor": "It creeps, and leaps, and slides and glides!"
+    },
+    {
+      "catcher": "The Primordial Ooze",
+      "descriptor": "The building blocks of new, terrifying life."
+    },
+    {
+      "catcher": "Patient Zero",
+      "descriptor": "The origin point of a new and horrifying plague."
+    },
+    {
+      "catcher": "The Biohazard Bin",
+      "descriptor": "Its final destination is a sealed container."
+    },
+    {
+      "catcher": "A New Civilization",
+      "descriptor": "It has achieved sentience and demands tribute."
+    },
+    {
+      "catcher": "The Green New Deal",
+      "descriptor": "An ambitious, fuzzy, and slightly scary project."
+    },
+    {
+      "catcher": "Pension Plan Penicillin",
+      "descriptor": "You might be able to retire on this discovery."
+    },
+    {
+      "catcher": "The Great Old One",
+      "descriptor": "Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn."
+    },
+    {
+      "catcher": "Abstract Art",
+      "descriptor": "A challenging piece on the nature of decay."
+    },
+    {
+      "catcher": "Landfill Latté",
+      "descriptor": "It smells like the dump on a hot day."
+    },
+    {
+      "catcher": "The Bog of Eternal Stench",
+      "descriptor": "One wrong move and you'll smell like this forever."
+    },
+    {
+      "catcher": "Science Project",
+      "descriptor": "You'll get an 'A' for demonstrating exponential growth."
+    },
+    {
+      "catcher": "The Forbidden Forest",
+      "descriptor": "Strange and dangerous things live in there now."
+    },
+    {
+      "catcher": "Shrek's Swamp",
+      "descriptor": "Get out of my mug!"
+    },
+    {
+      "catcher": "Liquid Entropy",
+      "descriptor": "The inevitable, final state of all coffee."
+    },
+    {
+      "catcher": "The Mug of Theseus",
+      "descriptor": "If all molecules are mold, is it still coffee?"
+    },
+    {
+      "catcher": "Chekhov's Mold",
+      "descriptor": "If you see it, it must be thrown out."
+    },
+    {
+      "catcher": "The Fifth Seal",
+      "descriptor": "And I looked, and behold a pale fungus."
+    },
+    {
+      "catcher": "The Upside-Down's Cousin",
+      "descriptor": "Even more unpleasant and covered in tendrils."
+    },
+    {
+      "catcher": "The Accursed",
+      "descriptor": "Whoever drinks this shall know no peace."
+    },
+    {
+      "catcher": "The Classification Error",
+      "descriptor": "No longer a beverage, now classified as a specimen."
+    },
+    {
+      "catcher": "The Quarantine Zone",
+      "descriptor": "Do not cross the yellow tape around this mug."
+    },
+    {
+      "catcher": "The Sunken Cost Fallacy",
+      "descriptor": "'I made it, so I should...' No. Stop."
+    },
+    {
+      "catcher": "The Defiler",
+      "descriptor": "It has desecrated the holy vessel of the mug."
+    },
+    {
+      "catcher": "Room 101",
+      "descriptor": "The worst thing in the world is in this pot."
+    },
+    {
+      "catcher": "The Necronomicon",
+      "descriptor": "Bound in fungus, written in regret. Do not open."
+    },
+    {
+      "catcher": "The Borg",
+      "descriptor": "It will assimilate your mug into its collective."
+    },
+    {
+      "catcher": "The Silent Killer",
+      "descriptor": "Its danger is only revealed when you look closely."
+    },
+    {
+      "catcher": "The Point of No Return",
+      "descriptor": "We can't save it. We can only save ourselves."
+    },
+    {
+      "catcher": "A Tolkien Monster",
+      "descriptor": "Some dark and ancient evil from the First Age."
+    },
+    {
+      "catcher": "The Weeping Angel",
+      "descriptor": "Don't blink. Don't even blink. Or it will grow."
+    },
+    {
+      "catcher": "Zombification Juice",
+      "descriptor": "One sip and you'll be craving brains."
+    },
+    {
+      "catcher": "The Kraken",
+      "descriptor": "Release it... down the drain. From a safe distance."
+    },
+    {
+      "catcher": "Total System Failure",
+      "descriptor": "The coffee machine is now a paperweight."
+    }
+  ]
+}

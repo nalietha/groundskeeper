@@ -1,0 +1,21 @@
+{
+  "name": "Tea",
+  "action_text": "Start Sipping",
+  "timer_ms": 3600000,
+  "splash_image": "themes/tea/splash.png",
+  "icon": "themes/tea/icon.png",
+  "colors": {
+    "dim_bg": "#5c4033",
+    "dim_fg": "#f5f5dc",
+    "bright_bg": "#a8d8b9",
+    "bright_fg": "#006400"
+  },
+  "mood_sayings_file": "themes/tea/tea_sayings.json",
+  "mood_tiers": [
+    { "name": "Aromatic Bliss", "threshold_minutes": 0 },
+    { "name": "Sippable Serenity", "threshold_minutes": 5 },
+    { "name": "Tepid Tranquility", "threshold_minutes": 20 },
+    { "name": "Cold Comfort", "threshold_minutes": 60 },
+    { "name": "Tannin Stain Terror", "threshold_minutes": 1440 }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "Still Warm": [
+    {
+      "catcher": "The Glaze is Gleaming!",
+      "descriptor": "The box is open and the donuts are still warm. This is not a drill."
+    },
+    {
+      "catcher": "Get It Now",
+      "descriptor": "This is the moment of peak donut perfection. Drop what you're doing."
+    },
+    {
+      "catcher": "The Smell of Victory",
+      "descriptor": "That sweet, sugary aroma is the smell of a truly great morning."
+    }
+  ],
+  "Prime Selection": [
+    {
+      "catcher": "Choose Your Fighter",
+      "descriptor": "All varieties are still available. Sprinkles, glazed, jelly-filled... the choice is yours."
+    },
+    {
+      "catcher": "The Herd is Coming",
+      "descriptor": "Word is spreading. The window for a premium choice is closing fast."
+    },
+    {
+      "catcher": "Still Delicious",
+      "descriptor": "They may have cooled, but they are still at the peak of their flavor."
+    }
+  ],
+  "Only Plain Left": [
+    {
+      "catcher": "The Good Ones Are Gone",
+      "descriptor": "All the frosted and filled donuts have been claimed. Only the plain remain."
+    },
+    {
+      "catcher": "A Difficult Choice",
+      "descriptor": "It's this or the questionable yogurt in the back of the fridge."
+    },
+    {
+      "catcher": "Begrudging Acceptance",
+      "descriptor": "A plain donut is better than no donut. Probably."
+    }
+  ],
+  "Halfsies & Crumbs": [
+    {
+      "catcher": "The Aftermath",
+      "descriptor": "People have resorted to cutting donuts in half. It's chaos."
+    },
+    {
+      "catcher": "CSI: Breakroom",
+      "descriptor": "The box is a crime scene of crumbs, stray sprinkles, and regret."
+    },
+    {
+      "catcher": "A Sad State",
+      "descriptor": "Only a sad, bisected remnant of a Boston Cream remains."
+    }
+  ],
+  "Just a Sad, Empty Box": [
+    {
+      "catcher": "A Ghost Town",
+      "descriptor": "The box is empty, serving only as a monument to what once was."
+    },
+    {
+      "catcher": "The Walk of Shame",
+      "descriptor": "Someone needs to do the right thing and throw this empty box away."
+    },
+    {
+      "catcher": "Too Late",
+      "descriptor": "You missed it. Better luck next time."
+    }
+  ]
+}

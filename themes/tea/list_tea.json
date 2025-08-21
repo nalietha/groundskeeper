@@ -1,0 +1,112 @@
+{
+  "Aromatic Bliss": [
+    {
+      "catcher": "Zen in a Mug",
+      "descriptor": "Inhale the calm. Exhale the chaos of that last email."
+    },
+    {
+      "catcher": "A Perfect Hug",
+      "descriptor": "The perfect temperature to warm your hands and your soul."
+    },
+    {
+      "catcher": "Do Not Disturb",
+      "descriptor": "This is your moment of Zen. Do not let a meeting interrupt it."
+    },
+    {
+      "catcher": "Noble Destiny",
+      "descriptor": "The tea bag has fulfilled its noble destiny. Respect."
+    },
+    {
+      "catcher": "Smells Like Success",
+      "descriptor": "Smells like productivity and a hint of bergamot."
+    }
+  ],
+  "Sippable Serenity": [
+    {
+      "catcher": "The Sweet Spot",
+      "descriptor": "The ideal temperature to solve all of today's problems."
+    },
+    {
+      "catcher": "Cozy Warmth",
+      "descriptor": "Still radiating a pleasant, cozy warmth."
+    },
+    {
+      "catcher": "Golden Hour",
+      "descriptor": "This is the golden hour for tea. Enjoy it."
+    },
+    {
+      "catcher": "Safe to Sip",
+      "descriptor": "No longer a threat to your taste buds. Sip away."
+    },
+    {
+      "catcher": "Don't Forget!",
+      "descriptor": "It’s perfect now. Don't you dare get distracted and forget about it."
+    }
+  ],
+  "Tepid Tranquility": [
+    {
+      "catcher": "The Warmth is Gone",
+      "descriptor": "It's lost the will to be warm. It's just... room temperature now."
+    },
+    {
+      "catcher": "A Fading Memory",
+      "descriptor": "It whispers tales of a time when it was hot and full of promise."
+    },
+    {
+      "catcher": "Mild Disappointment",
+      "descriptor": "It's the temperature of a mild disappointment."
+    },
+    {
+      "catcher": "The Big Question",
+      "descriptor": "To reheat or not to reheat? That is the question."
+    },
+    {
+      "catcher": "Cat Video Victim",
+      "descriptor": "You got distracted by a cat video on the internet, didn't you?"
+    }
+  ],
+  "Cold Comfort": [
+    {
+      "catcher": "Meeting Monument",
+      "descriptor": "A tribute to a meeting that ran entirely too long."
+    },
+    {
+      "catcher": "Sad Leaf Water",
+      "descriptor": "Congratulations, you've made sad, cold leaf water."
+    },
+    {
+      "catcher": "Attention Span Memorial",
+      "descriptor": "Your mug is now a monument to your short attention span."
+    },
+    {
+      "catcher": "Accidental Iced Tea",
+      "descriptor": "It's now officially 'iced tea' if you're an optimist."
+    },
+    {
+      "catcher": "Feed the Plants",
+      "descriptor": "Just pour it into the office plant. It's seen worse."
+    }
+  ],
+  "Tannin Stain Terror": [
+    {
+      "catcher": "A Permanent Record",
+      "descriptor": "This mug will now forever remember the tea it once held."
+    },
+    {
+      "catcher": "A Dark Portal",
+      "descriptor": "A dark ring has formed. It's a portal to the land of forgotten beverages."
+    },
+    {
+      "catcher": "Needs Excavation",
+      "descriptor": "You're not just washing this mug; you're excavating it."
+    },
+    {
+      "catcher": "Note from a Cleaner",
+      "descriptor": "The cleaning crew will leave you a strongly worded, passive-aggressive note."
+    },
+    {
+      "catcher": "New Ecosystem",
+      "descriptor": "It's developing its own microscopic ecosystem in there."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Coffee",
+  "action_text": "Brew Coffee",
+  "timer_ms": 240000,
+  "splash_image": "themes/coffee/splash.png",
+  "icon": "themes/coffee/icon.png",
+  "colors": {
+    "dim_bg": "#2a1d1d",
+    "dim_fg": "#d3c8c8",
+    "bright_bg": "#f5e6d3",
+    "bright_fg": "#4a2c2a"
+  },
+  "mood_sayings_file": "themes/coffee/list_moods.json",
+  "mood_tiers": [
+    { "name": "fresh", "threshold_minutes": 0 },
+    { "name": "good", "threshold_minutes": 30 },
+    { "name": "teetering", "threshold_minutes": 120 },
+    { "name": "stale", "threshold_minutes": 360 },
+    { "name": "moldy", "threshold_minutes": 2880 }
+  ]
+}

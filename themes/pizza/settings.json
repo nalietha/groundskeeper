@@ -1,0 +1,21 @@
+{
+  "name": "Pizza",
+  "action_text": "Pizza's Here!",
+  "timer_ms": 10800000,
+  "splash_image": "themes/pizza/splash.png",
+  "icon": "themes/pizza/icon.png",
+  "colors": {
+    "dim_bg": "#4d2600",
+    "dim_fg": "#f5e5c5",
+    "bright_bg": "#ff4500",
+    "bright_fg": "#2e2e2e"
+  },
+  "mood_sayings_file": "themes/pizza/pizza_sayings.json",
+  "mood_tiers": [
+    { "name": "Molten Glory", "threshold_minutes": 0 },
+    { "name": "Prime Pickings", "threshold_minutes": 15 },
+    { "name": "The Lukewarm Gamble", "threshold_minutes": 60 },
+    { "name": "Congealed Calamity", "threshold_minutes": 180 },
+    { "name": "Penicillin Farm", "threshold_minutes": 4320 }
+  ]
+}
