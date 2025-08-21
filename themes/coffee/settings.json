@@ -1,7 +1,8 @@
 {
   "name": "Coffee",
   "action_text": "Brew Coffee",
-  "start_phrase": "Last Brewed",
+  "start_phrase": "Last Brewed:",
+  "not_started_text": "Not brewed yet",
   "timer_ms": 240000,
   "splash_image": "themes/coffee/splash.png",
   "icon": "themes/coffee/icon.png",
@@ -11,7 +12,6 @@
     "bright_bg": "#f5e6d3",
     "bright_fg": "#4a2c2a"
   },
-  "mood_sayings_file": "themes/coffee/list_moods.json",
   "mood_tiers": [
     { "name": "fresh", "threshold_minutes": 0, "emoji": "✨" },
     { "name": "good", "threshold_minutes": 30, "emoji": "😊" },

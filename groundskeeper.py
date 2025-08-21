@@ -10,6 +10,8 @@ from core.joke_service import JokeService
 from core.update_service import UpdateService
 from core.game_service import GameService
 from core.tracking_service import TrackingService
+from core.gpio_service import GPIOService
+from core.control_service import ControlService
 
 from models.mood import Mood
 from views.view import View
@@ -32,6 +34,8 @@ class StandbyScreenApp:
         self.game_service = GameService(config)
         self.state_file = "state.json"
         self.tracking_service = TrackingService(self.state_file, self.theme_service)
+        self.gpio_service = GPIOService(config.GPIO_PINS)
+        self.control_service = ControlService(root)
 
         if not self.theme_service.themes:
             raise RuntimeError("Could not load any themes.")
@@ -51,15 +55,18 @@ class StandbyScreenApp:
             'show_updater': self.show_updater,
             'show_settings': self.show_settings,
             'start_snake': self.start_snake,
-            'set_active_theme': self.set_active_theme
+            'set_active_theme': self.set_active_theme,
+            'reset_all_items': self.reset_all_items
         }
-        self.view = View(root, callbacks, config, [AffirmationView, JokeView, UpdateView, SettingsView, GamesView])
+        self.view = View(root, callbacks, config, self.control_service, [AffirmationView, JokeView, UpdateView, SettingsView, GamesView])
         self.show_standby_screen()
         self.periodic_check()
+        self.gpio_service.start()
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
     def on_closing(self):
         self.tracking_service._save_tracked_items()
+        self.gpio_service.stop()
         self.root.destroy()
 
     def brighten_screen(self):
@@ -89,7 +96,7 @@ class StandbyScreenApp:
             start_time_str = tracked_item['start_time'].strftime("%I:%M %p").lstrip('0')
         else:
             mood = Mood("Welcome!", "Start an item from the menu.", "👋")
-            start_time_str = "Not started"
+            start_time_str = theme.not_started_text # Use the new theme-specific text
             
         standby_screen.theme_label.config(text=f"Viewing: {theme.name}")
         standby_screen.last_start_label.config(text=f"{theme.start_phrase} {start_time_str}")
@@ -98,7 +105,6 @@ class StandbyScreenApp:
         standby_screen.mood_desc_label.config(text=mood.descriptor)
         standby_screen.action_button.config(text=theme.action_text, command=lambda: self.start_new_item(theme.name))
 
-
     def start_new_item(self, theme_name):
         self.tracking_service.start_tracking_item(theme_name)
         self.active_theme_name = theme_name
@@ -106,6 +112,11 @@ class StandbyScreenApp:
 
     def set_active_theme(self, theme_name):
         self.active_theme_name = theme_name
+        self.show_standby_screen()
+
+    def reset_all_items(self):
+        self.tracking_service.reset_all_items()
+        self.active_theme_name = self.config.DEFAULT_THEME
         self.show_standby_screen()
 
     def show_standby_screen(self):
@@ -121,16 +132,10 @@ class StandbyScreenApp:
 
     def show_affirmation(self):
         self.brighten_screen()
-        affirmation_text = self.affirmation_service.get_daily_affirmation()
-        affirmation_screen = self.view.screens['AffirmationView']
-        affirmation_screen.affirmation_label.config(text=affirmation_text)
         self.view.show_screen('AffirmationView')
 
     def show_joke(self):
         self.brighten_screen()
-        joke_text = self.joke_service.get_joke()
-        joke_screen = self.view.screens['JokeView']
-        joke_screen.joke_label.config(text=joke_text)
         self.view.show_screen('JokeView')
         
     def show_updater(self):
@@ -142,7 +147,6 @@ class StandbyScreenApp:
         self.view.show_screen('SettingsView')
 
     def check_for_updates(self):
-        # ... (rest of the function is unchanged)
         pass
 
     def show_games(self):
@@ -154,6 +158,7 @@ class StandbyScreenApp:
         print("Showing leaderboard...")
 
     def start_snake(self):
+        self.control_service.deactivate_all_controls()
         self.root.iconify()
         active_theme = self.theme_service.get_theme(self.active_theme_name)
         self.game_service.start_snake(active_theme)

@@ -1,7 +1,8 @@
 {
   "name": "Tea",
   "action_text": "Start Sipping",
-  "start_phrase":"Tea Bagged",
+  "start_phrase": "Steeped At:",
+  "not_started_text": "Not steeped yet",
   "timer_ms": 3600000,
   "splash_image": "themes/tea/splash.png",
   "icon": "themes/tea/icon.png",
@@ -11,7 +12,6 @@
     "bright_bg": "#a8d8b9",
     "bright_fg": "#006400"
   },
-  "mood_sayings_file": "themes/tea/tea_sayings.json",
   "mood_tiers": [
     { "name": "Aromatic Bliss", "threshold_minutes": 0,"emoji": "✨" },
     { "name": "Sippable Serenity", "threshold_minutes": 5,"emoji": "😊" },

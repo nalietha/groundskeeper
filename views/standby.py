@@ -3,7 +3,6 @@ from views.screen import Screen
 
 class StandbyView(Screen):
     def setup_ui(self):
-        # All widgets are now placed in self.content_frame for centering
         self.theme_label = tk.Label(self.content_frame, text="", font=self.fonts["subtitle"])
         self.theme_label.pack(pady=(5, 0))
         self.last_start_label = tk.Label(self.content_frame, text="", font=self.fonts["small"])
@@ -23,7 +22,7 @@ class StandbyView(Screen):
         
         button_frame = tk.Frame(self)
         button_frame.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
-        self.grid_rowconfigure(1, weight=0) # Ensure button frame is at the bottom
+        self.grid_rowconfigure(1, weight=0)
         self.grid_columnconfigure(0, weight=1)
 
         button_frame.columnconfigure((0, 1), weight=1)
@@ -33,3 +32,6 @@ class StandbyView(Screen):
         
         self.action_button = tk.Button(button_frame, text="Action", font=self.fonts["button"])
         self.action_button.grid(row=0, column=1, sticky="ew", padx=5)
+
+        # Register navigable widgets
+        self.navigable_widgets = [menu_button, self.action_button]

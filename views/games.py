@@ -3,7 +3,6 @@ from views.screen import Screen
 
 class GamesView(Screen):
     def setup_ui(self):
-        # All widgets are now placed in self.content_frame for centering
         title_label = tk.Label(self.content_frame, text="Games", font=self.fonts["title"])
         title_label.pack(pady=(20, 10))
 
@@ -33,3 +32,6 @@ class GamesView(Screen):
             command=self.callbacks['show_main_menu']
         )
         back_button.pack(pady=(10, 20))
+
+        # Register navigable widgets
+        self.navigable_widgets = [snake_button, leaderboard_button, back_button]

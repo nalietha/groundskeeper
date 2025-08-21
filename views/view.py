@@ -9,8 +9,11 @@ from views.settings import SettingsView
 from views.games import GamesView
 
 class View:
-    def __init__(self, root, callbacks, config, extra_screens=None):
-        self.root, self.callbacks, self.config = root, callbacks, config
+    def __init__(self, root, callbacks, config, control_service, extra_screens=None):
+        self.root = root
+        self.callbacks = callbacks
+        self.config = config
+        self.control_service = control_service
         self.root.title("Groundskeeper")
         self.root.geometry(f"{config.SCREEN_WIDTH}x{config.SCREEN_HEIGHT}")
         scale_factor = config.SCREEN_WIDTH / config.BASE_WIDTH
@@ -31,15 +34,20 @@ class View:
         if extra_screens: all_screens.extend(extra_screens)
         for F in all_screens:
             screen_name = F.__name__
-            frame = F(self.container, callbacks, self.fonts, config) # Pass config to screens
+            frame = F(self.container, callbacks, self.fonts, config)
             self.screens[screen_name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-    def show_screen(self, screen_name): self.screens[screen_name].tkraise()
+    def show_screen(self, screen_name):
+        screen = self.screens[screen_name]
+        screen.tkraise()
+        self.control_service.activate_ui_controls(screen)
+
     def set_theme_colors(self, bg_color, fg_color):
         self.root.configure(bg=bg_color)
         for screen in self.screens.values():
             self._apply_theme_recursive(screen, bg_color, fg_color)
+
     def _apply_theme_recursive(self, widget, bg, fg):
         try:
             widget.configure(bg=bg)

@@ -3,13 +3,14 @@ class Config:
     """Loads global configuration from appsettings.json."""
     def __init__(self, filename="appsettings.json"):
         # Default values
-        self.SCREEN_WIDTH = 320
-        self.SCREEN_HEIGHT = 240
+        self.SCREEN_WIDTH = 240
+        self.SCREEN_HEIGHT = 320
         self.BASE_WIDTH = 320
-        self.FONT_SIZES = {"title": 26, "subtitle": 18, "body": 14, "small": 12, "button": 16}
+        self.FONT_SIZES = {"title": 22, "subtitle": 18, "body": 15, "small": 12, "button": 16}
         self.INACTIVITY_TIMEOUT_MS = 5000
         self.DEFAULT_THEME = "Coffee"
         self.USE_24H_CLOCK = False
+        self.GPIO_PINS = {}
 
         try:
             with open(filename, 'r', encoding='utf-8') as f:
@@ -27,6 +28,7 @@ class Config:
             self.INACTIVITY_TIMEOUT_MS = timing.get("inactivity_timeout_ms", self.INACTIVITY_TIMEOUT_MS)
             self.USE_24H_CLOCK = timing.get("use_24h_clock", self.USE_24H_CLOCK)
             self.DEFAULT_THEME = app.get("default_theme", self.DEFAULT_THEME)
+            self.GPIO_PINS = config_data.get("gpio_pins", self.GPIO_PINS)
             print(f"Successfully loaded global settings from {filename}")
         except (FileNotFoundError, json.JSONDecodeError) as e:
             print(f"Warning: Could not load '{filename}' ({e}). Using default settings.")

@@ -3,13 +3,14 @@ from views.screen import Screen
 
 class MainMenuView(Screen):
     def setup_ui(self):
-        # All widgets are now placed in self.content_frame for centering
         menu_label = tk.Label(self.content_frame, text="Main Menu", font=self.fonts["title"])
         menu_label.pack(pady=(10, 5))
         
         theme_frame = tk.LabelFrame(self.content_frame, text="Select Item to View", font=self.fonts["small"], padx=10, pady=5)
         theme_frame.pack(pady=5, padx=10, fill="x")
+        
         all_themes = self.callbacks['get_all_themes']()
+        theme_buttons = []
         for theme in all_themes:
             btn = tk.Button(
                 theme_frame, 
@@ -18,12 +19,14 @@ class MainMenuView(Screen):
                 command=lambda t=theme.name: self.callbacks['set_active_theme'](t)
             )
             btn.pack(side="top", expand=True, fill="x", pady=2)
+            theme_buttons.append(btn)
             
         menu_button_frame = tk.Frame(self.content_frame)
         menu_button_frame.pack(expand=True, fill="both", padx=10, pady=5)
         menu_button_frame.columnconfigure((0, 1), weight=1)
         menu_button_frame.rowconfigure((0, 1), weight=1)
         
+        menu_buttons = []
         buttons = {
             "Games": self.callbacks['show_games'], 
             "Affirmation": self.callbacks['show_affirmation'], 
@@ -35,8 +38,12 @@ class MainMenuView(Screen):
         for text, command in buttons.items():
             btn = tk.Button(menu_button_frame, text=text, font=self.fonts["body"], command=command)
             btn.grid(row=row, column=col, sticky="nsew", padx=5, pady=5)
+            menu_buttons.append(btn)
             col = (col + 1) % 2
             if col == 0: row += 1
             
         back_button = tk.Button(self.content_frame, text="Back to Standby", font=self.fonts["small"], command=self.callbacks['show_standby'])
         back_button.pack(pady=(0, 10))
+
+        # Register navigable widgets
+        self.navigable_widgets = theme_buttons + menu_buttons + [back_button]

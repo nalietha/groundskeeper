@@ -1,7 +1,8 @@
 {
   "name": "Donuts",
   "action_text": "Open the Box!",
-  "start_phrase": "Purchased",
+  "start_phrase": "Box Opened:",
+  "not_started_text": "Box not opened",
   "timer_ms": 14400000,
   "splash_image": "themes/donuts/splash.png",
   "icon": "themes/donuts/icon.png",
@@ -11,7 +12,6 @@
     "bright_bg": "#ffb6c1",
     "bright_fg": "#3683d7"
   },
-  "mood_sayings_file": "themes/donuts/donuts_sayings.json",
   "mood_tiers": [
     { "name": "Still Warm", "threshold_minutes": 0,"emoji": "✨" },
     { "name": "Prime Selection", "threshold_minutes": 10,"emoji": "😊" },

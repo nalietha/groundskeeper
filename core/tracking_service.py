@@ -38,7 +38,6 @@ class TrackingService:
 
     def start_tracking_item(self, theme_name):
         """Starts tracking a new item, replacing an existing one of the same theme."""
-        # Remove any existing item of the same theme
         self.tracked_items = [item for item in self.tracked_items if item['theme_name'] != theme_name]
 
         theme = self.theme_service.get_theme(theme_name)
@@ -58,3 +57,9 @@ class TrackingService:
     def get_tracked_items(self):
         """Returns the list of all currently tracked items."""
         return self.tracked_items
+
+    def reset_all_items(self):
+        """Clears all tracked items and saves the state."""
+        self.tracked_items = []
+        self._save_tracked_items()
+        print("All tracked items have been reset.")

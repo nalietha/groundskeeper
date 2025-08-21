@@ -1,7 +1,8 @@
 {
   "name": "Pizza",
   "action_text": "Pizza's Here!",
-  "start_phrase": "Ordered",
+  "start_phrase": "Arrival Time:",
+  "not_started_text": "Not here yet",
   "timer_ms": 10800000,
   "splash_image": "themes/pizza/splash.png",
   "icon": "themes/pizza/icon.png",
@@ -11,7 +12,6 @@
     "bright_bg": "#ff4500",
     "bright_fg": "#2e2e2e"
   },
-  "mood_sayings_file": "themes/pizza/pizza_sayings.json",
   "mood_tiers": [
     { "name": "Molten Glory", "threshold_minutes": 0, "emoji": "✨"},
     { "name": "Prime Pickings", "threshold_minutes": 15, "emoji": "😊"},
