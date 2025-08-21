@@ -12,7 +12,7 @@ class Config:
         self.USE_24H_CLOCK = False
 
         try:
-            with open(filename, 'r') as f:
+            with open(filename, 'r', encoding='utf-8') as f:
                 config_data = json.load(f)
             
             screen = config_data.get("screen", {})

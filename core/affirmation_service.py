@@ -8,7 +8,7 @@ class AffirmationService:
     def __init__(self, filename="resources/affirmation.json"):
         self.affirmations = []
         try:
-            with open(filename, 'r') as f:
+            with open(filename, 'r', encoding='utf-8') as f:
                 self.affirmations = json.load(f)
             print(f"Successfully loaded {len(self.affirmations)} affirmations.")
         except (FileNotFoundError, json.JSONDecodeError) as e:

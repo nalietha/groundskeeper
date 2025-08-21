@@ -5,10 +5,12 @@ import random
 from core.theme_service import ThemeService
 from core.mood_service import MoodService
 from core.affirmation_service import AffirmationService
+from core.joke_service import JokeService
 
 from models.mood import Mood
 from views.view import View
 from views.affirmation import AffirmationView
+from views.joke import JokeView
 from configs.config import Config
 
 class StandbyScreenApp:
@@ -17,6 +19,7 @@ class StandbyScreenApp:
         self.inactivity_job_id = None
         self.theme_service = ThemeService()
         self.affirmation_service = AffirmationService()
+        self.joke_service = JokeService()
         if not self.theme_service.themes:
             raise RuntimeError("Could not load any themes.")
         self.action_start_time = None
@@ -24,7 +27,7 @@ class StandbyScreenApp:
         self.current_mood_tier_name = None
         self.current_theme = self.theme_service.get_theme(self.config.DEFAULT_THEME) or self.theme_service.get_all_themes()[0]
         callbacks = {'show_main_menu': self.show_main_menu, 'start_action': self.start_action, 'show_standby': self.show_standby_screen, 'show_games': self.show_games, 'show_leaderboard': self.show_leaderboard, 'show_affirmation': self.show_affirmation, 'show_joke': self.show_joke, 'get_all_themes': self.theme_service.get_all_themes, 'change_theme': self.change_theme}
-        self.view = View(root, callbacks, config, [AffirmationView])
+        self.view = View(root, callbacks, config, [AffirmationView, JokeView])
         self.show_standby_screen()
         self.periodic_check()
 
@@ -94,9 +97,16 @@ class StandbyScreenApp:
         affirmation_screen.affirmation_label.config(text=affirmation_text)
         self.view.show_screen('AffirmationView')
 
+    def show_joke(self):
+        self.brighten_screen()
+        if self.inactivity_job_id: self.root.after_cancel(self.inactivity_job_id)
+        joke_text = self.joke_service.get_joke(self.current_theme)
+        joke_screen = self.view.screens['JokeView']
+        joke_screen.joke_label.config(text=joke_text)
+        self.view.show_screen('JokeView')
+
     def show_games(self): self.brighten_screen()
     def show_leaderboard(self): self.brighten_screen()
-    def show_joke(self): self.brighten_screen()
 
 if __name__ == "__main__":
     app_root = tk.Tk()
