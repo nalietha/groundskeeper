@@ -1,6 +1,7 @@
 {
   "name": "Tea",
   "action_text": "Start Sipping",
+  "start_phrase":"Tea Bagged",
   "timer_ms": 3600000,
   "splash_image": "themes/tea/splash.png",
   "icon": "themes/tea/icon.png",

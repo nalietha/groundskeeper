@@ -3,12 +3,15 @@ from datetime import datetime
 import random
 import json
 import os
+import json
+import os
 
 from core.theme_service import ThemeService
 from core.mood_service import MoodService
 from core.affirmation_service import AffirmationService
 from core.joke_service import JokeService
 from core.update_service import Updater
+from core.joke_service import JokeService
 
 from models.mood import Mood
 from views.view import View
@@ -16,6 +19,7 @@ from views.affirmation import AffirmationView
 from views.joke import JokeView
 from views.update import UpdateView
 from views.settings import SettingsView
+from views.joke import JokeView
 from configs.config import Config
 
 class StandbyScreenApp:
@@ -26,6 +30,8 @@ class StandbyScreenApp:
         self.affirmation_service = AffirmationService()
         self.joke_service = JokeService()
         self.updater = Updater(update_url="https://example.com/updates.json") # Replace with your update URL
+        self.state_file = "state.json"
+        self.joke_service = JokeService()
         self.state_file = "state.json"
         if not self.theme_service.themes:
             raise RuntimeError("Could not load any themes.")
@@ -180,6 +186,14 @@ class StandbyScreenApp:
                     self.change_theme(self.current_theme.name) # Reload current theme
         else:
             update_screen.status_label.config(text="You are up to date!")
+
+    def show_joke(self):
+        self.brighten_screen()
+        if self.inactivity_job_id: self.root.after_cancel(self.inactivity_job_id)
+        joke_text = self.joke_service.get_joke(self.current_theme)
+        joke_screen = self.view.screens['JokeView']
+        joke_screen.joke_label.config(text=joke_text)
+        self.view.show_screen('JokeView')
 
     def show_games(self): self.brighten_screen()
     def show_leaderboard(self): self.brighten_screen()

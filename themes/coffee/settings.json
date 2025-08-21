@@ -1,6 +1,7 @@
 {
   "name": "Coffee",
   "action_text": "Brew Coffee",
+  "start_phrase": "Last Brewed",
   "timer_ms": 240000,
   "splash_image": "themes/coffee/splash.png",
   "icon": "themes/coffee/icon.png",

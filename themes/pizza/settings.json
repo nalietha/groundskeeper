@@ -1,6 +1,7 @@
 {
   "name": "Pizza",
   "action_text": "Pizza's Here!",
+  "start_phrase": "Ordered",
   "timer_ms": 10800000,
   "splash_image": "themes/pizza/splash.png",
   "icon": "themes/pizza/icon.png",

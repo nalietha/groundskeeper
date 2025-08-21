@@ -1,5 +1,3 @@
-
-
 class Theme:
     def __init__(self, data):
         self.name = data.get("name", "Unknown")
@@ -14,3 +12,4 @@ class Theme:
         self.mood_sayings_file = data.get("mood_sayings_file", "")
         self.mood_tiers = data.get("mood_tiers", [])
         self.sayings = {}
+        self.jokes = []
