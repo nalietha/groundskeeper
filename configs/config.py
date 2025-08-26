@@ -11,8 +11,8 @@ class Config:
         self.DEFAULT_THEME = "Coffee"
         self.USE_24H_CLOCK = False
         self.GPIO_PINS = {}
-        self.LATENCY_MS = 500 # Default latency
-        self.LOADING_IMAGE_INTERVAL_MS = 250 # Time each loading image is shown
+        self.LATENCY_MS = 1500
+        self.LOADING_IMAGE_INTERVAL_MS = 500
 
         try:
             with open(filename, 'r', encoding='utf-8') as f:
@@ -23,7 +23,6 @@ class Config:
             timing = config_data.get("timing", {})
             app = config_data.get("app", {})
             latency = config_data.get("latency", {})
-
 
             self.SCREEN_WIDTH = screen.get("width", self.SCREEN_WIDTH)
             self.SCREEN_HEIGHT = screen.get("height", self.SCREEN_HEIGHT)

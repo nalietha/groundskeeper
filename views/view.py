@@ -1,4 +1,6 @@
+# groundskeeper/views/view.py
 import tkinter as tk
+from tkinter import font as tkfont
 
 from views.standby import StandbyView
 from views.mainmenu import MainMenuView
@@ -7,6 +9,7 @@ from views.joke import JokeView
 from views.update import UpdateView
 from views.settings import SettingsView
 from views.games import GamesView
+# Remove the old screen.py import and bases.py if you created it
 
 class View:
     def __init__(self, root, callbacks, config, control_service, extra_screens=None):
@@ -17,8 +20,12 @@ class View:
         self.root.title("Groundskeeper")
         self.root.geometry(f"{config.SCREEN_WIDTH}x{config.SCREEN_HEIGHT}")
         scale_factor = config.SCREEN_WIDTH / config.BASE_WIDTH
+
+        available_fonts = tkfont.families()
+        font_family = "Press Start 2P" if "Press Start 2P" in available_fonts else "Courier"
+
         self.fonts = {
-            name: ("Helvetica", int(size * scale_factor), style)
+            name: (font_family, int(size * scale_factor), style)
             for name, size, style in [
                 ("title", config.FONT_SIZES["title"], "bold"),
                 ("subtitle", config.FONT_SIZES["subtitle"], "bold"),
@@ -27,13 +34,21 @@ class View:
                 ("button", config.FONT_SIZES["button"], ""),
             ]
         }
+        
+        # --- Main Container Setup ---
         self.container = tk.Frame(root)
-        self.container.pack(expand=True, fill="both")
+        self.container.pack(side="top", fill="both", expand=True)
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
+        # ---------------------------
+
         self.screens = {}
-        all_screens = [StandbyView, MainMenuView]
+        all_screens = [StandbyView, MainMenuView, AffirmationView, JokeView, UpdateView, SettingsView, GamesView]
         if extra_screens: all_screens.extend(extra_screens)
+
         for F in all_screens:
             screen_name = F.__name__
+            # Pass the container as the parent to each screen
             frame = F(self.container, callbacks, self.fonts, config)
             self.screens[screen_name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -41,7 +56,7 @@ class View:
     def show_screen(self, screen_name):
         screen = self.screens[screen_name]
         screen.tkraise()
-        self.control_service.activate_ui_controls(screen)
+        # self.control_service.activate_ui_controls(screen) # We'll re-enable this later if needed
 
     def set_theme_colors(self, bg_color, fg_color):
         self.root.configure(bg=bg_color)
@@ -50,7 +65,10 @@ class View:
 
     def _apply_theme_recursive(self, widget, bg, fg):
         try:
-            widget.configure(bg=bg)
-            if not isinstance(widget, (tk.Frame, tk.LabelFrame)): widget.configure(fg=fg)
-        except tk.TclError: pass
-        for child in widget.winfo_children(): self._apply_theme_recursive(child, bg, fg)
+            widget.configure(bg=bg, highlightbackground=bg)
+            if isinstance(widget, (tk.Label, tk.Button, tk.LabelFrame)):
+                widget.configure(fg=fg)
+        except tk.TclError:
+            pass
+        for child in widget.winfo_children():
+            self._apply_theme_recursive(child, bg, fg)

@@ -1,3 +1,4 @@
+# groundskeeper/views/screen.py
 import tkinter as tk
 
 class Screen(tk.Frame):
@@ -9,12 +10,19 @@ class Screen(tk.Frame):
         self.navigable_widgets = []
         self.current_focus_index = 0
 
-        self.grid_rowconfigure(0, weight=1)
+        # Configure the grid layout for the screen itself
         self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)    # Let the content row (0) expand
+        self.grid_rowconfigure(1, weight=0)    # Keep the button row (1) a fixed size
 
+        # Create the main content frame, it will fill the available space
         self.content_frame = tk.Frame(self)
-        self.content_frame.grid()
-        
+        self.content_frame.grid(row=0, column=0, sticky="nsew")
+
+        # Create the bottom button frame, it will sit at the bottom
+        self.button_frame = tk.Frame(self)
+        self.button_frame.grid(row=1, column=0, sticky="ew")
+
         self.setup_ui()
         self.setup_navigation()
 
@@ -38,16 +46,11 @@ class Screen(tk.Frame):
         if not self.navigable_widgets:
             return
         
-        # Remove focus highlight from the old widget
         self.navigable_widgets[self.current_focus_index].config(relief=tk.RAISED)
-
         self.current_focus_index = (self.current_focus_index + direction) % len(self.navigable_widgets)
-        
-        # Set focus and highlight on the new widget
         new_widget = self.navigable_widgets[self.current_focus_index]
         new_widget.focus_set()
         new_widget.config(relief=tk.SUNKEN)
-
 
     def invoke_widget(self):
         if self.navigable_widgets:

@@ -1,3 +1,4 @@
+# groundskeeper.py
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
@@ -23,12 +24,14 @@ from views.update import UpdateView
 from views.settings import SettingsView
 from views.games import GamesView
 from views.loading import LoadingView
+from views.extras import ExtrasView
 from configs.config import Config
 
 class StandbyScreenApp:
     def __init__(self, root, config):
         self.root, self.config = root, config
         self.root.resizable(False, False)
+        self.root.pack_propagate(False)
         self.inactivity_job_id = None
         self.theme_service = ThemeService()
         self.affirmation_service = AffirmationService()
@@ -51,12 +54,15 @@ class StandbyScreenApp:
             'show_main_menu': self.show_main_menu, 
             'confirm_and_start_item': self.confirm_and_start_item, 
             'show_standby': self.show_standby_screen, 
+            'show_extras': self.show_extras,
             'show_games': self.show_games, 
             'show_leaderboard': self.show_leaderboard, 
             'show_affirmation': self.show_affirmation, 
             'show_joke': self.show_joke, 
             'get_all_themes': self.theme_service.get_all_themes, 
             'check_for_updates': self.check_for_updates,
+            'apply_updates': self.apply_updates,
+            'get_current_version': lambda: self.updater.current_versions.get('system', '?.?.?'),
             'show_updater': self.show_updater,
             'show_settings': self.show_settings,
             'start_snake': self.start_snake,
@@ -65,7 +71,8 @@ class StandbyScreenApp:
             'toggle_turbo_mode': self.toggle_turbo_mode,
             'get_loading_service': lambda: self.loading_service
         }
-        self.view = View(root, callbacks, config, self.control_service, [AffirmationView, JokeView, UpdateView, SettingsView, GamesView, LoadingView])
+
+        self.view = View(root, callbacks, config, self.control_service, [AffirmationView, JokeView, UpdateView, SettingsView, GamesView, LoadingView, ExtrasView])
         self.show_standby_screen()
         self.periodic_check()
         self.gpio_service.start()
@@ -116,8 +123,9 @@ class StandbyScreenApp:
         theme = self.theme_service.get_theme(self.active_theme_name)
 
         if tracked_item:
-            mood, _ = MoodService.get_mood_for_theme(theme, tracked_item['start_time'])
-            start_time_str = tracked_item['start_time'].strftime("%I:%M %p").lstrip('0')
+            start_time = datetime.fromisoformat(tracked_item['start_time']) if isinstance(tracked_item['start_time'], str) else tracked_item['start_time']
+            mood, _ = MoodService.get_mood_for_theme(theme, start_time)
+            start_time_str = start_time.strftime("%I:%M %p").lstrip('0')
         else:
             mood = Mood("Welcome!", "Start an item from the menu.", "👋")
             start_time_str = theme.not_started_text
@@ -167,21 +175,28 @@ class StandbyScreenApp:
 
     def show_affirmation(self):
         def _action():
+            affirmation = self.affirmation_service.get_daily_affirmation()
+            affirmation_screen = self.view.screens['AffirmationView']
+            affirmation_screen.affirmation_label.config(text=affirmation)
             self.brighten_screen()
             self.view.show_screen('AffirmationView')
         self.show_loading_and_run(_action)
 
     def show_joke(self):
         def _action():
+            active_theme = self.theme_service.get_theme(self.active_theme_name)
+            joke = self.joke_service.get_joke(theme=active_theme)
+            joke_screen = self.view.screens['JokeView']
+            joke_screen.joke_label.config(text=joke)
             self.brighten_screen()
             self.view.show_screen('JokeView')
         self.show_loading_and_run(_action)
-        
-    def show_updater(self):
+    
+    def show_extras(self):
         def _action():
             self.brighten_screen()
-            self.view.show_screen('UpdateView')
-        self.show_loading_and_run(_action)
+            self.view.show_screen('ExtrasView')
+        self.show_loading_and_run(_action) 
         
     def show_settings(self):
         def _action():
@@ -189,8 +204,48 @@ class StandbyScreenApp:
             self.view.show_screen('SettingsView')
         self.show_loading_and_run(_action)
 
+    def show_updater(self):
+        def _action():
+            self.brighten_screen()
+            update_screen = self.view.screens['UpdateView']
+            current_version = self.updater.current_versions.get('system', '?.?.?')
+            update_screen.current_version_label.config(text=f"v{current_version}")
+            
+            default_fg = update_screen.current_version_label.cget("foreground")
+            update_screen.latest_version_label.config(text="Checking...", fg=default_fg)
+            
+            update_screen.status_label.config(text="Press the button to check for updates.")
+            update_screen.update_button.config(text="Check for Updates", command=self.check_for_updates)
+            self.view.show_screen('UpdateView')
+        self.show_loading_and_run(_action)
+
     def check_for_updates(self):
-        pass
+        update_screen = self.view.screens['UpdateView']
+        update_screen.status_label.config(text="Checking GitHub for new releases...")
+        self.root.update_idletasks() # Force UI to update
+
+        updates = self.updater.check_for_updates()
+        update_screen.update_status(updates)
+        
+    def apply_updates(self):
+        update_screen = self.view.screens['UpdateView']
+        if not update_screen.updates_available:
+            update_screen.status_label.config(text="No updates to apply.")
+            return
+
+        system_update_version = update_screen.updates_available.get("system")
+        if system_update_version:
+            update_screen.status_label.config(text=f"Applying system update to v{system_update_version}...")
+            self.root.update_idletasks()
+            
+            # In a real app, this is where you'd download and apply the update.
+            # For now, we'll simulate it by just updating the version file.
+            result_message = self.updater.apply_update("system", system_update_version)
+            
+            update_screen.status_label.config(text=result_message)
+            # Update the current version label and disable the button
+            update_screen.current_version_label.config(text=f"v{system_update_version}")
+            update_screen.update_button.config(text="Update Applied", state="disabled")
 
     def show_games(self):
         def _action():
