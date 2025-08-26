@@ -1,7 +1,7 @@
 # groundskeeper.py
 import tkinter as tk
 from tkinter import messagebox
-from datetime import datetime
+from datetime import datetime, date, timedelta
 import json
 import os
 
@@ -123,9 +123,24 @@ class StandbyScreenApp:
         theme = self.theme_service.get_theme(self.active_theme_name)
 
         if tracked_item:
-            start_time = datetime.fromisoformat(tracked_item['start_time']) if isinstance(tracked_item['start_time'], str) else tracked_item['start_time']
+            start_time = tracked_item['start_time']
             mood, _ = MoodService.get_mood_for_theme(theme, start_time)
-            start_time_str = start_time.strftime("%I:%M %p").lstrip('0')
+            
+            # --- New Date Formatting Logic ---
+            today = date.today()
+            yesterday = today - timedelta(days=1)
+
+            if start_time.date() == today:
+                time_format = start_time.strftime("%I:%M %p").lstrip('0')
+                start_time_str = f"Today, {time_format}"
+            elif start_time.date() == yesterday:
+                time_format = start_time.strftime("%I:%M %p").lstrip('0')
+                start_time_str = f"Yesterday, {time_format}"
+            else:
+                # Fallback for older dates
+                start_time_str = start_time.strftime("%b %d, %I:%M %p")
+            # --------------------------------
+
         else:
             mood = Mood("Welcome!", "Start an item from the menu.", "👋")
             start_time_str = theme.not_started_text
