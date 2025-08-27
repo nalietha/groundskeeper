@@ -1,1 +1,0 @@
-Place your loading screen images (e.g., loading01.jpg) in this folder.
