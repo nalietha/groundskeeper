@@ -1,10 +1,12 @@
 # groundskeeper.py
+#region System Imports
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime, date, timedelta
 import json
 import os
-
+#endregion
+#region Core Imports
 from core.theme_service import ThemeService
 from core.mood_service import MoodService
 from core.affirmation_service import AffirmationService
@@ -15,8 +17,8 @@ from core.tracking_service import TrackingService
 from core.gpio_service import GPIOService
 from core.control_service import ControlService
 from core.loading_service import LoadingService
-
-from models.mood import Mood
+#endregion
+#region Views Imports
 from views.view import View
 from views.affirmation import AffirmationView
 from views.joke import JokeView
@@ -25,6 +27,11 @@ from views.settings import SettingsView
 from views.games import GamesView
 from views.loading import LoadingView
 from views.extras import ExtrasView
+from views.leaderboard import LeaderboardView
+from views.name_entry import NameEntryView
+#endregion
+
+from models.mood import Mood
 from configs.config import Config
 
 class StandbyScreenApp:
@@ -65,14 +72,20 @@ class StandbyScreenApp:
             'get_current_version': lambda: self.updater.current_versions.get('system', '?.?.?'),
             'show_updater': self.show_updater,
             'show_settings': self.show_settings,
-            'start_snake': self.start_snake,
+            'get_available_games': self.game_service.get_available_games, 
+            'start_game': self.start_game,
             'set_active_theme': self.set_active_theme,
+            'show_name_entry': self.show_name_entry,
+            'save_score': self.game_service.save_score,
             'reset_all_items': self.reset_all_items,
             'toggle_turbo_mode': self.toggle_turbo_mode,
             'get_loading_service': lambda: self.loading_service
         }
 
-        self.view = View(root, callbacks, config, self.control_service, [AffirmationView, JokeView, UpdateView, SettingsView, GamesView, LoadingView, ExtrasView])
+        self.view = View(root, callbacks, config, self.control_service, [
+            AffirmationView, JokeView, UpdateView, SettingsView, GamesView, 
+            LoadingView, ExtrasView, LeaderboardView, NameEntryView
+        ])
         self.show_standby_screen()
         self.periodic_check()
         self.gpio_service.start()
@@ -83,11 +96,22 @@ class StandbyScreenApp:
         self.gpio_service.stop()
         self.root.destroy()
         
+    
     def show_loading_and_run(self, target_function):
         """Displays the loading screen, then runs the target function after a delay."""
         delay = 0 if self.turbo_mode else self.config.LATENCY_MS
         
         if delay > 0:
+            # --- Use theme-specific loading images ---
+            active_theme = self.theme_service.get_theme(self.active_theme_name)
+            loading_screen = self.view.screens.get('LoadingView')
+            if loading_screen and active_theme.loading_images:
+                image_sequence = self.loading_service.get_image_sequence(
+                    active_theme.loading_images, self.config.SCREEN_WIDTH, self.config.SCREEN_HEIGHT
+                )
+                loading_screen.set_image_sequence(image_sequence)
+            # ------------------------------------------
+            
             self.view.show_screen('LoadingView')
             self.root.after(delay, target_function)
         else:
@@ -219,6 +243,7 @@ class StandbyScreenApp:
             self.view.show_screen('SettingsView')
         self.show_loading_and_run(_action)
 
+# region Updater
     def show_updater(self):
         def _action():
             self.brighten_screen()
@@ -233,7 +258,7 @@ class StandbyScreenApp:
             update_screen.update_button.config(text="Check for Updates", command=self.check_for_updates)
             self.view.show_screen('UpdateView')
         self.show_loading_and_run(_action)
-
+    
     def check_for_updates(self):
         update_screen = self.view.screens['UpdateView']
         update_screen.status_label.config(text="Checking GitHub for new releases...")
@@ -261,6 +286,44 @@ class StandbyScreenApp:
             # Update the current version label and disable the button
             update_screen.current_version_label.config(text=f"v{system_update_version}")
             update_screen.update_button.config(text="Update Applied", state="disabled")
+# endregion
+
+
+# region Games
+    def show_name_entry(self, game_name, score):
+        """Prepares and shows the screen for the player to enter their name."""
+        def _action():
+            name_entry_screen = self.view.screens['NameEntryView']
+            name_entry_screen.set_score(game_name, score)
+            self.brighten_screen()
+            self.view.show_screen('NameEntryView')
+        self.show_loading_and_run(_action)
+
+
+    def start_game(self, game_name):
+        """A generic method to start any discovered game."""
+        self.control_service.deactivate_all_controls()
+        self.root.iconify() # Hide the main Tkinter window
+        active_theme = self.theme_service.get_theme(self.active_theme_name)
+        
+        score = self.game_service.start_game(game_name, active_theme)
+        print(f"Game '{game_name}' ended with score: {score}")
+        self.root.deiconify()
+
+        # --- FIX: Bypass the loading screen for post-game UI ---
+        if self.game_service.is_high_score(game_name, score):
+            # Directly call the core logic of show_name_entry
+            name_entry_screen = self.view.screens['NameEntryView']
+            name_entry_screen.set_score(game_name, score)
+            self.brighten_screen()
+            self.view.show_screen('NameEntryView')
+        else:
+            # Directly call the core logic of show_leaderboard
+            leaderboard_screen = self.view.screens['LeaderboardView']
+            scores = self.game_service.get_scores()
+            leaderboard_screen.display_scores(scores)
+            self.brighten_screen()
+            self.view.show_screen('LeaderboardView')
 
     def show_games(self):
         def _action():
@@ -269,17 +332,32 @@ class StandbyScreenApp:
         self.show_loading_and_run(_action)
         
     def show_leaderboard(self):
-        def _action():
-            self.brighten_screen()
-            print("Showing leaderboard...")
-        self.show_loading_and_run(_action)
+        """Shows the leaderboard for the currently selected game in the carousel."""
+        games_screen = self.view.screens.get('GamesView')
+        if not games_screen or not hasattr(games_screen, 'carousel'):
+            print("Error: Could not find the games screen or carousel.")
+            return
 
-    def start_snake(self):
-        self.control_service.deactivate_all_controls()
-        self.root.iconify()
-        active_theme = self.theme_service.get_theme(self.active_theme_name)
-        self.game_service.start_snake(active_theme)
-        self.show_main_menu()
+        # Get the key (e.g., 'snake') of the game in the center of the carousel
+        game_name = games_screen.carousel.get_current_item_key()
+        if not game_name:
+            # If there are no games, just show a generic leaderboard
+            game_name = "All Games"
+
+        leaderboard_screen = self.view.screens['LeaderboardView']
+        scores = self.game_service.get_scores(game_name)
+        
+        # Pass both the game name and the scores to the view
+        leaderboard_screen.display_scores(game_name, scores)
+        
+        self.brighten_screen()
+        self.view.show_screen('LeaderboardView')
+
+# endregion
+
+
+
+
 
 if __name__ == "__main__":
     app_root = tk.Tk()

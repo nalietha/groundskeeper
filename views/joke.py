@@ -1,8 +1,8 @@
 # groundskeeper/views/joke.py
 import tkinter as tk
-from views.bases import SingleButtonScreen
+from views.bases import MenuScreen
 
-class JokeView(SingleButtonScreen):
+class JokeView(MenuScreen):
     def setup_ui(self):
         # The content_frame is centered.
         title_label = tk.Label(self.content_frame, text="Your Daily Joke", font=self.fonts["subtitle"])

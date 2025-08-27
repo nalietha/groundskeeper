@@ -1,43 +1,37 @@
 # groundskeeper/views/standby.py
 import tkinter as tk
+from .bases import TwoButtonScreen
 
-class StandbyView(tk.Frame):
-    def __init__(self, parent, callbacks, fonts, config, **kwargs):
-        super().__init__(parent)
-        self.callbacks = callbacks
-        self.fonts = fonts
-        self.config = config
-        
-        self.setup_ui()
-
+class StandbyView(TwoButtonScreen):
     def setup_ui(self):
-        # --- Main Content Labels ---
-        self.theme_label = tk.Label(self, text="", font=self.fonts["subtitle"])
-        self.theme_label.place(relx=0.5, rely=0.2, anchor="center")
+        # The content_frame is already created and centered by the base class
+        self.theme_label = tk.Label(self.content_frame, text="", font=self.fonts["subtitle"])
+        self.theme_label.pack(pady=(10, 0))
 
-        self.last_start_label = tk.Label(self, text="", font=self.fonts["small"])
-        self.last_start_label.place(relx=0.5, rely=0.28, anchor="center")
+        self.last_start_label = tk.Label(self.content_frame, text="", font=self.fonts["small"])
+        self.last_start_label.pack()
         
-        # --- Mood Section (Centering the Emoji and Text) ---
-        mood_frame = tk.Frame(self)
-        mood_frame.place(relx=0.5, rely=0.45, anchor="center")
+        # --- MODIFIED: Mood Frame Layout ---
+        # This frame will hold the emoji and the catcher phrase
+        mood_frame = tk.Frame(self.content_frame)
+        mood_frame.pack(pady=20, padx=5, fill="x", expand=True) # Fill horizontal space
+
+        # Configure the grid inside the mood_frame to manage space
+        mood_frame.columnconfigure(0, weight=0) # Emoji column (fixed size)
+        mood_frame.columnconfigure(1, weight=1) # Text column (takes remaining space)
 
         self.mood_emoji_label = tk.Label(mood_frame, text="", font=self.fonts["title"])
-        self.mood_emoji_label.pack(side="left", padx=5)
+        self.mood_emoji_label.grid(row=0, column=0, sticky="w")
         
-        self.mood_catcher_label = tk.Label(mood_frame, text="", font=self.fonts["title"], justify="left", wraplength=self.config.SCREEN_WIDTH - 120)
-        self.mood_catcher_label.pack(side="left")
+        # FIX: Increased wraplength to prevent wrapping on long words
+        self.mood_catcher_label = tk.Label(mood_frame, text="", font=self.fonts["title"], justify="left", wraplength=self.config.SCREEN_WIDTH - 80)
+        self.mood_catcher_label.grid(row=0, column=1, sticky="ew")
+        # ------------------------------------
         
-        self.mood_desc_label = tk.Label(self, text="", font=self.fonts["body"], justify="center", wraplength=self.config.SCREEN_WIDTH - 20)
-        self.mood_desc_label.place(relx=0.5, rely=0.65, anchor="center")
+        self.mood_desc_label = tk.Label(self.content_frame, text="", font=self.fonts["body"], justify="center", wraplength=self.config.SCREEN_WIDTH - 20)
+        self.mood_desc_label.pack(pady=(0, 10))
         
-        # --- Bottom Buttons ---
-        button_frame = tk.Frame(self)
-        button_frame.place(relx=0, rely=1, relwidth=1, anchor="sw") # Place at the bottom
-        button_frame.columnconfigure((0, 1), weight=1)
+        self.setup_navigation()
 
-        menu_button = tk.Button(button_frame, text="Menu", font=self.fonts["button"], command=self.callbacks['show_main_menu'])
-        menu_button.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-        
-        self.action_button = tk.Button(button_frame, text="Action", font=self.fonts["button"])
-        self.action_button.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
+    def go_back(self):
+        pass # This screen doesn't go back

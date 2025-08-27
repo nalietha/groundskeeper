@@ -56,7 +56,7 @@ class View:
     def show_screen(self, screen_name):
         screen = self.screens[screen_name]
         screen.tkraise()
-        # self.control_service.activate_ui_controls(screen) # We'll re-enable this later if needed
+        self.control_service.activate_ui_controls(screen) 
 
     def set_theme_colors(self, bg_color, fg_color):
         self.root.configure(bg=bg_color)

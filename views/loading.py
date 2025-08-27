@@ -1,3 +1,4 @@
+# groundskeeper/views/loading.py
 import tkinter as tk
 from views.screen import Screen
 
@@ -13,21 +14,16 @@ class LoadingView(Screen):
         # No navigation on the loading screen
         self.navigable_widgets = []
 
-    def start_loading_animation(self):
-        loading_service = self.callbacks.get('get_loading_service')()
-        if loading_service:
-            self.image_sequence = loading_service.get_random_image_sequence(
-                self.config.SCREEN_WIDTH, self.config.SCREEN_HEIGHT
-            )
-            self.current_image_index = 0
-            self.animate()
+    def set_image_sequence(self, image_sequence):
+        """Sets the images to be used for the loading animation."""
+        self.image_sequence = image_sequence
+        self.current_image_index = 0
 
     def stop_loading_animation(self):
         if self.animation_job:
             self.after_cancel(self.animation_job)
             self.animation_job = None
-        self.image_sequence = []
-
+    
     def animate(self):
         if not self.image_sequence:
             return
@@ -40,8 +36,10 @@ class LoadingView(Screen):
         self.animation_job = self.after(self.config.LOADING_IMAGE_INTERVAL_MS, self.animate)
 
     def tkraise(self, aboveThis=None):
+        # The main app now loads the images. We just need to start the animation.
         super().tkraise(aboveThis)
-        self.start_loading_animation()
+        self.stop_loading_animation() # Ensure any old animation is stopped
+        self.animate()
 
     def grid_remove(self):
         self.stop_loading_animation()

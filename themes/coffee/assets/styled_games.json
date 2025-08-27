@@ -1,0 +1,10 @@
+{
+  "snake": {
+    "food": "game_assets/snake/food.png",
+    "colors": {
+      "snake": [118, 85, 77],
+      "background": [54, 45, 45],
+      "text": [245, 230, 211]
+    }
+  }
+}

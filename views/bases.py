@@ -41,50 +41,76 @@ class BaseScreen(tk.Frame):
         if 'show_main_menu' in self.callbacks:
             self.callbacks['show_main_menu']()
 
-class CenteredContentScreen(BaseScreen):
-    """A screen that automatically centers its content vertically."""
+class TwoButtonScreen(BaseScreen):
+    """The base for the StandbyView, which has a centered content area and two buttons."""
     def __init__(self, parent, callbacks, fonts, config, **kwargs):
         super().__init__(parent, callbacks, fonts, config, **kwargs)
-        # Main layout configuration
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=0) # Content row
-        self.grid_rowconfigure(2, weight=1)
+        self.grid_rowconfigure(0, weight=1)    # Top spacer
+        self.grid_rowconfigure(1, weight=0)    # Content
+        self.grid_rowconfigure(2, weight=1)    # Bottom spacer
+        self.grid_rowconfigure(3, weight=0)    # Buttons
         self.grid_columnconfigure(0, weight=1)
 
-        # The content_frame is where child classes will place their widgets
         self.content_frame = tk.Frame(self, borderwidth=0, highlightthickness=0)
         self.content_frame.grid(row=1, column=0)
-
-
-class SingleButtonScreen(CenteredContentScreen):
-    """A centered screen with a single 'Back' button."""
-    def __init__(self, parent, callbacks, fonts, config, **kwargs):
-        super().__init__(parent, callbacks, fonts, config, **kwargs)
-        
-        button_frame = tk.Frame(self, borderwidth=0, highlightthickness=0)
-        button_frame.grid(row=3, column=0, sticky="ew") # Sits below the bottom spacer
-        button_frame.columnconfigure(0, weight=1)
-
-        back_button = tk.Button(button_frame, text="Back to Menu", font=self.fonts["button"], command=self.go_back)
-        back_button.grid(row=0, column=0, sticky="ew", pady=5)
-        
-        self.navigable_widgets = [back_button]
-        self.setup_ui()
-
-class TwoButtonScreen(CenteredContentScreen):
-    """A centered screen with 'Menu' and 'Action' buttons."""
-    def __init__(self, parent, callbacks, fonts, config, **kwargs):
-        super().__init__(parent, callbacks, fonts, config, **kwargs)
 
         button_frame = tk.Frame(self, borderwidth=0, highlightthickness=0)
         button_frame.grid(row=3, column=0, sticky="ew")
         button_frame.columnconfigure((0, 1), weight=1)
 
         self.menu_button = tk.Button(button_frame, text="Menu", font=self.fonts["button"], command=self.callbacks['show_main_menu'])
-        self.menu_button.grid(row=0, column=0, sticky="ew", pady=5)
+        self.menu_button.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
         
         self.action_button = tk.Button(button_frame, text="Action", font=self.fonts["button"])
-        self.action_button.grid(row=0, column=1, sticky="ew", pady=5)
+        self.action_button.grid(row=0, column=1, sticky="ew", pady=5, padx=5)
 
         self.navigable_widgets = [self.menu_button, self.action_button]
+        self.setup_ui()
+
+class MenuScreen(BaseScreen):
+    """
+    The NEW base for any screen that is a list of buttons (MainMenu, Extras, Settings, Games).
+    The content area expands, and the single 'Back' button is always visible at the bottom.
+    """
+    def __init__(self, parent, callbacks, fonts, config, **kwargs):
+        super().__init__(parent, callbacks, fonts, config, **kwargs)
+        self.grid_rowconfigure(0, weight=1) # Let the content row expand
+        self.grid_rowconfigure(1, weight=0) # Keep the button row fixed
+        self.grid_columnconfigure(0, weight=1)
+
+        self.content_frame = tk.Frame(self, borderwidth=0, highlightthickness=0)
+        self.content_frame.grid(row=0, column=0, sticky="nsew")
+
+        button_frame = tk.Frame(self, borderwidth=0, highlightthickness=0)
+        button_frame.grid(row=1, column=0, sticky="ew")
+        button_frame.columnconfigure(0, weight=1)
+
+        back_button = tk.Button(button_frame, text="Back", font=self.fonts["button"], command=self.go_back)
+        back_button.grid(row=0, column=0, sticky="ew", pady=5)
+        
+        self.navigable_widgets = [back_button]
+        self.setup_ui()
+
+class GameMenuScreen(BaseScreen):
+    """A base for the game selection screen with a carousel and two bottom buttons."""
+    def __init__(self, parent, callbacks, fonts, config, **kwargs):
+        super().__init__(parent, callbacks, fonts, config, **kwargs)
+        self.grid_rowconfigure(0, weight=1) # Carousel content
+        self.grid_rowconfigure(1, weight=0) # Buttons
+        self.grid_columnconfigure(0, weight=1)
+
+        self.content_frame = tk.Frame(self, borderwidth=0, highlightthickness=0)
+        self.content_frame.grid(row=0, column=0, sticky="nsew")
+
+        button_frame = tk.Frame(self, borderwidth=0, highlightthickness=0)
+        button_frame.grid(row=1, column=0, sticky="ew")
+        button_frame.columnconfigure((0, 1), weight=1)
+
+        back_button = tk.Button(button_frame, text="Back", font=self.fonts["button"], command=self.go_back)
+        back_button.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
+
+        leaderboard_button = tk.Button(button_frame, text="Leaderboard", font=self.fonts["button"], command=self.callbacks['show_leaderboard'])
+        leaderboard_button.grid(row=0, column=1, sticky="ew", pady=5, padx=5)
+
+        self.navigable_widgets = [back_button, leaderboard_button]
         self.setup_ui()

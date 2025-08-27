@@ -1,8 +1,8 @@
 # groundskeeper/views/update.py
 import tkinter as tk
-from .bases import SingleButtonScreen
+from .bases import MenuScreen
 
-class UpdateView(SingleButtonScreen):
+class UpdateView(MenuScreen):
     # Define a static, theme-independent color scheme for the updater
     UPDATER_COLORS = {
         "bg": "#1c1c1c",        # A dark charcoal background

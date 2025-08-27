@@ -1,8 +1,8 @@
 # groundskeeper/views/extras.py
 import tkinter as tk
-from .bases import SingleButtonScreen
+from .bases import MenuScreen
 
-class ExtrasView(SingleButtonScreen):
+class ExtrasView(MenuScreen):
     def setup_ui(self):
         title_label = tk.Label(self.content_frame, text="Extras & Fun", font=self.fonts["title"])
         title_label.pack(pady=(20, 10))

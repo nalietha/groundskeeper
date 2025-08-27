@@ -4,8 +4,6 @@
   "start_phrase": "Arrival Time:",
   "not_started_text": "Not here yet",
   "timer_ms": 10800000,
-  "splash_image": "themes/pizza/splash.png",
-  "icon": "themes/pizza/icon.png",
   "colors": {
     "dim_bg": "#4d2600",
     "dim_fg": "#f5e5c5",

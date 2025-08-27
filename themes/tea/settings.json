@@ -4,8 +4,6 @@
   "start_phrase": "Steeped At:",
   "not_started_text": "Not steeped yet",
   "timer_ms": 3600000,
-  "splash_image": "themes/tea/splash.png",
-  "icon": "themes/tea/icon.png",
   "colors": {
     "dim_bg": "#5c4033",
     "dim_fg": "#f5f5dc",

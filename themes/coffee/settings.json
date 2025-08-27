@@ -4,8 +4,6 @@
   "start_phrase": "Last Brewed:",
   "not_started_text": "Not brewed yet",
   "timer_ms": 240000,
-  "splash_image": "themes/coffee/splash.png",
-  "icon": "themes/coffee/icon.png",
   "colors": {
     "dim_bg": "#2a1d1d",
     "dim_fg": "#d3c8c8",

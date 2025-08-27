@@ -1,8 +1,10 @@
+# groundskeeper/views/settings.py
 import tkinter as tk
-from views.screen import Screen
+from .bases import MenuScreen 
 
-class SettingsView(Screen):
+class SettingsView(MenuScreen):
     def setup_ui(self):
+        # The content_frame is provided by the MenuScreen base class
         title_label = tk.Label(self.content_frame, text="Settings", font=self.fonts["title"])
         title_label.pack(pady=(20, 10))
 
@@ -17,14 +19,14 @@ class SettingsView(Screen):
 
         self.turbo_button = tk.Button(button_area, text="Turbo: OFF", font=self.fonts["button"], command=self.callbacks['toggle_turbo_mode'])
         self.turbo_button.pack(pady=10, fill="x")
-
-        self.button_frame.columnconfigure(0, weight=1)
-        back_button = tk.Button(self.button_frame, text="<font size='5'>◄</font> Back to Menu", font=self.fonts["button"], command=self.callbacks['show_main_menu'])
-        back_button.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
         
-        self.navigable_widgets = [update_button, reset_button, self.turbo_button, back_button]
+        # The "Back" button is created by the MenuScreen base.
+        # We just need to add our new buttons to the navigation list.
+        self.navigable_widgets = [update_button, reset_button, self.turbo_button] + self.navigable_widgets
+        self.setup_navigation()
 
     def update_turbo_button_state(self, is_on):
+        """Updates the turbo button's appearance."""
         if is_on:
             self.turbo_button.config(text="Turbo: ON", relief=tk.SUNKEN)
         else:

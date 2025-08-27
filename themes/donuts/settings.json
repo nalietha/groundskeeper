@@ -4,8 +4,6 @@
   "start_phrase": "Box Opened:",
   "not_started_text": "Box not opened",
   "timer_ms": 14400000,
-  "splash_image": "themes/donuts/splash.png",
-  "icon": "themes/donuts/icon.png",
   "colors": {
     "dim_bg": "#4a2c2a",
     "dim_fg": "#fff8e7",

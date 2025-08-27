@@ -1,7 +1,7 @@
 import tkinter as tk
-from views.bases import SingleButtonScreen
+from views.bases import MenuScreen
 
-class AffirmationView(SingleButtonScreen):
+class AffirmationView(MenuScreen):
     def setup_ui(self):
         title_label = tk.Label(self.content_frame, text="Your Daily Affirmation", font=self.fonts["subtitle"])
         title_label.pack(pady=(20, 10))

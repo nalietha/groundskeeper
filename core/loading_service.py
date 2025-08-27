@@ -1,35 +1,24 @@
+# groundskeeper/core/loading_service.py
 import os
 import random
 from PIL import Image, ImageTk
 
 class LoadingService:
-    def __init__(self, loading_folder="resources/loading"):
-        self.image_sets = []
-        if os.path.isdir(loading_folder):
-            for item in os.listdir(loading_folder):
-                item_path = os.path.join(loading_folder, item)
-                if os.path.isdir(item_path):
-                    images = sorted([
-                        os.path.join(item_path, f) for f in os.listdir(item_path)
-                        if f.endswith(('.png', '.jpg', '.jpeg'))
-                    ])
-                    if images:
-                        self.image_sets.append(images)
-        
-        if not self.image_sets:
-            print("Warning: No loading image sets found.")
+    def __init__(self):
+        # No longer scans a global folder
+        pass
 
-    def get_random_image_sequence(self, width, height):
-        if not self.image_sets:
+    def get_image_sequence(self, image_paths, width, height):
+        """Processes a list of image paths into a Tkinter-compatible image sequence."""
+        if not image_paths:
             return []
         
-        image_path_sequence = random.choice(self.image_sets)
         loaded_images = []
-        for path in image_path_sequence:
+        for path in image_paths:
             try:
-                img = Image.open(path)
-                img = img.resize((width, height), Image.Resampling.LANCZOS)
-                loaded_images.append(ImageTk.PhotoImage(img))
+                with Image.open(path) as img:
+                    img_resized = img.resize((width, height), Image.Resampling.LANCZOS)
+                    loaded_images.append(ImageTk.PhotoImage(img_resized))
             except Exception as e:
                 print(f"Error loading image {path}: {e}")
         

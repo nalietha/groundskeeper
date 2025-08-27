@@ -1,3 +1,4 @@
+# groundskeeper/models/theme.py
 class Theme:
     def __init__(self, data):
         self.name = data.get("name", "Unknown")
@@ -5,6 +6,14 @@ class Theme:
         self.start_phrase = data.get("start_phrase", "Last Start:")
         self.not_started_text = data.get("not_started_text", "Not Started")
         self.timer_ms = data.get("timer_ms", 60000)
+        
+        # --- Placeholders for standardized assets ---
+        self.icon = None
+        self.theme_card = None
+        self.loading_images = []
+        self.game_styles = {}
+        # ------------------------------------------
+
         colors = data.get("colors", {})
         self.colors = {
             "dim_bg": colors.get("dim_bg", "#1e1e1e"), "dim_fg": colors.get("dim_fg", "#a9a9a9"),
