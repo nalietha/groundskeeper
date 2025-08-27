@@ -1,4 +1,5 @@
 {
+  "active": false,
   "name": "Donuts",
   "action_text": "Open the Box!",
   "start_phrase": "Box Opened:",

@@ -1,4 +1,5 @@
 {
+  "active": false,
   "name": "Pizza",
   "action_text": "Pizza's Here!",
   "start_phrase": "Arrival Time:",

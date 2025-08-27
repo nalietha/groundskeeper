@@ -3,6 +3,7 @@ import os
 import json
 from models.theme import Theme
 
+
 class ThemeService:
     def __init__(self, themes_dir="themes"):
         self.themes = {}
@@ -21,6 +22,13 @@ class ThemeService:
                 try:
                     with open(settings_file, 'r', encoding='utf-8') as f:
                         theme_data = json.load(f)
+                        
+                        # --- FIX: Check for the "active" flag ---
+                        # If the theme is not marked as active, skip it.
+                        if not theme_data.get("active", False):
+                            continue
+                        # ----------------------------------------
+                        
                         theme = Theme(theme_data)
                         
                         self._load_standard_assets(theme, theme_path)
@@ -30,7 +38,7 @@ class ThemeService:
 
                 except json.JSONDecodeError:
                     print(f"Warning: Could not parse settings for theme '{theme_name}'.")
-        print(f"Discovered and loaded {len(self.themes)} themes.")
+        print(f"Discovered and loaded {len(self.themes)} active themes.")
 
     def _load_standard_assets(self, theme, theme_path):
         """Finds and attaches standardized asset paths and data to the theme object."""

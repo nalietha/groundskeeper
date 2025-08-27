@@ -41,6 +41,7 @@ def create_theme():
         
         # settings.json
         settings_content = {
+            "active": False,
             "name": theme_name_capitalized,
             "action_text": "Start Action",
             "start_phrase": "Last Started:",
@@ -104,7 +105,8 @@ def create_theme():
     print("  2. Add one or more loading screen images to the 'assets/loading' folder.")
     print("  3. Customize the text and colors in 'settings.json'.")
     print("  4. Fill out the mood sayings in 'list_...json' and add some jokes to 'jokes_...json'.")
-    print("  5. Run the main application to see your new theme in the carousel!")
+    print("  5. When you are ready, change 'active': false to 'active': true in settings.json.")
+
 
 
 if __name__ == "__main__":

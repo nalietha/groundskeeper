@@ -1,4 +1,5 @@
 {
+  "active": true,
   "name": "Coffee",
   "action_text": "Brew Coffee",
   "start_phrase": "Last Brewed:",
