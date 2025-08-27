@@ -1,28 +1,25 @@
+# groundskeeper/core/loading_service.py
 import os
 import random
 from PIL import Image, ImageTk
 
 class LoadingService:
-    def __init__(self, loading_folder="resources/loading"):
-        self.image_paths = []
-        if os.path.isdir(loading_folder):
-            self.image_paths = [
-                os.path.join(loading_folder, f) for f in os.listdir(loading_folder)
-                if f.endswith(('.png', '.jpg', '.jpeg'))
-            ]
-        
-        if not self.image_paths:
-            print("Warning: No loading images found.")
+    def __init__(self):
+        # No longer scans a global folder
+        pass
 
-    def get_random_loading_image(self, width, height):
-        if not self.image_paths:
-            return None
+    def get_image_sequence(self, image_paths, width, height):
+        """Processes a list of image paths into a Tkinter-compatible image sequence."""
+        if not image_paths:
+            return []
         
-        path = random.choice(self.image_paths)
-        try:
-            img = Image.open(path)
-            img = img.resize((width, height), Image.Resampling.LANCZOS)
-            return ImageTk.PhotoImage(img)
-        except Exception as e:
-            print(f"Error loading image {path}: {e}")
-            return None
+        loaded_images = []
+        for path in image_paths:
+            try:
+                with Image.open(path) as img:
+                    img_resized = img.resize((width, height), Image.Resampling.LANCZOS)
+                    loaded_images.append(ImageTk.PhotoImage(img_resized))
+            except Exception as e:
+                print(f"Error loading image {path}: {e}")
+        
+        return loaded_images

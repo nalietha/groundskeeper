@@ -1,3 +1,4 @@
+# groundskeeper/core/mood_service.py
 import random
 from datetime import datetime
 
@@ -18,7 +19,12 @@ class MoodService:
                 tier_emoji = tier.get('emoji', '')
                 sayings_list = theme.sayings.get(tier_name, [])
                 if sayings_list:
+                    # --- FIX: Seed the random choice to be consistent per day ---
+                    # This ensures the same saying is chosen for a given tier all day.
+                    seed_str = f"{datetime.now().date().isoformat()}-{tier_name}"
+                    random.seed(seed_str)
                     chosen_saying = random.choice(sayings_list)
+                    # -----------------------------------------------------------
                     return Mood(chosen_saying.get('catcher'), chosen_saying.get('descriptor'), tier_emoji), tier_name
                 break
         return Mood("Hmm...", "No sayings found for this state.", "🤔"), None

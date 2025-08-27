@@ -1,37 +1,37 @@
+# groundskeeper/views/standby.py
 import tkinter as tk
-from views.screen import Screen
+from .bases import TwoButtonScreen
 
-class StandbyView(Screen):
+class StandbyView(TwoButtonScreen):
     def setup_ui(self):
+        # The content_frame is already created and centered by the base class
         self.theme_label = tk.Label(self.content_frame, text="", font=self.fonts["subtitle"])
-        self.theme_label.pack(pady=(5, 0))
+        self.theme_label.pack(pady=(10, 0))
+
         self.last_start_label = tk.Label(self.content_frame, text="", font=self.fonts["small"])
         self.last_start_label.pack()
         
+        # --- MODIFIED: Mood Frame Layout ---
+        # This frame will hold the emoji and the catcher phrase
         mood_frame = tk.Frame(self.content_frame)
-        mood_frame.pack(expand=True, padx=10, pady=20)
-        
+        mood_frame.pack(pady=20, padx=5, fill="x", expand=True) # Fill horizontal space
+
+        # Configure the grid inside the mood_frame to manage space
+        mood_frame.columnconfigure(0, weight=0) # Emoji column (fixed size)
+        mood_frame.columnconfigure(1, weight=1) # Text column (takes remaining space)
+
         self.mood_emoji_label = tk.Label(mood_frame, text="", font=self.fonts["title"])
-        self.mood_emoji_label.pack(side="left", padx=(0, 10))
+        self.mood_emoji_label.grid(row=0, column=0, sticky="w")
         
-        self.mood_catcher_label = tk.Label(mood_frame, text="", font=self.fonts["title"], justify="left", wraplength=self.config.SCREEN_WIDTH - 100)
-        self.mood_catcher_label.pack(side="left")
+        # FIX: Increased wraplength to prevent wrapping on long words
+        self.mood_catcher_label = tk.Label(mood_frame, text="", font=self.fonts["title"], justify="left", wraplength=self.config.SCREEN_WIDTH - 80)
+        self.mood_catcher_label.grid(row=0, column=1, sticky="ew")
+        # ------------------------------------
         
-        self.mood_desc_label = tk.Label(self.content_frame, text="", font=self.fonts["body"], justify="center", wraplength=self.config.SCREEN_WIDTH - 40)
-        self.mood_desc_label.pack(expand=True, side="top", pady=(0, 10))
+        self.mood_desc_label = tk.Label(self.content_frame, text="", font=self.fonts["body"], justify="center", wraplength=self.config.SCREEN_WIDTH - 20)
+        self.mood_desc_label.pack(pady=(0, 10))
         
-        button_frame = tk.Frame(self)
-        button_frame.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
-        self.grid_rowconfigure(1, weight=0)
-        self.grid_columnconfigure(0, weight=1)
+        self.setup_navigation()
 
-        button_frame.columnconfigure((0, 1), weight=1)
-        
-        menu_button = tk.Button(button_frame, text="Menu", font=self.fonts["button"], command=self.callbacks['show_main_menu'])
-        menu_button.grid(row=0, column=0, sticky="ew", padx=5)
-        
-        self.action_button = tk.Button(button_frame, text="Action", font=self.fonts["button"])
-        self.action_button.grid(row=0, column=1, sticky="ew", padx=5)
-
-        # Register navigable widgets
-        self.navigable_widgets = [menu_button, self.action_button]
+    def go_back(self):
+        pass # This screen doesn't go back

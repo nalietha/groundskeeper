@@ -1,27 +1,15 @@
+# groundskeeper/views/joke.py
 import tkinter as tk
-from views.screen import Screen
+from views.bases import MenuScreen
 
-class JokeView(Screen):
+class JokeView(MenuScreen):
     def setup_ui(self):
+        # The content_frame is centered.
         title_label = tk.Label(self.content_frame, text="Your Daily Joke", font=self.fonts["subtitle"])
-        title_label.pack(pady=(20, 10))
+        title_label.pack(pady=(10, 10))
 
-        self.joke_label = tk.Label(
-            self.content_frame,
-            text="",
-            font=self.fonts["body"],
-            wraplength=self.config.SCREEN_WIDTH - 40,
-            justify="center"
-        )
-        self.joke_label.pack(expand=True, padx=20)
-
-        back_button = tk.Button(
-            self.content_frame,
-            text="Back to Menu",
-            font=self.fonts["button"],
-            command=self.callbacks['show_main_menu']
-        )
-        back_button.pack(pady=(10, 20))
-
-        # Register navigable widgets
-        self.navigable_widgets = [back_button]
+        self.joke_label = tk.Label(self.content_frame, text="", font=self.fonts["body"], wraplength=self.config.SCREEN_WIDTH - 20, justify="center")
+        self.joke_label.pack(expand=True)
+        
+        # Navigation setup is all that's needed.
+        self.setup_navigation()

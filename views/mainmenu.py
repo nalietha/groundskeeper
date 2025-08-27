@@ -1,49 +1,36 @@
+# groundskeeper/views/mainmenu.py
 import tkinter as tk
-from views.screen import Screen
+from .bases import MenuScreen
+from .carousel import Carousel
 
-class MainMenuView(Screen):
+class MainMenuView(MenuScreen):
     def setup_ui(self):
-        menu_label = tk.Label(self.content_frame, text="Main Menu", font=self.fonts["title"])
-        menu_label.pack(pady=(10, 5))
-        
-        theme_frame = tk.LabelFrame(self.content_frame, text="Select Item to View", font=self.fonts["small"], padx=10, pady=5)
-        theme_frame.pack(pady=5, padx=10, fill="x")
+        # title_label = tk.Label(self.content_frame, text="Main Menu", font=self.fonts["title"])
+        # title_label.pack(pady=20)
         
         all_themes = self.callbacks['get_all_themes']()
-        theme_buttons = []
-        for theme in all_themes:
-            btn = tk.Button(
-                theme_frame, 
-                text=theme.name, 
-                font=self.fonts["small"], 
-                command=lambda t=theme.name: self.callbacks['set_active_theme'](t)
-            )
-            btn.pack(side="top", expand=True, fill="x", pady=2)
-            theme_buttons.append(btn)
-            
-        menu_button_frame = tk.Frame(self.content_frame)
-        menu_button_frame.pack(expand=True, fill="both", padx=10, pady=5)
-        menu_button_frame.columnconfigure((0, 1), weight=1)
-        menu_button_frame.rowconfigure((0, 1), weight=1)
-        
-        menu_buttons = []
-        buttons = {
-            "Games": self.callbacks['show_games'], 
-            "Affirmation": self.callbacks['show_affirmation'], 
-            "Joke": self.callbacks['show_joke'],
-            "Settings": self.callbacks['show_settings']
-        }
-        
-        row, col = 0, 0
-        for text, command in buttons.items():
-            btn = tk.Button(menu_button_frame, text=text, font=self.fonts["body"], command=command)
-            btn.grid(row=row, column=col, sticky="nsew", padx=5, pady=5)
-            menu_buttons.append(btn)
-            col = (col + 1) % 2
-            if col == 0: row += 1
-            
-        back_button = tk.Button(self.content_frame, text="Back to Standby", font=self.fonts["small"], command=self.callbacks['show_standby'])
-        back_button.pack(pady=(0, 10))
+        menu_items = []
 
-        # Register navigable widgets
-        self.navigable_widgets = theme_buttons + menu_buttons + [back_button]
+        for theme in all_themes:
+            if theme.theme_card:
+                menu_items.append({
+                    'text': theme.name,
+                    'image_path': theme.theme_card,
+                    'callback': lambda t=theme.name: self.callbacks['set_active_theme'](t)
+                })
+
+        menu_items.extend([
+            {'text': 'Extras & Fun', 'image_path': 'resources/icons/extras.png', 'callback': self.callbacks['show_extras']},
+            {'text': 'Settings', 'image_path': 'resources/icons/settings.png', 'callback': self.callbacks['show_settings']},
+        ])
+        
+        self.carousel = Carousel(self.content_frame, menu_items, self.fonts, self.config)
+        self.carousel.pack(expand=True, fill="both")
+
+        # Carousel screens don't have navigable widgets in the traditional sense
+        self.navigable_widgets = []
+ 
+    def go_back(self):
+        # FIX: Explicitly define the back action for the main menu
+        if 'show_standby' in self.callbacks:
+            self.callbacks['show_standby']()

@@ -1,0 +1,27 @@
+{
+  "name": "Snake",
+  "entry_point": "Snake",
+  "assets": {
+    "player_head": {
+      "path": "assets/snake_head.png",
+      "themeable": false,
+      "width": 20,
+      "height": 20
+    },
+    "food": {
+      "path": "assets/apple.png",
+      "themeable": true,
+      "width": 20,
+      "height": 20
+    },
+    "colors": {
+      "type": "dict",
+      "themeable": true,
+      "default": {
+        "snake": [0, 255, 0],
+        "background": [0, 0, 0],
+        "text": [255, 255, 255]
+      }
+    }
+  }
+}
