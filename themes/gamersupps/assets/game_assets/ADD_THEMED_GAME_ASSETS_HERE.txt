@@ -1,0 +1,1 @@
+Place themed game assets (e.g., a custom food.png for Snake) in this folder.

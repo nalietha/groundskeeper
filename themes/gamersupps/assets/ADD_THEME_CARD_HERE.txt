@@ -1,0 +1,1 @@
+Place your 160x120 theme_card.png file in this folder.

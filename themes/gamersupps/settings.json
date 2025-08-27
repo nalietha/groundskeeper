@@ -1,0 +1,40 @@
+{
+    "name": "Gamersupps",
+    "action_text": "Start Action",
+    "start_phrase": "Last Started:",
+    "not_started_text": "Not started yet",
+    "timer_ms": 3600000,
+    "colors": {
+        "dim_bg": "#1e1e1e",
+        "dim_fg": "#a9a9a9",
+        "bright_bg": "#add8e6",
+        "bright_fg": "#000000"
+    },
+    "mood_tiers": [
+        {
+            "name": "Fresh",
+            "threshold_minutes": 0,
+            "emoji": "\u2728"
+        },
+        {
+            "name": "Good",
+            "threshold_minutes": 60,
+            "emoji": "\ud83d\ude0a"
+        },
+        {
+            "name": "Okay",
+            "threshold_minutes": 180,
+            "emoji": "\ud83d\ude10"
+        },
+        {
+            "name": "Stale",
+            "threshold_minutes": 360,
+            "emoji": "\ud83e\udd22"
+        },
+        {
+            "name": "Ancient",
+            "threshold_minutes": 1440,
+            "emoji": "\ud83d\udc80"
+        }
+    ]
+}
