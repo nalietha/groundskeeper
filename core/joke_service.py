@@ -5,7 +5,7 @@ class JokeService:
     """
     Loads and provides jokes.
     """
-    def __init__(self, filename="resources/jokes.json"):
+    def __init__(self, filename="assets/jokes.json"):
         self.jokes = []
         try:
             with open(filename, 'r', encoding='utf-8') as f:

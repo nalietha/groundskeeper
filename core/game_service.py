@@ -30,6 +30,11 @@ class GameService:
                 try:
                     with open(manifest_path, 'r') as f:
                         manifest = json.load(f)
+
+                    # If the game is not marked as active, skip it.
+                    if not manifest.get("active", False):
+                        continue
+                    
                     manifest['root_path'] = game_path
                     manifest['card_path'] = os.path.join(game_path, "game_card.png")
                     manifest['module_path'] = os.path.join(game_path, "game.py")

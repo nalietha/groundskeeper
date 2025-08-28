@@ -29,12 +29,14 @@ from views.loading import LoadingView
 from views.extras import ExtrasView
 from views.leaderboard import LeaderboardView
 from views.name_entry import NameEntryView
+from views.splash import SplashView
+from views.title import TitleView
 #endregion
 
 from models.mood import Mood
 from configs.config import Config
 
-class StandbyScreenApp:
+class GroundskeeperApp:
     def __init__(self, root, config):
         self.root, self.config = root, config
         self.root.resizable(False, False)
@@ -48,7 +50,7 @@ class StandbyScreenApp:
         self.state_file = "state.json"
         self.tracking_service = TrackingService(self.state_file, self.theme_service)
         self.gpio_service = GPIOService(config.GPIO_PINS)
-        self.control_service = ControlService(root)
+        self.control_service = ControlService(self)
         self.loading_service = LoadingService()
         self.turbo_mode = False
 
@@ -58,7 +60,8 @@ class StandbyScreenApp:
         self.active_theme_name = self.config.DEFAULT_THEME
 
         callbacks = {
-            'show_main_menu': self.show_main_menu, 
+            'show_main_menu': self.show_main_menu,
+            'show_title_screen': self.show_title_screen, 
             'confirm_and_start_item': self.confirm_and_start_item, 
             'show_standby': self.show_standby_screen, 
             'show_extras': self.show_extras,
@@ -83,13 +86,15 @@ class StandbyScreenApp:
         }
 
         self.view = View(root, callbacks, config, self.control_service, [
-            AffirmationView, JokeView, UpdateView, SettingsView, GamesView, 
-            LoadingView, ExtrasView, LeaderboardView, NameEntryView
+            SplashView, TitleView, AffirmationView, JokeView, UpdateView, 
+            SettingsView, GamesView, LoadingView, ExtrasView, LeaderboardView, 
+            NameEntryView
         ])
-        self.show_standby_screen()
-        self.periodic_check()
-        self.gpio_service.start()
-        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.show_splash_screen()
+        # self.show_standby_screen()
+        # self.periodic_check()
+        # self.gpio_service.start()
+        # self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
     def on_closing(self):
         self.tracking_service._save_tracked_items()
@@ -200,6 +205,8 @@ class StandbyScreenApp:
         self.active_theme_name = self.config.DEFAULT_THEME
         self.show_standby_screen()
 
+#region Screens
+
     def show_standby_screen(self):
         self.view.show_screen('StandbyView')
         self.update_standby_ui()
@@ -242,6 +249,17 @@ class StandbyScreenApp:
             self.brighten_screen()
             self.view.show_screen('SettingsView')
         self.show_loading_and_run(_action)
+    
+    def show_splash_screen(self):
+        """Shows the studio logo for a brief period."""
+        self.view.show_screen('SplashView')
+        # After 3 seconds, transition to the title screen
+        self.root.after(3000, self.show_title_screen)
+
+    def show_title_screen(self):
+        """Shows the 'Press Start' screen and waits for input."""
+        self.view.show_screen('TitleView')
+#endregion 
 
 # region Updater
     def show_updater(self):
@@ -299,7 +317,6 @@ class StandbyScreenApp:
             self.view.show_screen('NameEntryView')
         self.show_loading_and_run(_action)
 
-
     def start_game(self, game_name):
         """A generic method to start any discovered game."""
         self.control_service.deactivate_all_controls()
@@ -320,8 +337,8 @@ class StandbyScreenApp:
         else:
             # Directly call the core logic of show_leaderboard
             leaderboard_screen = self.view.screens['LeaderboardView']
-            scores = self.game_service.get_scores()
-            leaderboard_screen.display_scores(scores)
+            scores = self.game_service.get_scores(game_name)
+            leaderboard_screen.display_scores(game_name, scores)
             self.brighten_screen()
             self.view.show_screen('LeaderboardView')
 
@@ -355,6 +372,21 @@ class StandbyScreenApp:
 
 # endregion
 
+# region Status Bar
+    def toggle_turbo_mode(self):
+        self.turbo_mode = not self.turbo_mode
+        print(f"Turbo mode {'ENABLED' if self.turbo_mode else 'DISABLED'}")
+        
+        # --- Tell the status bar to update its icon ---
+        self.view.status_bar.set_turbo_visibility(self.turbo_mode)
+        # ----------------------------------------------
+        
+        settings_screen = self.view.screens.get('SettingsView')
+        if settings_screen:
+            settings_screen.update_turbo_button_state(self.turbo_mode)
+
+
+#endregion
 
 
 
@@ -363,7 +395,7 @@ if __name__ == "__main__":
     app_root = tk.Tk()
     app_config = Config()
     try:
-        app = StandbyScreenApp(app_root, app_config)
+        app = GroundskeeperApp(app_root, app_config)
         app_root.mainloop()
     except RuntimeError as e:
         print(e)

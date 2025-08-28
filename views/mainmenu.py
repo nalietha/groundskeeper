@@ -20,8 +20,8 @@ class MainMenuView(MenuScreen):
                 })
 
         menu_items.extend([
-            {'text': 'Extras & Fun', 'image_path': 'resources/icons/extras.png', 'callback': self.callbacks['show_extras']},
-            {'text': 'Settings', 'image_path': 'resources/icons/settings.png', 'callback': self.callbacks['show_settings']},
+            {'text': 'Extras & Fun', 'image_path': 'assets/icons/extras.png', 'callback': self.callbacks['show_extras']},
+            {'text': 'Settings', 'image_path': 'assets/icons/settings.png', 'callback': self.callbacks['show_settings']},
         ])
         
         self.carousel = Carousel(self.content_frame, menu_items, self.fonts, self.config)
