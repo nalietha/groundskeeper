@@ -1,5 +1,5 @@
 {
-  "active": false,
+    "active":true,
   "name": "Cosmic Grind",
   "entry_point": "CosmicGrind",
   "assets": {
@@ -12,14 +12,14 @@
     "enemy_ship_1": {
       "path": "assets/enemy1.png",
       "themeable": false,
-      "width": 32,
-      "height": 32
+      "width": 24,
+      "height": 24
     },
     "enemy_ship_2": {
       "path": "assets/enemy2.png",
       "themeable": false,
-      "width": 32,
-      "height": 32
+      "width": 24,
+      "height": 24
     },
     "player_bullet": {
       "path": "assets/player_bullet.png",

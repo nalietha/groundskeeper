@@ -1,5 +1,10 @@
 [
     {
+        "game": "cosmicgrind",
+        "name": "NAL",
+        "score": 50
+    },
+    {
         "game": "snake",
         "name": "?BA",
         "score": 5
