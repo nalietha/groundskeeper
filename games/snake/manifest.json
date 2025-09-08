@@ -15,6 +15,12 @@
       "width": 20,
       "height": 20
     },
+    "player_body":{
+      "path":"assets/body.png",
+      "themeable":true,
+      "width": 20,
+      "height": 20
+    },
     "colors": {
       "type": "dict",
       "themeable": true,

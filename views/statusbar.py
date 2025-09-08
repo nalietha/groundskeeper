@@ -16,6 +16,11 @@ class StatusBar(tk.Frame):
         self.clock_label = tk.Label(self, text="", font=("Press Start 2P", 8))
         self.clock_label.grid(row=0, column=0, sticky="w", padx=5)
 
+        # --- Game Score Label ---
+        self.score_label = tk.Label(self, text="", font=("Press Start 2P", 8))
+        self.score_label.grid(row=0, column=1, sticky="w")
+        
+
         # --- Icons Frame ---
         icons_frame = tk.Frame(self)
         icons_frame.grid(row=0, column=1, sticky="e", padx=5)
@@ -50,3 +55,14 @@ class StatusBar(tk.Frame):
             self.turbo_icon_label.pack(side="right")
         else:
             self.turbo_icon_label.pack_forget()
+    
+    def set_score_visibility(self, is_visible):
+        """Shows or hides the score label."""
+        if is_visible:
+            self.score_label.grid()
+        else:
+            self.score_label.grid_remove()
+
+    def update_score(self, score):
+        """Updates the score display."""
+        self.score_label.config(text=f"Score: {score}")

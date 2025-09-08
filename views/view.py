@@ -27,23 +27,17 @@ class View:
         self.root.geometry(f"{config.SCREEN_WIDTH}x{config.SCREEN_HEIGHT}")
         scale_factor = config.SCREEN_WIDTH / config.BASE_WIDTH
 
-        # --- FIX: Use grid() exclusively for the root window's layout ---
-        # 1. Configure the main window's grid
-        self.root.grid_rowconfigure(0, weight=0) # Status bar row (fixed size)
-        self.root.grid_rowconfigure(1, weight=1) # Screen container row (expands)
+        self.root.grid_rowconfigure(0, weight=0)
+        self.root.grid_rowconfigure(1, weight=1)
         self.root.grid_columnconfigure(0, weight=1)
 
-        # 2. Place the StatusBar in the top row
         self.status_bar = StatusBar(root, config)
         self.status_bar.grid(row=0, column=0, sticky="ew")
 
-        # 3. Place the main screen container in the bottom row
         self.container = tk.Frame(root, borderwidth=0, highlightthickness=0)
         self.container.grid(row=1, column=0, sticky="nsew")
-        # The container itself can use grid for its internal layout
         self.container.grid_rowconfigure(0, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
-        # ----------------------------------------------------------------
 
         available_fonts = tkfont.families()
         font_family = "Press Start 2P" if "Press Start 2P" in available_fonts else "Courier"
@@ -60,7 +54,6 @@ class View:
         }
         
         self.screens = {}
-        # This list needs to include your new startup screens
         all_screens = [
             SplashView, TitleView, StandbyView, MainMenuView, AffirmationView, 
             JokeView, UpdateView, SettingsView, GamesView, ExtrasView, 
@@ -94,3 +87,12 @@ class View:
             pass
         for child in widget.winfo_children():
             self._apply_theme_recursive(child, bg, fg)
+    
+    def update_score(self, score):
+        """Passes the score to the status bar."""
+        self.status_bar.update_score(score)
+        self.root.update() # Force UI to refresh
+
+    def set_score_visibility(self, is_visible):
+        """Passes the visibility command to the status bar."""
+        self.status_bar.set_score_visibility(is_visible)

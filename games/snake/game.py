@@ -3,7 +3,7 @@ import pygame
 import random
 
 class Snake:
-    def __init__(self, screen_width, screen_height, assets):
+    def __init__(self, screen_width, screen_height, assets, callbacks):
         pygame.init()
         self.width = screen_width
         self.height = screen_height
@@ -11,9 +11,11 @@ class Snake:
         pygame.display.set_caption('Groundskeeper - Snake')
 
         self.assets = assets
+        self.callbacks = callbacks
         self.colors = assets.get('colors', {})
         self.player_head_original = assets.get('player_head')
         self.player_head_rotated = self.player_head_original
+        self.player_body_img = assets.get('player_body')
         self.food_img = assets.get('food')
 
         self.clock = pygame.time.Clock()
@@ -35,6 +37,9 @@ class Snake:
         """
         Main game loop. Tracks the highest score within a session.
         """
+        self.callbacks['set_score_visibility'](True)
+        self.callbacks['update_score'](0)
+        
         game_over = False
         game_close = False
 
@@ -53,25 +58,22 @@ class Snake:
                 self.screen.fill(self.colors.get('background', (0,0,0)))
                 
                 current_score = length_of_snake - 1
-                # --- FIX: Keep track of the best score this session ---
                 session_high_score = max(high_score_so_far, current_score)
-                # ---------------------------------------------------
 
                 self.message("You Lost!", self.colors.get('text', (255,255,255)), y_offset=-50)
-                self.message(f"Score: {current_score}", self.colors.get('text', (255,255,255)), font=self.score_font, y_offset=0)
-                self.message("Press A-Play Again or B-Quit", self.colors.get('text', (255,255,255)), y_offset=50)
+                self.message(f"Final Score: {current_score}", self.colors.get('text', (255,255,255)), font=self.score_font, y_offset=0)
+                self.message("Press A-Play Again", self.colors.get('text', (255,255,255)), y_offset=50)
+                self.message("B-Quit", self.colors.get('text', (255,255,255)), y_offset=100)
                 pygame.display.update()
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         game_over = True; game_close = False
                     if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_b: # Player chooses to Quit
+                        if event.key == pygame.K_b:
                             game_over = True; game_close = False
-                        if event.key == pygame.K_a: # Player chooses to Play Again
-                            # --- FIX: Recursively call game_loop, passing the session's high score ---
+                        if event.key == pygame.K_a:
                             return self.game_loop(high_score_so_far=session_high_score)
-                            # -------------------------------------------------------------------------
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -121,20 +123,19 @@ class Snake:
             else: 
                 pygame.draw.rect(self.screen, self.colors.get('snake', (0,255,0)), [snake_head[0], snake_head[1], self.snake_block, self.snake_block])
             
-            self.display_score(length_of_snake - 1)
             pygame.display.update()
             
             if head_rect.colliderect(food_rect):
                 foodx, foody = self._generate_food(snake_list)
                 length_of_snake += 1
+                self.callbacks['update_score'](length_of_snake - 1)
 
             self.clock.tick(self.snake_speed)
 
+        self.callbacks['set_score_visibility'](False)
         pygame.quit()
-        # --- FIX: Return the highest score from the entire session ---
         final_score = length_of_snake - 1
         return max(high_score_so_far, final_score)
-        # -----------------------------------------------------------
 
     def message(self, msg, color, font=None, y_offset=0):
         if font is None:
@@ -144,9 +145,9 @@ class Snake:
         self.screen.blit(mesg, text_rect)
 
     def draw_snake_body(self, snake_list):
-        for x in snake_list:
-            pygame.draw.rect(self.screen, self.colors.get('snake', (0,255,0)), [x[0], x[1], self.snake_block, self.snake_block])
-
-    def display_score(self, score):
-        value = self.font_style.render("Score: " + str(score), True, self.colors.get('text', (255,255,255)))
-        self.screen.blit(value, [10, 10])
+        if self.player_body_img:
+            for x in snake_list:
+                self.screen.blit(self.player_body_img, (x[0], x[1]))
+        else:
+            for x in snake_list:
+                pygame.draw.rect(self.screen, self.colors.get('snake', (0,255,0)), [x[0], x[1], self.snake_block, self.snake_block])

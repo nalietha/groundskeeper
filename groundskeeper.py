@@ -59,7 +59,7 @@ class GroundskeeperApp:
         
         self.active_theme_name = self.config.DEFAULT_THEME
 
-        callbacks = {
+        self.callbacks = {
             'show_main_menu': self.show_main_menu,
             'show_title_screen': self.show_title_screen, 
             'confirm_and_start_item': self.confirm_and_start_item, 
@@ -82,19 +82,18 @@ class GroundskeeperApp:
             'save_score': self.game_service.save_score,
             'reset_all_items': self.reset_all_items,
             'toggle_turbo_mode': self.toggle_turbo_mode,
-            'get_loading_service': lambda: self.loading_service
+            'get_loading_service': lambda: self.loading_service,
+            # New callbacks for the game to use
+            'update_score': lambda score: self.view.update_score(score),
+            'set_score_visibility': lambda is_visible: self.view.set_score_visibility(is_visible)
         }
 
-        self.view = View(root, callbacks, config, self.control_service, [
+        self.view = View(root, self.callbacks, config, self.control_service, [
             SplashView, TitleView, AffirmationView, JokeView, UpdateView, 
             SettingsView, GamesView, LoadingView, ExtrasView, LeaderboardView, 
             NameEntryView
         ])
         self.show_splash_screen()
-        # self.show_standby_screen()
-        # self.periodic_check()
-        # self.gpio_service.start()
-        # self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
     def on_closing(self):
         self.tracking_service._save_tracked_items()
@@ -103,11 +102,9 @@ class GroundskeeperApp:
         
     
     def show_loading_and_run(self, target_function):
-        """Displays the loading screen, then runs the target function after a delay."""
         delay = 0 if self.turbo_mode else self.config.LATENCY_MS
         
         if delay > 0:
-            # --- Use theme-specific loading images ---
             active_theme = self.theme_service.get_theme(self.active_theme_name)
             loading_screen = self.view.screens.get('LoadingView')
             if loading_screen and active_theme.loading_images:
@@ -115,7 +112,6 @@ class GroundskeeperApp:
                     active_theme.loading_images, self.config.SCREEN_WIDTH, self.config.SCREEN_HEIGHT
                 )
                 loading_screen.set_image_sequence(image_sequence)
-            # ------------------------------------------
             
             self.view.show_screen('LoadingView')
             self.root.after(delay, target_function)
@@ -155,7 +151,6 @@ class GroundskeeperApp:
             start_time = tracked_item['start_time']
             mood, _ = MoodService.get_mood_for_theme(theme, start_time)
             
-            # --- New Date Formatting Logic ---
             today = date.today()
             yesterday = today - timedelta(days=1)
 
@@ -166,9 +161,7 @@ class GroundskeeperApp:
                 time_format = start_time.strftime("%I:%M %p").lstrip('0')
                 start_time_str = f"Yesterday, {time_format}"
             else:
-                # Fallback for older dates
                 start_time_str = start_time.strftime("%b %d, %I:%M %p")
-            # --------------------------------
 
         else:
             mood = Mood("Welcome!", "Start an item from the menu.", "👋")
@@ -251,13 +244,10 @@ class GroundskeeperApp:
         self.show_loading_and_run(_action)
     
     def show_splash_screen(self):
-        """Shows the studio logo for a brief period."""
         self.view.show_screen('SplashView')
-        # After 3 seconds, transition to the title screen
         self.root.after(3000, self.show_title_screen)
 
     def show_title_screen(self):
-        """Shows the 'Press Start' screen and waits for input."""
         self.view.show_screen('TitleView')
 #endregion 
 
@@ -280,7 +270,7 @@ class GroundskeeperApp:
     def check_for_updates(self):
         update_screen = self.view.screens['UpdateView']
         update_screen.status_label.config(text="Checking GitHub for new releases...")
-        self.root.update_idletasks() # Force UI to update
+        self.root.update_idletasks()
 
         updates = self.updater.check_for_updates()
         update_screen.update_status(updates)
@@ -296,12 +286,9 @@ class GroundskeeperApp:
             update_screen.status_label.config(text=f"Applying system update to v{system_update_version}...")
             self.root.update_idletasks()
             
-            # In a real app, this is where you'd download and apply the update.
-            # For now, we'll simulate it by just updating the version file.
             result_message = self.updater.apply_update("system", system_update_version)
             
             update_screen.status_label.config(text=result_message)
-            # Update the current version label and disable the button
             update_screen.current_version_label.config(text=f"v{system_update_version}")
             update_screen.update_button.config(text="Update Applied", state="disabled")
 # endregion
@@ -309,7 +296,6 @@ class GroundskeeperApp:
 
 # region Games
     def show_name_entry(self, game_name, score):
-        """Prepares and shows the screen for the player to enter their name."""
         def _action():
             name_entry_screen = self.view.screens['NameEntryView']
             name_entry_screen.set_score(game_name, score)
@@ -318,24 +304,21 @@ class GroundskeeperApp:
         self.show_loading_and_run(_action)
 
     def start_game(self, game_name):
-        """A generic method to start any discovered game."""
         self.control_service.deactivate_all_controls()
-        self.root.iconify() # Hide the main Tkinter window
+        self.root.iconify()
         active_theme = self.theme_service.get_theme(self.active_theme_name)
         
-        score = self.game_service.start_game(game_name, active_theme)
+        # Pass the callbacks to the game service
+        score = self.game_service.start_game(game_name, active_theme, self.callbacks)
         print(f"Game '{game_name}' ended with score: {score}")
         self.root.deiconify()
 
-        # --- FIX: Bypass the loading screen for post-game UI ---
         if self.game_service.is_high_score(game_name, score):
-            # Directly call the core logic of show_name_entry
             name_entry_screen = self.view.screens['NameEntryView']
             name_entry_screen.set_score(game_name, score)
             self.brighten_screen()
             self.view.show_screen('NameEntryView')
         else:
-            # Directly call the core logic of show_leaderboard
             leaderboard_screen = self.view.screens['LeaderboardView']
             scores = self.game_service.get_scores(game_name)
             leaderboard_screen.display_scores(game_name, scores)
@@ -349,22 +332,18 @@ class GroundskeeperApp:
         self.show_loading_and_run(_action)
         
     def show_leaderboard(self):
-        """Shows the leaderboard for the currently selected game in the carousel."""
         games_screen = self.view.screens.get('GamesView')
         if not games_screen or not hasattr(games_screen, 'carousel'):
             print("Error: Could not find the games screen or carousel.")
             return
 
-        # Get the key (e.g., 'snake') of the game in the center of the carousel
         game_name = games_screen.carousel.get_current_item_key()
         if not game_name:
-            # If there are no games, just show a generic leaderboard
             game_name = "All Games"
 
         leaderboard_screen = self.view.screens['LeaderboardView']
         scores = self.game_service.get_scores(game_name)
         
-        # Pass both the game name and the scores to the view
         leaderboard_screen.display_scores(game_name, scores)
         
         self.brighten_screen()
@@ -377,9 +356,7 @@ class GroundskeeperApp:
         self.turbo_mode = not self.turbo_mode
         print(f"Turbo mode {'ENABLED' if self.turbo_mode else 'DISABLED'}")
         
-        # --- Tell the status bar to update its icon ---
         self.view.status_bar.set_turbo_visibility(self.turbo_mode)
-        # ----------------------------------------------
         
         settings_screen = self.view.screens.get('SettingsView')
         if settings_screen:
@@ -387,9 +364,6 @@ class GroundskeeperApp:
 
 
 #endregion
-
-
-
 
 if __name__ == "__main__":
     app_root = tk.Tk()

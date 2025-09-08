@@ -6,6 +6,16 @@
     },
     {
         "game": "snake",
+        "name": "AAA",
+        "score": 15
+    },
+    {
+        "game": "snake",
+        "name": "NAL",
+        "score": 14
+    },
+    {
+        "game": "snake",
         "name": "?BA",
         "score": 5
     },
