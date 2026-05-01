@@ -19,11 +19,29 @@ class SettingsView(MenuScreen):
 
         self.turbo_button = tk.Button(button_area, text="Turbo: OFF", font=self.fonts["button"], command=self.callbacks['toggle_turbo_mode'])
         self.turbo_button.pack(pady=10, fill="x")
+
+        debug_button = tk.Button(button_area, text="Debug Menu", font=self.fonts["button"], command=self.callbacks.get('show_debug_menu'))
+        debug_button.pack(pady=10, fill="x")
         
         # The "Back" button is created by the MenuScreen base.
         # We just need to add our new buttons to the navigation list.
-        self.navigable_widgets = [update_button, reset_button, self.turbo_button] + self.navigable_widgets
+        self.navigable_widgets = [update_button, reset_button, self.turbo_button, debug_button] + self.navigable_widgets
         self.setup_navigation()
+
+        ip_address = self.get_ip_address()
+        ip_label = tk.Label(self.content_frame, text=f"IP: {ip_address}", font=("Courier", 10), fg="gray")
+        ip_label.pack(side="bottom", pady=10)
+
+    def get_ip_address(self):
+        import socket
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("8.8.8.8", 80))
+            ip = s.getsockname()[0]
+            s.close()
+            return ip
+        except Exception:
+            return "127.0.0.1"
 
     def update_turbo_button_state(self, is_on):
         """Updates the turbo button's appearance."""

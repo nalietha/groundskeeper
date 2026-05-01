@@ -29,12 +29,21 @@ class StatusBar(tk.Frame):
         try:
             self.turbo_icon_image = ImageTk.PhotoImage(Image.open("assets/icons/turbo_on.png").resize((16, 16)))
             self.turbo_icon_label = tk.Label(icons_frame, image=self.turbo_icon_image)
-            # The label is created but not shown initially. We'll use pack_forget() to hide it.
-            self.turbo_icon_label.pack()
+            self.turbo_icon_label.pack(side="right")
             self.turbo_icon_label.pack_forget()
         except Exception as e:
             print(f"Could not load turbo icon: {e}")
-            self.turbo_icon_label = None # Handle missing icon gracefully
+            self.turbo_icon_label = None
+
+        # --- Update Icon ---
+        try:
+            self.update_icon_image = ImageTk.PhotoImage(Image.open("assets/icons/update.png").resize((16, 16)))
+            self.update_icon_label = tk.Label(icons_frame, image=self.update_icon_image)
+            self.update_icon_label.pack(side="right")
+            self.update_icon_label.pack_forget()
+        except Exception as e:
+            print(f"Could not load update icon: {e}")
+            self.update_icon_label = None
 
         self.update_clock()
 
@@ -55,6 +64,16 @@ class StatusBar(tk.Frame):
             self.turbo_icon_label.pack(side="right")
         else:
             self.turbo_icon_label.pack_forget()
+            
+    def set_update_visibility(self, is_visible):
+        """Shows or hides the update icon."""
+        if not self.update_icon_label:
+            return
+            
+        if is_visible:
+            self.update_icon_label.pack(side="right", padx=(0, 2))
+        else:
+            self.update_icon_label.pack_forget()
     
     def set_score_visibility(self, is_visible):
         """Shows or hides the score label."""

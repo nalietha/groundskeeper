@@ -17,6 +17,8 @@ from core.tracking_service import TrackingService
 from core.gpio_service import GPIOService
 from core.control_service import ControlService
 from core.loading_service import LoadingService
+from core.notification_service import NotificationService
+from core.webapp_service import WebAppService
 #endregion
 #region Views Imports
 from views.view import View
@@ -31,6 +33,9 @@ from views.leaderboard import LeaderboardView
 from views.name_entry import NameEntryView
 from views.splash import SplashView
 from views.title import TitleView
+from views.qr_code_view import QRCodeView
+from views.debug import DebugView
+import threading
 #endregion
 
 from models.mood import Mood
@@ -47,11 +52,14 @@ class GroundskeeperApp:
         self.joke_service = JokeService()
         self.updater = UpdateService()
         self.game_service = GameService(config)
-        self.state_file = "state.json"
-        self.tracking_service = TrackingService(self.state_file, self.theme_service)
+        self.state_file = "data/state.json"
+        self.tracking_service = TrackingService(self.state_file, self.theme_service, self.joke_service, self.affirmation_service)
         self.gpio_service = GPIOService(config.GPIO_PINS)
         self.control_service = ControlService(self)
         self.loading_service = LoadingService()
+        self.notification_service = NotificationService(getattr(self.config, 'EMAIL_CONFIG', {}))
+        self.webapp_service = WebAppService(self.notification_service, self.theme_service)
+        self.webapp_service.start()
         self.turbo_mode = False
 
         if not self.theme_service.themes:
@@ -83,6 +91,10 @@ class GroundskeeperApp:
             'reset_all_items': self.reset_all_items,
             'toggle_turbo_mode': self.toggle_turbo_mode,
             'get_loading_service': lambda: self.loading_service,
+            'get_webapp_ip': lambda: self.webapp_service.get_local_ip(),
+            'show_qr_screen': self.show_qr_screen,
+            'show_debug_menu': self.show_debug_menu,
+            'test_email': self.notification_service.send_test_email,
             # New callbacks for the game to use
             'update_score': lambda score: self.view.update_score(score),
             'set_score_visibility': lambda is_visible: self.view.set_score_visibility(is_visible)
@@ -91,9 +103,16 @@ class GroundskeeperApp:
         self.view = View(root, self.callbacks, config, self.control_service, [
             SplashView, TitleView, AffirmationView, JokeView, UpdateView, 
             SettingsView, GamesView, LoadingView, ExtrasView, LeaderboardView, 
-            NameEntryView
+            NameEntryView, QRCodeView, DebugView
         ])
         self.show_splash_screen()
+        
+        # Start a background thread to check for updates periodically
+        self.update_thread = threading.Thread(target=self._background_update_check, daemon=True)
+        self.update_thread.start()
+        
+        # Start the main loop to check for notifications
+        self.periodic_check()
 
     def on_closing(self):
         self.tracking_service._save_tracked_items()
@@ -140,7 +159,20 @@ class GroundskeeperApp:
 
     def periodic_check(self):
         self.update_standby_ui()
+        self.tracking_service.check_notifications(self.notification_service)
         self.root.after(60000, self.periodic_check)
+        
+    def _background_update_check(self):
+        """Runs in a background thread to check for updates every hour."""
+        import time
+        while True:
+            updates = self.updater.check_for_updates()
+            # Safely update the UI from the background thread using after
+            if updates:
+                self.root.after(0, lambda: self.view.status_bar.set_update_visibility(True))
+            else:
+                self.root.after(0, lambda: self.view.status_bar.set_update_visibility(False))
+            time.sleep(3600) # Check every hour
 
     def update_standby_ui(self):
         standby_screen = self.view.screens['StandbyView']
@@ -237,10 +269,22 @@ class GroundskeeperApp:
             self.view.show_screen('ExtrasView')
         self.show_loading_and_run(_action) 
         
+    def show_qr_screen(self):
+        def _action():
+            self.brighten_screen()
+            self.view.show_screen('QRCodeView')
+        self.show_loading_and_run(_action)
+        
     def show_settings(self):
         def _action():
             self.brighten_screen()
             self.view.show_screen('SettingsView')
+        self.show_loading_and_run(_action)
+        
+    def show_debug_menu(self):
+        def _action():
+            self.brighten_screen()
+            self.view.show_screen('DebugView')
         self.show_loading_and_run(_action)
     
     def show_splash_screen(self):

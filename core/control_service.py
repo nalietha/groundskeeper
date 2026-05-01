@@ -22,6 +22,7 @@ class ControlService:
     def _setup_global_controls(self):
         """Binds keys that should work on any screen and are never deactivated."""
         self.add_global_binding("<space>", self.handle_coin_press)
+        self.add_global_binding("r", self.handle_brew_press)
 
     def add_global_binding(self, event, callback):
         """Adds a binding that is not cleared on screen change."""
@@ -32,6 +33,13 @@ class ControlService:
         """Callback for the global coin/games button."""
         print("Coin button pressed!")
         self.app.show_games() # Call the existing show_games method
+        return "break"
+
+    def handle_brew_press(self, event):
+        """Callback for the global brew button (resets current theme timer)."""
+        print("Brew button pressed!")
+        # Automatically confirm and start the item for the currently active theme
+        self.app.confirm_and_start_item(self.app.active_theme_name)
         return "break"
     
     def activate_ui_controls(self, screen):

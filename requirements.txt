@@ -1,3 +1,5 @@
-pygame
-RPi.GPIO
-pynput
+pygame-ce
+Pillow
+Flask
+qrcode
+python-dotenv

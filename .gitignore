@@ -1,2 +1,4 @@
-leaderboard.json
-state.json
+__pycache__/
+.venv/
+.env
+data/*.json

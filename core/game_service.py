@@ -8,7 +8,7 @@ from pathlib import Path # Use pathlib for robust path handling
 class GameService:
     def __init__(self, config):
         self.config = config
-        self.leaderboard_file = "leaderboard.json"
+        self.leaderboard_file = "data/leaderboard.json"
         self.games = self._discover_games()
         print(f"Discovered {len(self.games)} games.")
 

@@ -11,6 +11,7 @@ class Player(pygame.sprite.Sprite):
         self.original_image = self.image
         self.rect = self.image.get_rect(center=(screen_width / 2, screen_height - 50))
         self.screen_width = screen_width
+        self.screen_height = screen_height
         self.speed = 5
         self.last_shot = 0
         self.shoot_delay = 300
@@ -19,7 +20,7 @@ class Player(pygame.sprite.Sprite):
         self.hidden = False
         self.hide_timer = pygame.time.get_ticks()
 
-    def update(self, all_sprites, player_bullets, *args): # Corrected method signature
+    def update(self, all_sprites, player_bullets):
         if self.hidden and pygame.time.get_ticks() - self.hide_timer > 2000:
             self.hidden = False
             self.rect.centerx = self.screen_width / 2
@@ -73,7 +74,7 @@ class Enemy(pygame.sprite.Sprite):
         self.dive_speed = 4
         self.swoop_speed_x = random.choice([-2, 2])
 
-    def update(self, player, all_sprites, enemy_bullets, *args): # Corrected method signature
+    def update(self, player, all_sprites, enemy_bullets):
         if self.state == 'ENTERING':
             dx, dy = self.target_x - self.rect.centerx, self.target_y - self.rect.centery
             dist = math.hypot(dx, dy)
@@ -107,7 +108,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=(x, y))
         self.speedy = speed
 
-    def update(self, *args):
+    def update(self):
         self.rect.y += self.speedy
         if self.rect.bottom < 0:
             self.kill()
@@ -119,7 +120,7 @@ class EnemyBullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=(x, y))
         self.speedy = 5
 
-    def update(self, *args):
+    def update(self):
         self.rect.y += self.speedy
         if self.rect.top > 480:
             self.kill()
@@ -132,7 +133,7 @@ class Powerup(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=center)
         self.speedy = 3
 
-    def update(self, *args):
+    def update(self):
         self.rect.y += self.speedy
         if self.rect.top > 480:
             self.kill()
@@ -148,11 +149,12 @@ class CosmicGrind:
         self.assets = assets
         self.callbacks = callbacks
         self.colors = assets.get('colors', {})
-        self.font_style = pygame.font.SysFont(None, 35)
-        self.large_font = pygame.font.SysFont(None, 75)
+        self.font_style = pygame.font.SysFont(None, 24)
+        self.large_font = pygame.font.SysFont(None, 50)
         self.score = 0
         self.game_running = True
         self.wave = 0
+        self.paused = False 
         
         self.last_dive_time = pygame.time.get_ticks()
         self.dive_delay = 1500
@@ -196,15 +198,28 @@ class CosmicGrind:
                 if event.type == pygame.QUIT:
                     self.game_running = False
                 elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.paused = not self.paused
                     if event.key == pygame.K_q:
                         self.game_running = False
+            
+            if self.paused:
+                self.message("Paused", self.colors.get('text', (255, 255, 255)), font=self.large_font)
+                self.message("Press ESC to Resume", self.colors.get('text', (255, 255, 255)), y_offset=50)
+                self.message("Q to Quit", self.colors.get('text', (255, 255, 255)), y_offset=100)
+                pygame.display.update()
+                continue
 
             if self.wave_cleared_time is None and now - self.last_dive_time > self.dive_delay:
                 self.last_dive_time = now
                 self.trigger_enemy_dive()
 
-            # The main update call now sends the correct arguments to each sprite class
-            self.all_sprites.update(self.player, self.all_sprites, self.enemy_bullets, self.player_bullets)
+            # Update sprites with specific arguments for each group
+            self.player.update(self.all_sprites, self.player_bullets)
+            self.enemies.update(self.player, self.all_sprites, self.enemy_bullets)
+            self.player_bullets.update()
+            self.enemy_bullets.update()
+            self.powerups.update()
             
             hits = pygame.sprite.groupcollide(self.enemies, self.player_bullets, True, True)
             if hits:
@@ -234,6 +249,12 @@ class CosmicGrind:
                     self.player.hide()
                     if self.player.lives <= 0:
                         self.game_running = False
+                    else:
+                        # Display lives left message
+                        color = (255, 50, 50) if self.player.lives == 1 else self.colors.get('text', (255, 255, 255))
+                        self.message(f"Lives Left: {self.player.lives}", color, font=self.large_font)
+                        pygame.display.update()
+                        time.sleep(1.5)
 
             if not self.enemies and self.wave_cleared_time is None:
                 self.wave_cleared_time = pygame.time.get_ticks()

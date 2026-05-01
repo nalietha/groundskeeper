@@ -5,7 +5,7 @@ import urllib.request
 import re
 
 class UpdateService:
-    def __init__(self, version_file='version.json'):
+    def __init__(self, version_file='data/version.json'):
         self.api_url = "https://api.github.com/repos/nalietha/groundskeeper/releases/latest"
         self.version_file = version_file
         self.current_versions = self._load_versions()

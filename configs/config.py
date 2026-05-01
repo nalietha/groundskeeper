@@ -1,6 +1,11 @@
 import json
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 class Config:
-    """Loads global configuration from appsettings.json."""
+    """Loads global configuration from appsettings.json and .env."""
     def __init__(self, filename="appsettings.json"):
         # Default values
         self.SCREEN_WIDTH = 240
@@ -34,6 +39,14 @@ class Config:
             self.GPIO_PINS = config_data.get("gpio_pins", self.GPIO_PINS)
             self.LATENCY_MS = latency.get("menu_load_ms", self.LATENCY_MS)
             self.LOADING_IMAGE_INTERVAL_MS = latency.get("loading_image_interval_ms", self.LOADING_IMAGE_INTERVAL_MS)
+            self.EMAIL_CONFIG = config_data.get("email", {})
+            
+            # Override email credentials with environment variables if present
+            if os.getenv("SMTP_SENDER_EMAIL"):
+                self.EMAIL_CONFIG["sender_email"] = os.getenv("SMTP_SENDER_EMAIL")
+            if os.getenv("SMTP_SENDER_PASSWORD"):
+                self.EMAIL_CONFIG["sender_password"] = os.getenv("SMTP_SENDER_PASSWORD")
+                
             print(f"Successfully loaded global settings from {filename}")
         except (FileNotFoundError, json.JSONDecodeError) as e:
             print(f"Warning: Could not load '{filename}' ({e}). Using default settings.")
