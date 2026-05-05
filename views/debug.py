@@ -12,21 +12,24 @@ class DebugView(MenuScreen):
         self.status_label = tk.Label(button_area, text="", font=self.fonts["body"], fg="blue", wraplength=200, justify="center")
         self.status_label.pack(pady=5)
 
-        test_email_btn = tk.Button(
-            button_area, 
-            text="Test Email Config", 
-            font=self.fonts["button"], 
-            command=self._test_email
-        )
-        test_email_btn.pack(pady=10, fill="x")
+        btn_test_config = tk.Button(button_area, text="Test SMTP Config", font=self.fonts["button"], command=lambda: self._run_test('test_email'))
+        btn_test_config.pack(pady=5, fill="x")
 
-        self.navigable_widgets = [test_email_btn] + self.navigable_widgets
+        btn_test_started = tk.Button(button_area, text="Test 'Started' Email", font=self.fonts["button"], command=lambda: self._run_test('test_email_started'))
+        btn_test_started.pack(pady=5, fill="x")
+
+        btn_test_ready = tk.Button(button_area, text="Test 'Ready' Email", font=self.fonts["button"], command=lambda: self._run_test('test_email_ready'))
+        btn_test_ready.pack(pady=5, fill="x")
+
+        self.navigable_widgets = [btn_test_config, btn_test_started, btn_test_ready] + self.navigable_widgets
         self.setup_navigation()
 
-    def _test_email(self):
-        self.status_label.config(text="Sending test email...")
+    def _run_test(self, callback_key):
+        """Runs the assigned test callback and updates the UI with the result."""
+        self.status_label.config(text="Sending test email...", fg="blue")
         self.content_frame.update_idletasks()
-        if 'test_email' in self.callbacks:
-            success, msg = self.callbacks['test_email']()
+        
+        if callback_key in self.callbacks:
+            success, msg = self.callbacks[callback_key]()
             color = "green" if success else "red"
             self.status_label.config(text=msg, fg=color)

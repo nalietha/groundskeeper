@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; background-color: #f4f7f6; padding: 20px; margin: 0;">
+    <div style="background-color: #ffffff; padding: 30px; border-radius: 12px; max-width: 500px; margin: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+        
+        <h2 style="color: #4CAF50; margin-top: 0;">Hey {{ alias }}! Your {{ theme_name }} Update ☕</h2>
+        <p style="font-size: 16px; color: #333333; line-height: 1.5;">{{ main_message }}</p>
+
+        {% if joke %}
+        <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 25px;">
+            <h3 style="color: #777; font-size: 13px; text-transform: uppercase; margin-top: 0; margin-bottom: 8px;">Joke of the Day</h3>
+            <p style="color: #555; margin: 0; font-style: italic;">"{{ joke }}"</p>
+        </div>
+        {% endif %}
+
+        {% if affirmation %}
+        <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px; margin-top: 15px;">
+            <h3 style="color: #2e7d32; font-size: 13px; text-transform: uppercase; margin-top: 0; margin-bottom: 8px;">Daily Affirmation</h3>
+            <p style="color: #1b5e20; margin: 0; font-weight: bold;">{{ affirmation }}</p>
+        </div>
+        {% endif %}
+        
+    </div>
+</body>
+</html>

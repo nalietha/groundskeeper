@@ -58,7 +58,7 @@ class GroundskeeperApp:
         self.control_service = ControlService(self)
         self.loading_service = LoadingService()
         self.notification_service = NotificationService(getattr(self.config, 'EMAIL_CONFIG', {}))
-        self.webapp_service = WebAppService(self.notification_service, self.theme_service)
+        self.webapp_service = WebAppService(self.notification_service, self.theme_service, self.tracking_service)
         self.webapp_service.start()
         self.turbo_mode = False
 
@@ -93,8 +93,12 @@ class GroundskeeperApp:
             'get_loading_service': lambda: self.loading_service,
             'get_webapp_ip': lambda: self.webapp_service.get_local_ip(),
             'show_qr_screen': self.show_qr_screen,
+            # debugging menu
             'show_debug_menu': self.show_debug_menu,
             'test_email': self.notification_service.send_test_email,
+            'test_email_started': self.test_email_started,    # Add this
+            'test_email_ready': self.test_email_ready,        # Add this
+
             # New callbacks for the game to use
             'update_score': lambda score: self.view.update_score(score),
             'set_score_visibility': lambda is_visible: self.view.set_score_visibility(is_visible)
@@ -230,6 +234,39 @@ class GroundskeeperApp:
         self.active_theme_name = self.config.DEFAULT_THEME
         self.show_standby_screen()
 
+# region Debug Actions
+    def test_email_started(self):
+        theme = self.theme_service.get_theme(self.active_theme_name)
+
+        context = {
+            "theme_name": theme.name,
+            "main_message": f"[TEST] {theme.name} has just been started!"
+        }
+        if hasattr(self.tracking_service, '_get_newsletter_content'):
+            context.update(self.tracking_service._get_newsletter_content(theme))
+        
+        try:
+            self.notification_service.send_notification(theme.name, context, test_mode=True)
+            return True, f"'Started' preview sent to your email!"
+        except Exception as e:
+            return False, f"Failed: {str(e)}"
+
+    def test_email_ready(self):
+        theme = self.theme_service.get_theme(self.active_theme_name)
+
+        context = {
+            "theme_name": theme.name,
+            "main_message": f"[TEST] {theme.name} is now ready! Enjoy!"
+        }
+        if hasattr(self.tracking_service, '_get_newsletter_content'):
+            context.update(self.tracking_service._get_newsletter_content(theme))
+            
+        try:
+            self.notification_service.send_notification(theme.name, context, test_mode=True)
+            return True, f"'Ready' preview sent to your email!"
+        except Exception as e:
+            return False, f"Failed: {str(e)}"
+# endregion
 #region Screens
 
     def show_standby_screen(self):
@@ -336,7 +373,6 @@ class GroundskeeperApp:
             update_screen.current_version_label.config(text=f"v{system_update_version}")
             update_screen.update_button.config(text="Update Applied", state="disabled")
 # endregion
-
 
 # region Games
     def show_name_entry(self, game_name, score):

@@ -67,24 +67,16 @@ class TrackingService:
         self._save_tracked_items()
         print("All tracked items have been reset.")
         
-    def _append_newsletter_content(self, message, theme):
-        """Appends the joke of the day and daily affirmation to the message."""
-        content = message + "\n"
-        
+    def _get_newsletter_content(self, theme):
+        """Fetches joke and affirmation as a dictionary."""
+        content = {}
         if getattr(self, 'joke_service', None):
-            joke = self.joke_service.get_joke(theme=theme)
-            if joke:
-                content += f"\n\n--- Joke of the Day ---\n{joke}"
-                
+            content['joke'] = self.joke_service.get_joke(theme=theme)
         if getattr(self, 'affirmation_service', None):
-            affirmation = self.affirmation_service.get_daily_affirmation()
-            if affirmation:
-                content += f"\n\n--- Daily Affirmation ---\n{affirmation}"
-                
+            content['affirmation'] = self.affirmation_service.get_daily_affirmation()
         return content
-        
+
     def check_notifications(self, notification_service):
-        """Checks if any tracked items have reached a notification threshold and sends alerts."""
         now = datetime.now()
         state_changed = False
         
@@ -99,16 +91,18 @@ class TrackingService:
             # 1. Started Notification
             if 'started' not in events:
                 if timer_ms > 0 and elapsed_ms >= timer_ms:
-                    # Skip 'started' notification if it's already 'ready' to avoid double emails on restart
                     events.append('started')
                     item['notified_events'] = events
                     state_changed = True
                 else:
-                    msg = f"Update: {theme.name} has just been started!"
+                    context = {
+                        "theme_name": theme.name,
+                        "main_message": f"{theme.name} has just been started!"
+                    }
                     if timer_ms <= 0:
-                        msg = self._append_newsletter_content(msg, theme)
+                        context.update(self._get_newsletter_content(theme))
                         
-                    notification_service.send_notification(theme.name, msg)
+                    notification_service.send_notification(theme.name, context)
                     events.append('started')
                     item['notified_events'] = events
                     state_changed = True
@@ -116,22 +110,19 @@ class TrackingService:
             # 2. Ready Notification
             if timer_ms > 0 and elapsed_ms >= timer_ms and 'ready' not in events:
                 hour = now.hour
-                if hour < 12:
-                    time_of_day = "morning"
-                elif hour < 17:
-                    time_of_day = "afternoon"
-                elif hour < 21:
-                    time_of_day = "evening"
-                else:
-                    time_of_day = "nighttime"
+                time_of_day = "morning" if hour < 12 else "afternoon" if hour < 17 else "evening" if hour < 21 else "nighttime"
                     
-                msg = f"Update: {theme.name} is now ready! Enjoy your {time_of_day} cuppa!"
-                msg = self._append_newsletter_content(msg, theme)
+                context = {
+                    "theme_name": theme.name,
+                    "main_message": f"{theme.name} is now ready! Enjoy your {time_of_day} cuppa!"
+                }
+                context.update(self._get_newsletter_content(theme))
                 
-                notification_service.send_notification(theme.name, msg)
+                notification_service.send_notification(theme.name, context)
                 events.append('ready')
                 item['notified_events'] = events
                 state_changed = True
                 
         if state_changed:
             self._save_tracked_items()
+ 

@@ -89,6 +89,8 @@ class ControlService:
         if not self.ui_context_active or not self.active_screen: return "break"
         if self.active_screen.__class__.__name__ == 'NameEntryView':
             self.active_screen.change_char(1)
+        elif hasattr(self.active_screen, 'carousel'):
+            self.active_screen.carousel.go_previous()
         elif hasattr(self.active_screen, 'navigate') and not hasattr(self.active_screen, 'carousel'):
             self.active_screen.navigate(-1)
         return "break"
@@ -98,6 +100,8 @@ class ControlService:
         if not self.ui_context_active or not self.active_screen: return "break"
         if self.active_screen.__class__.__name__ == 'NameEntryView':
             self.active_screen.change_char(-1)
+        elif hasattr(self.active_screen, 'carousel'):
+            self.active_screen.carousel.go_next()
         elif hasattr(self.active_screen, 'navigate') and not hasattr(self.active_screen, 'carousel'):
             self.active_screen.navigate(1)
         return "break"
@@ -107,8 +111,6 @@ class ControlService:
         if not self.ui_context_active or not self.active_screen: return "break"
         if self.active_screen.__class__.__name__ == 'NameEntryView':
             self.active_screen.move_cursor(-1)
-        elif hasattr(self.active_screen, 'carousel'):
-            self.active_screen.carousel.go_previous()
         elif hasattr(self.active_screen, 'navigate'):
             self.active_screen.navigate(-1)
         return "break"
@@ -118,13 +120,11 @@ class ControlService:
         if not self.ui_context_active or not self.active_screen: return "break"
         if self.active_screen.__class__.__name__ == 'NameEntryView':
             self.active_screen.move_cursor(1)
-        elif hasattr(self.active_screen, 'carousel'):
-            self.active_screen.carousel.go_next()
         elif hasattr(self.active_screen, 'navigate'):
             self.active_screen.navigate(1)
         return "break"
-
     # --- New handlers for A and B buttons ---
+    
     def handle_action_a(self, event):
         self._record_key('a')
         self.invoke_widget(event) # Also perform the normal action
