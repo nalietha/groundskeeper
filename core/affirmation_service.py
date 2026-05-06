@@ -5,7 +5,7 @@ class AffirmationService:
     """
     Loads and provides a unique affirmation for each day of the year.
     """
-    def __init__(self, filename="resources/affirmation.json"):
+    def __init__(self, filename="assets/affirmation.json"):
         self.affirmations = []
         try:
             with open(filename, 'r', encoding='utf-8') as f:

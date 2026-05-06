@@ -19,6 +19,9 @@ class ExtrasView(MenuScreen):
         games_button = tk.Button(button_area, text="Games", font=self.fonts["button"], command=self.callbacks['show_games'])
         games_button.pack(pady=10, fill="x", padx=20)
 
+        notif_button = tk.Button(button_area, text="Setup Notifications", font=self.fonts["button"], command=self.callbacks['show_qr_screen'])
+        notif_button.pack(pady=10, fill="x", padx=20)
+
         # Add the new buttons to the navigable list (the back button is already there from the base class)
-        self.navigable_widgets = [joke_button, affirmation_button, games_button] + self.navigable_widgets
+        self.navigable_widgets = [joke_button, affirmation_button, games_button, notif_button] + self.navigable_widgets
         self.setup_navigation()

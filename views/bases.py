@@ -106,7 +106,18 @@ class GameMenuScreen(BaseScreen):
         button_frame.grid(row=1, column=0, sticky="ew")
         button_frame.columnconfigure((0, 1), weight=1)
 
-        back_button = tk.Button(button_frame, text="Back", font=self.fonts["button"], command=self.go_back)
+        back_button = tk.Button(
+            button_frame, 
+            text="BACK", 
+            font=self.fonts["button"], 
+            command=self.go_back,
+            bg="#2d1b11",              # Dark bronze resting state
+            fg="#d4a373",              # Brass text
+            activebackground="#1a0f0a", # Very dark when pushed
+            activeforeground="#e07a5f", # Text glows copper when pushed
+            bd=5,                      # Thick 3D border
+            relief=tk.RAISED           # Pops out from the screen
+        )
         back_button.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
 
         leaderboard_button = tk.Button(button_frame, text="Leaderboard", font=self.fonts["button"], command=self.callbacks['show_leaderboard'])

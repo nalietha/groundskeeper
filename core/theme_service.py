@@ -1,96 +1,89 @@
 # groundskeeper/core/theme_service.py
 import os
 import json
+from pathlib import Path # Use pathlib for robust path handling
 from models.theme import Theme
 
 
 class ThemeService:
     def __init__(self, themes_dir="themes"):
         self.themes = {}
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        project_root = os.path.dirname(script_dir)
-        abs_themes_dir = os.path.join(project_root, themes_dir)
+        project_root = Path(__file__).parent.parent # Navigate up from core/ to groundskeeper/
+        abs_themes_dir = project_root / themes_dir
 
-        if not os.path.isdir(abs_themes_dir):
+        if not abs_themes_dir.is_dir():
             print(f"Error: Themes directory '{abs_themes_dir}' not found.")
             return
         
-        for theme_name in os.listdir(abs_themes_dir):
-            theme_path = os.path.join(abs_themes_dir, theme_name)
-            settings_file = os.path.join(theme_path, "settings.json")
-            if os.path.isdir(theme_path) and os.path.isfile(settings_file):
+        for theme_dir in abs_themes_dir.iterdir():
+            settings_file = theme_dir / "settings.json"
+            if theme_dir.is_dir() and settings_file.is_file():
                 try:
                     with open(settings_file, 'r', encoding='utf-8') as f:
                         theme_data = json.load(f)
                         
-                        # --- FIX: Check for the "active" flag ---
-                        # If the theme is not marked as active, skip it.
                         if not theme_data.get("active", False):
                             continue
-                        # ----------------------------------------
                         
                         theme = Theme(theme_data)
                         
-                        self._load_standard_assets(theme, theme_path)
-                        self._load_sayings_for_theme(theme, theme_path)
-                        self._load_jokes_for_theme(theme, theme_path)
+                        self._load_standard_assets(theme, theme_dir)
+                        self._load_sayings_for_theme(theme, theme_dir)
+                        self._load_jokes_for_theme(theme, theme_dir)
                         self.themes[theme.name] = theme
 
                 except json.JSONDecodeError:
-                    print(f"Warning: Could not parse settings for theme '{theme_name}'.")
+                    print(f"Warning: Could not parse settings for theme '{theme_dir.name}'.")
         print(f"Discovered and loaded {len(self.themes)} active themes.")
 
     def _load_standard_assets(self, theme, theme_path):
         """Finds and attaches standardized asset paths and data to the theme object."""
-        assets_path = os.path.join(theme_path, "assets")
+        assets_path = theme_path / "assets"
         
-        # Icon, Theme Card, Loading Images... (this part is correct)
-        icon_path = os.path.join(assets_path, "icon.png")
-        if os.path.exists(icon_path): theme.icon = icon_path
-        card_path = os.path.join(assets_path, "theme_card.png")
-        if os.path.exists(card_path): theme.theme_card = card_path
-        loading_path = os.path.join(assets_path, "loading")
-        if os.path.isdir(loading_path):
+        icon_path = assets_path / "icon.png"
+        if icon_path.exists(): theme.icon = str(icon_path)
+        card_path = assets_path / "theme_card.png"
+        if card_path.exists(): theme.theme_card = str(card_path)
+        
+        loading_path = assets_path / "loading"
+        if loading_path.is_dir():
             theme.loading_images = sorted([
-                os.path.join(loading_path, f) for f in os.listdir(loading_path)
-                if f.lower().endswith(('.png', '.jpg', '.jpeg'))
+                str(f) for f in loading_path.iterdir()
+                if f.suffix.lower() in ['.png', '.jpg', '.jpeg']
             ])
             
-        # Game Styles
-        game_styles_path = os.path.join(assets_path, "styled_games.json")
-        if os.path.exists(game_styles_path):
+        game_styles_path = assets_path / "styled_games.json"
+        if game_styles_path.exists():
             try:
                 with open(game_styles_path, 'r', encoding='utf-8') as f:
                     styles_data = json.load(f)
-                    # --- FIX: Correctly resolve relative paths ---
                     for game, assets in styles_data.items():
                         for key, value in assets.items():
-                            if isinstance(value, str) and value.lower().endswith('.png'):
-                                # Create the full, absolute path by joining the theme's assets dir with the relative path
-                                full_path = os.path.join(assets_path, value)
-                                styles_data[game][key] = os.path.normpath(full_path)
+                            if isinstance(value, str) and Path(value).suffix.lower() in ['.png', '.jpg', '.jpeg']:
+                                # Resolve the path relative to the theme's assets directory
+                                full_path = assets_path / value
+                                styles_data[game][key] = str(full_path)
                     theme.game_styles = styles_data
-                    # ---------------------------------------------
             except json.JSONDecodeError:
                 print(f"Warning: Could not parse styled_games.json for theme '{theme.name}'.")
 
     def _load_sayings_for_theme(self, theme, theme_path):
         sayings_filename = f"list_{theme.name.lower()}.json"
-        sayings_path = os.path.join(theme_path, sayings_filename)
+        sayings_path = theme_path / sayings_filename
         try:
             with open(sayings_path, 'r', encoding='utf-8') as f:
                 theme.sayings = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
-            pass # It's okay if a theme doesn't have sayings
+            pass 
 
     def _load_jokes_for_theme(self, theme, theme_path):
         jokes_filename = f"jokes_{theme.name.lower()}.json"
-        jokes_path = os.path.join(theme_path, jokes_filename)
+        jokes_path = theme_path / jokes_filename
         try:
             with open(jokes_path, 'r', encoding='utf-8') as f:
                 theme.jokes = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
-            pass # It's okay if a theme doesn't have jokes
+            pass
 
     def get_theme(self, name): return self.themes.get(name)
     def get_all_themes(self): return list(self.themes.values())

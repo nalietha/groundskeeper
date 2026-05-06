@@ -1,0 +1,63 @@
+{
+  "active":true,
+  "name": "Cosmic Grind",
+  "entry_point": "CosmicGrind",
+  "assets": {
+    "player_ship": {
+      "path": "assets/player.png",
+      "themeable": false,
+      "width": 32,
+      "height": 32
+    },
+    "player_life_icon": {
+      "path": "assets/player_life.png",
+      "themeable": false,
+      "width": 20,
+      "height": 20
+    },
+    "enemy_ship_1": {
+      "path": "assets/enemy1.png",
+      "themeable": false,
+      "width": 24,
+      "height": 24
+    },
+    "enemy_ship_2": {
+      "path": "assets/enemy2.png",
+      "themeable": false,
+      "width": 24,
+      "height": 24
+    },
+    "player_bullet": {
+      "path": "assets/player_bullet.png",
+      "themeable": false,
+      "width": 8,
+      "height": 16
+    },
+    "enemy_bullet": {
+      "path": "assets/enemy_bullet.png",
+      "themeable": false,
+      "width": 8,
+      "height": 16
+    },
+    "powerup_blue": {
+      "path": "assets/powerup_blue.png",
+      "themeable": false,
+      "width": 24,
+      "height": 24
+    },
+    "powerup_gold": {
+      "path": "assets/powerup_gold.png",
+      "themeable": false,
+      "width": 24,
+      "height": 24
+    },
+    "colors": {
+      "type": "dict",
+      "themeable": true,
+      "default": {
+        "background": [15, 15, 25],
+        "text": [255, 255, 255]
+      }
+    }
+  }
+}

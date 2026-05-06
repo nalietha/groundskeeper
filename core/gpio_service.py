@@ -64,6 +64,8 @@ class GPIOService:
             "select": Key.enter,
             "back": Key.backspace,
             "action1": 'a',
-            "action2": 'b'
+            "action2": 'b',
+            "brew": 'r',
+            "coin": Key.space
         }
         return key_map.get(name)
