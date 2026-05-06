@@ -3,31 +3,29 @@ import uuid
 from datetime import datetime
 
 class TrackingService:
-    """
-    Manages loading, saving, and updating all tracked items.
-    """
-    def __init__(self, state_file, theme_service, joke_service=None, affirmation_service=None):
+    def __init__(self, state_file, theme_service, joke_service=None, affirmation_service=None, newsletter_service=None):
         self.state_file = state_file
         self.theme_service = theme_service
         self.joke_service = joke_service
         self.affirmation_service = affirmation_service
+        self.newsletter_service = newsletter_service # Add this
+        
         self.tracked_items = self._load_tracked_items()
+        
+        # Load the last newsletter date from the state file
+        self.last_newsletter_date = None
+        self._load_newsletter_state()
 
-    def _load_tracked_items(self):
-        """Loads items from the state file, converting timestamps back to datetime objects."""
+    def _load_newsletter_state(self):
         try:
             with open(self.state_file, 'r') as f:
                 data = json.load(f)
-                items_data = data.get('tracked_items', [])
-                for item in items_data:
-                    if 'start_time' in item and item['start_time']:
-                        item['start_time'] = datetime.fromisoformat(item['start_time'])
-                return items_data
+                self.last_newsletter_date = data.get('last_newsletter_date')
         except (FileNotFoundError, json.JSONDecodeError):
-            return []
+            pass
 
+    # Update your _save_tracked_items method to also save the newsletter date
     def _save_tracked_items(self):
-        """Saves items to the state file, converting datetime objects to strings."""
         items_to_save = []
         for item in self.tracked_items:
             item_copy = item.copy()
@@ -36,7 +34,10 @@ class TrackingService:
             items_to_save.append(item_copy)
 
         with open(self.state_file, 'w') as f:
-            json.dump({'tracked_items': items_to_save}, f, indent=4)
+            json.dump({
+                'tracked_items': items_to_save,
+                'last_newsletter_date': self.last_newsletter_date # Add this
+            }, f, indent=4)
 
     def start_tracking_item(self, theme_name):
         """Starts tracking a new item, replacing an existing one of the same theme."""
@@ -88,20 +89,27 @@ class TrackingService:
             events = item.get('notified_events', [])
             timer_ms = getattr(theme, 'timer_ms', 0)
             
-            # 1. Started Notification
+           # 1. Started Notification
             if 'started' not in events:
                 if timer_ms > 0 and elapsed_ms >= timer_ms:
+                    # Skip 'started' notification if it's already 'ready'
                     events.append('started')
                     item['notified_events'] = events
                     state_changed = True
                 else:
-                    context = {
-                        "theme_name": theme.name,
-                        "main_message": f"{theme.name} has just been started!"
-                    }
-                    if timer_ms <= 0:
-                        context.update(self._get_newsletter_content(theme))
+                    msg = f"{theme.name} has just been started!"
+                    context = {"theme_name": theme.name, "main_message": msg}
+                    
+                    today_str = str(now.date())
+                    # Only append the newsletter if it's the first brew of the day
+                    if self.newsletter_service and self.last_newsletter_date != today_str:
+                        newsletter_content = self.newsletter_service.generate_morning_newsletter(theme)
+                        context.update(newsletter_content)
                         
+                        # Mark today as sent!
+                        self.last_newsletter_date = today_str
+                        state_changed = True
+
                     notification_service.send_notification(theme.name, context)
                     events.append('started')
                     item['notified_events'] = events

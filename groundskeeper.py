@@ -19,7 +19,10 @@ from core.control_service import ControlService
 from core.loading_service import LoadingService
 from core.notification_service import NotificationService
 from core.webapp_service import WebAppService
+from core.newsletter_service import NewsletterService
+
 #endregion
+
 #region Views Imports
 from views.view import View
 from views.affirmation import AffirmationView
@@ -47,18 +50,32 @@ class GroundskeeperApp:
         self.root.resizable(False, False)
         self.root.pack_propagate(False)
         self.inactivity_job_id = None
+        self.state_file = "data/state.json"
+        # Feature Services
         self.theme_service = ThemeService()
         self.affirmation_service = AffirmationService()
         self.joke_service = JokeService()
         self.updater = UpdateService()
         self.game_service = GameService(config)
-        self.state_file = "data/state.json"
-        self.tracking_service = TrackingService(self.state_file, self.theme_service, self.joke_service, self.affirmation_service)
+        self.newsletter_service = NewsletterService(self.joke_service, self.affirmation_service)
+        
+        # Core tracking 
+        self.tracking_service = TrackingService(
+            self.state_file, 
+            self.theme_service, 
+            self.joke_service, 
+            self.affirmation_service,
+            self.newsletter_service
+        )
+        
+        # UI 
         self.gpio_service = GPIOService(config.GPIO_PINS)
         self.control_service = ControlService(self)
         self.loading_service = LoadingService()
         self.notification_service = NotificationService(getattr(self.config, 'EMAIL_CONFIG', {}))
         self.webapp_service = WebAppService(self.notification_service, self.theme_service, self.tracking_service)
+
+
         self.webapp_service.start()
         self.turbo_mode = False
 
@@ -93,6 +110,7 @@ class GroundskeeperApp:
             'get_loading_service': lambda: self.loading_service,
             'get_webapp_ip': lambda: self.webapp_service.get_local_ip(),
             'show_qr_screen': self.show_qr_screen,
+            
             # debugging menu
             'show_debug_menu': self.show_debug_menu,
             'test_email': self.notification_service.send_test_email,
