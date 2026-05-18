@@ -1,17 +1,42 @@
-[
-  "I am capable of achieving my goals and dreams.",
-  "I choose to be happy and to love myself today.",
-  "My potential to succeed is infinite and I will use it.",
-  "I am resilient and can handle any challenge that comes my way.",
-  "I am worthy of love, happiness, and complete success.",
-  "I trust my intuition and I always make wise decisions.",
-  "Every day, in every way, I am getting better and better.",
-  "I release all negativity and embrace the power of positivity.",
-  "I am grateful for all the wonderful things in my life.",
-  "I am confident in my abilities to create the life I desire.",
-  "I have the power to create change.",
-  "I am in charge of my life and my happiness.",
-  "I am strong, I am powerful, I am calm.",
-  "I believe in myself and my unique talents.",
-  "I am surrounded by love and support."
-]
+{
+  "positive_affirmations": [
+    "I am capable of achieving my goals and dreams.",
+    "I choose to be happy and to love myself today.",
+    "My potential to succeed is infinite and I will use it.",
+    "I am resilient and can handle any challenge that comes my way.",
+    "I am worthy of love, happiness, and complete success.",
+    "I trust my intuition and I always make wise decisions.",
+    "Every day, in every way, I am getting better and better.",
+    "I release all negativity and embrace the power of positivity.",
+    "I am grateful for all the wonderful things in my life.",
+    "I am confident in my abilities to create the life I desire.",
+    "I have the power to create change.",
+    "I am in charge of my life and my happiness.",
+    "I am strong, I am powerful, I am calm.",
+    "I believe in myself and my unique talents.",
+    "I am surrounded by love and support."
+  ],
+
+  "pointless_affirmations": [
+    "I am capable of successfully operating a microwave on the first try.",
+    "I choose to wear socks that mostly match today.",
+    "My potential to sit in this chair is infinite, and I will use it.",
+    "I am resilient and can handle mildly inconvenient traffic.",
+    "I am worthy of a perfectly mediocre cup of room-temperature water.",
+    "I trust my intuition to tell me when I am slightly hungry.",
+    "Every day, in every way, I am getting imperceptibly older.",
+    "I release all negativity, mostly because holding onto it takes too much energy.",
+    "I am grateful for the structural integrity of the floor beneath me.",
+    "I am confident in my ability to blink without actively thinking about it.",
+    "I have the power to create a slight, temporary dent in the sofa cushions.",
+    "I am in charge of selecting which streaming service to scroll through endlessly.",
+    "I am strong enough to open most jars on the second or third try.",
+    "I believe in my unique talent to immediately forget why I walked into a room.",
+    "I am surrounded by breathable air and varying levels of humidity.",
+    "I have the courage to politely decline an optional software update.",
+    "I will gracefully accept that I cannot change the weather today.",
+    "I am doing an adequate job of maintaining a basic level of hydration.",
+    "My body is a vessel that successfully converts snacks into mild enthusiasm.",
+    "I am perfectly content with being completely unextraordinary for the next ten minutes."
+  ]
+}

@@ -58,7 +58,7 @@ class TwoButtonScreen(BaseScreen):
         button_frame.grid(row=3, column=0, sticky="ew")
         button_frame.columnconfigure((0, 1), weight=1)
 
-        self.menu_button = tk.Button(button_frame, text="Menu", font=self.fonts["button"], command=self.callbacks['show_main_menu'])
+        self.menu_button = tk.Button(button_frame, text="Menu", font=self.fonts["button"], command=lambda: self.callbacks['show_main_menu']())
         self.menu_button.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
         
         self.action_button = tk.Button(button_frame, text="Action", font=self.fonts["button"])
@@ -120,7 +120,7 @@ class GameMenuScreen(BaseScreen):
         )
         back_button.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
 
-        leaderboard_button = tk.Button(button_frame, text="Leaderboard", font=self.fonts["button"], command=self.callbacks['show_leaderboard'])
+        leaderboard_button = tk.Button(button_frame, text="Leaderboard", font=self.fonts["button"], command=lambda: self.callbacks['show_leaderboard']())
         leaderboard_button.grid(row=0, column=1, sticky="ew", pady=5, padx=5)
 
         self.navigable_widgets = [back_button, leaderboard_button]

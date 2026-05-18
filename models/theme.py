@@ -10,6 +10,8 @@ class Theme:
         # --- Placeholders for standardized assets ---
         self.icon = None
         self.theme_card = None
+        self.standby_bg = None
+        self.symbol = None
         self.loading_images = []
         self.game_styles = {}
         # ------------------------------------------

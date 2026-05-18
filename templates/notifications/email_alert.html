@@ -33,6 +33,21 @@
             <p style="margin: 0; color: #555;">{{ mindful_goal }}</p>
         </div>
         {% endif %}
+
+        {% if leaderboard %}
+        <div style="background-color: #fce4ec; padding: 15px; border-radius: 8px; margin-top: 15px;">
+            <h3 style="color: #880e4f; font-size: 13px; margin: 0 0 10px 0;">🏆 Arcade High Scores</h3>
+            
+            {% for game, scores in leaderboard.items() %}
+                <h4 style="margin: 5px 0 2px 0; color: #333333; font-size: 12px; text-transform: uppercase;">{{ game }}</h4>
+                <ul style="margin: 0 0 10px 0; padding-left: 20px; color: #555555; font-size: 12px; list-style-type: square;">
+                {% for s in scores %}
+                    <li><b>{{ s.name }}</b>: {{ s.score }}</li>
+                {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+        {% endif %}
         
     </div>
 </body>

@@ -17,14 +17,12 @@ def create_game():
     game_folder_name = game_name_input.lower().replace(" ", "_")
     game_class_name = "".join(word.title() for word in game_folder_name.split("_"))
 
-    # --- FIX: Make path relative to the script's location ---
     # Get the directory where this script is located (e.g., 'creators/')
     script_dir = os.path.dirname(os.path.abspath(__file__))
     # Get the parent directory (the project root)
     project_root = os.path.dirname(script_dir)
     # Construct the correct path to the 'games' folder
     base_path = os.path.join(project_root, "games", game_folder_name)
-    # ---------------------------------------------------------
 
     assets_path = os.path.join(base_path, "assets")
 

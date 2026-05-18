@@ -3,6 +3,7 @@ import uuid
 from datetime import datetime
 
 class TrackingService:
+   
     def __init__(self, state_file, theme_service, joke_service=None, affirmation_service=None, newsletter_service=None):
         self.state_file = state_file
         self.theme_service = theme_service
@@ -24,7 +25,19 @@ class TrackingService:
         except (FileNotFoundError, json.JSONDecodeError):
             pass
 
-    # Update your _save_tracked_items method to also save the newsletter date
+    def _load_tracked_items(self):
+        """Loads items from the state file, converting timestamps back to datetime objects."""
+        try:
+            with open(self.state_file, 'r') as f:
+                data = json.load(f)
+                items_data = data.get('tracked_items', [])
+                for item in items_data:
+                    if 'start_time' in item and item['start_time']:
+                        item['start_time'] = datetime.fromisoformat(item['start_time'])
+                return items_data
+        except (FileNotFoundError, json.JSONDecodeError):
+            return []
+
     def _save_tracked_items(self):
         items_to_save = []
         for item in self.tracked_items:
@@ -39,7 +52,7 @@ class TrackingService:
                 'last_newsletter_date': self.last_newsletter_date # Add this
             }, f, indent=4)
 
-    def start_tracking_item(self, theme_name):
+    def start_tracking_item(self, theme_name, custom_timer=None):
         """Starts tracking a new item, replacing an existing one of the same theme."""
         self.tracked_items = [item for item in self.tracked_items if item['theme_name'] != theme_name]
 

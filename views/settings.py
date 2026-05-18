@@ -11,16 +11,16 @@ class SettingsView(MenuScreen):
         button_area = tk.Frame(self.content_frame)
         button_area.pack(expand=True, padx=20)
 
-        update_button = tk.Button(button_area, text="Check for Updates", font=self.fonts["button"], command=self.callbacks['show_updater'])
+        update_button = tk.Button(button_area, text="Check for Updates", font=self.fonts["button"], command=lambda: self.callbacks['show_updater']())
         update_button.pack(pady=10, fill="x")
 
-        reset_button = tk.Button(button_area, text="Reset All Timers", font=self.fonts["button"], command=self.callbacks['reset_all_items'])
+        reset_button = tk.Button(button_area, text="Reset All Timers", font=self.fonts["button"], command=lambda: self.callbacks['reset_all_items']())
         reset_button.pack(pady=10, fill="x")
 
-        self.turbo_button = tk.Button(button_area, text="Turbo: OFF", font=self.fonts["button"], command=self.callbacks['toggle_turbo_mode'])
+        self.turbo_button = tk.Button(button_area, text="Turbo: OFF", font=self.fonts["button"], command=lambda: self.callbacks['toggle_turbo_mode']())
         self.turbo_button.pack(pady=10, fill="x")
 
-        debug_button = tk.Button(button_area, text="Debug Menu", font=self.fonts["button"], command=self.callbacks.get('show_debug_menu'))
+        debug_button = tk.Button(button_area, text="Debug Menu", font=self.fonts["button"], command=lambda: self.callbacks.get('show_debug_menu')())
         debug_button.pack(pady=10, fill="x")
         
         # The "Back" button is created by the MenuScreen base.

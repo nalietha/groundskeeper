@@ -4,10 +4,11 @@ import random
 from datetime import datetime
 
 class NewsletterService:
-    def __init__(self, joke_service, affirmation_service):
+    def __init__(self, joke_service, affirmation_service, game_service):
         self.joke_service = joke_service
         self.affirmation_service = affirmation_service
-        
+        self.game_service = game_service
+
         self.mindful_goals = [
             "Take 3 deep breaths before opening your email inbox.",
             "Drink a glass of water while your coffee cools.",
@@ -71,5 +72,19 @@ class NewsletterService:
             
         if 'goal' in chosen_extras:
             content['mindful_goal'] = random.choice(self.mindful_goals)
+
+        # 3. NEW: Always include the Top 3 Leaderboard if anyone has played!
+        all_scores = self.game_service.get_scores()
+        if all_scores:
+            leaderboard_data = {}
+            for entry in all_scores:
+                game_name = entry.get('game', 'Unknown').replace('_', ' ').title()
+                if game_name not in leaderboard_data:
+                    leaderboard_data[game_name] = []
+                # Only keep the top 3 for the email so it doesn't get too long
+                if len(leaderboard_data[game_name]) < 3:
+                    leaderboard_data[game_name].append(entry)
+            
+            content['leaderboard'] = leaderboard_data
 
         return content

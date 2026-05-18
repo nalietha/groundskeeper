@@ -4,7 +4,12 @@
   "action_text": "Start Sipping",
   "start_phrase": "Steeped At:",
   "not_started_text": "Not steeped yet",
-  "timer_ms": 3600000,
+  "timer_ms": 300000,
+  "timer_options": [
+    { "label": "Green Tea (3m)", "ms": 180000 },
+    { "label": "Black / Oolong (5m)", "ms": 300000 },
+    { "label": "Herbal / Fruit (7m)", "ms": 420000 }
+  ],
   "colors": {
     "dim_bg": "#5c4033",
     "dim_fg": "#f5f5dc",

@@ -32,7 +32,7 @@ class ControlService:
     def handle_coin_press(self, event):
         """Callback for the global coin/games button."""
         print("Coin button pressed!")
-        self.app.show_games() # Call the existing show_games method
+        self.app.callbacks['show_games']()
         return "break"
 
     def handle_brew_press(self, event):
@@ -140,7 +140,7 @@ class ControlService:
         if not self.ui_context_active or not self.active_screen: return "break"
         
         if self.active_screen.__class__.__name__ == 'TitleView':
-            self.app.show_main_menu()
+            self.app.callbacks['show_main_menu']()
         elif self.active_screen.__class__.__name__ == 'NameEntryView':
             self.active_screen.advance_or_submit()
         elif hasattr(self.active_screen, 'carousel'):

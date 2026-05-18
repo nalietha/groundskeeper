@@ -42,9 +42,16 @@ class ThemeService:
         
         icon_path = assets_path / "icon.png"
         if icon_path.exists(): theme.icon = str(icon_path)
+        
         card_path = assets_path / "theme_card.png"
         if card_path.exists(): theme.theme_card = str(card_path)
         
+        standby_bg_path = assets_path / "standby_bg.png"
+        if standby_bg_path.exists(): theme.standby_bg = str(standby_bg_path)
+
+        symbol_path = assets_path / "symbol.png"
+        if symbol_path.exists(): theme.symbol = str(symbol_path)
+
         loading_path = assets_path / "loading"
         if loading_path.is_dir():
             theme.loading_images = sorted([

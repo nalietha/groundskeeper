@@ -10,16 +10,16 @@ class ExtrasView(MenuScreen):
         button_area = tk.Frame(self.content_frame)
         button_area.pack(expand=True)
 
-        joke_button = tk.Button(button_area, text="Daily Joke", font=self.fonts["button"], command=self.callbacks['show_joke'])
+        joke_button = tk.Button(button_area, text="Daily Joke", font=self.fonts["button"], command=lambda: self.callbacks['show_joke']())
         joke_button.pack(pady=10, fill="x", padx=20)
 
-        affirmation_button = tk.Button(button_area, text="Daily Affirmation", font=self.fonts["button"], command=self.callbacks['show_affirmation'])
+        affirmation_button = tk.Button(button_area, text="Daily Affirmation", font=self.fonts["button"], command=lambda: self.callbacks['show_affirmation']())
         affirmation_button.pack(pady=10, fill="x", padx=20)
 
-        games_button = tk.Button(button_area, text="Games", font=self.fonts["button"], command=self.callbacks['show_games'])
+        games_button = tk.Button(button_area, text="Games", font=self.fonts["button"], command=lambda: self.callbacks['show_games']())
         games_button.pack(pady=10, fill="x", padx=20)
 
-        notif_button = tk.Button(button_area, text="Setup Notifications", font=self.fonts["button"], command=self.callbacks['show_qr_screen'])
+        notif_button = tk.Button(button_area, text="Setup Notifications", font=self.fonts["button"], command=lambda: self.callbacks['show_qr_screen']())
         notif_button.pack(pady=10, fill="x", padx=20)
 
         # Add the new buttons to the navigable list (the back button is already there from the base class)

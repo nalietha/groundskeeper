@@ -8,8 +8,8 @@
   "colors": {
     "dim_bg": "#2a1d1d",
     "dim_fg": "#d3c8c8",
-    "bright_bg": "#f5e6d3",
-    "bright_fg": "#4a2c2a"
+    "bright_bg": "#4a2c2a",
+    "bright_fg": "#f5e6d3"
   },
   "mood_tiers": [
     { "name": "fresh", "threshold_minutes": 0, "emoji": "✨" },
