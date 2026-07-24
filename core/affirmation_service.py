@@ -1,5 +1,6 @@
-import json
 from datetime import datetime
+
+from core.utils import load_json
 
 class AffirmationService:
     """
@@ -7,14 +8,24 @@ class AffirmationService:
     """
     def __init__(self, filename="assets/affirmation.json"):
         self.affirmations = []
-        try:
-            with open(filename, 'r', encoding='utf-8') as f:
-                self.affirmations = json.load(f)
-            print(f"Successfully loaded {len(self.affirmations)} affirmations.")
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            print(f"Warning: Could not load affirmations file '{filename}' ({e}).")
+        data = load_json(filename)
+
+        if data is None:
+            print(f"Warning: Could not load affirmations file '{filename}'.")
             # Provide a fallback affirmation if the file is missing or invalid
             self.affirmations = ["Today is a good day to have a good day."]
+            return
+
+        # Check if it's using the new categorized format
+        if isinstance(data, dict) and "affirmations" in data:
+            # Loop through each category and merge them into one flat list
+            for _category, aff_list in data["affirmations"].items():
+                self.affirmations.extend(aff_list)
+        else:
+            # Fallback just in case it ever reverts to a flat list
+            self.affirmations = data
+
+        print(f"Successfully loaded {len(self.affirmations)} affirmations.")
 
     def get_daily_affirmation(self):
         """

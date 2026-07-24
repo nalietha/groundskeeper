@@ -1,8 +1,8 @@
 # groundskeeper/core/theme_service.py
-import os
 import json
 from pathlib import Path # Use pathlib for robust path handling
 from models.theme import Theme
+from core.utils import load_json
 
 
 class ThemeService:
@@ -75,22 +75,16 @@ class ThemeService:
                 print(f"Warning: Could not parse styled_games.json for theme '{theme.name}'.")
 
     def _load_sayings_for_theme(self, theme, theme_path):
-        sayings_filename = f"list_{theme.name.lower()}.json"
-        sayings_path = theme_path / sayings_filename
-        try:
-            with open(sayings_path, 'r', encoding='utf-8') as f:
-                theme.sayings = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            pass 
+        sayings_path = theme_path / f"list_{theme.name.lower()}.json"
+        sayings = load_json(sayings_path)
+        if sayings is not None:
+            theme.sayings = sayings
 
     def _load_jokes_for_theme(self, theme, theme_path):
-        jokes_filename = f"jokes_{theme.name.lower()}.json"
-        jokes_path = theme_path / jokes_filename
-        try:
-            with open(jokes_path, 'r', encoding='utf-8') as f:
-                theme.jokes = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            pass
+        jokes_path = theme_path / f"jokes_{theme.name.lower()}.json"
+        jokes = load_json(jokes_path)
+        if jokes is not None:
+            theme.jokes = jokes
 
     def get_theme(self, name): return self.themes.get(name)
     def get_all_themes(self): return list(self.themes.values())

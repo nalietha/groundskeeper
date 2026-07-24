@@ -1,6 +1,7 @@
 # groundskeeper/views/settings.py
 import tkinter as tk
-from .bases import MenuScreen 
+from .bases import MenuScreen
+from core.utils import get_local_ip
 
 class SettingsView(MenuScreen):
     def setup_ui(self):
@@ -28,20 +29,9 @@ class SettingsView(MenuScreen):
         self.navigable_widgets = [update_button, reset_button, self.turbo_button, debug_button] + self.navigable_widgets
         self.setup_navigation()
 
-        ip_address = self.get_ip_address()
+        ip_address = get_local_ip()
         ip_label = tk.Label(self.content_frame, text=f"IP: {ip_address}", font=("Courier", 10), fg="gray")
         ip_label.pack(side="bottom", pady=10)
-
-    def get_ip_address(self):
-        import socket
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.connect(("8.8.8.8", 80))
-            ip = s.getsockname()[0]
-            s.close()
-            return ip
-        except Exception:
-            return "127.0.0.1"
 
     def update_turbo_button_state(self, is_on):
         """Updates the turbo button's appearance."""

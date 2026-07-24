@@ -4,7 +4,10 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import date, datetime
+from urllib.parse import quote
 import jinja2
+
+from core.utils import get_local_ip
 
 class NotificationService:
     def __init__(self, email_config, storage_file="data/subscribers.json"):
@@ -61,15 +64,100 @@ class NotificationService:
         print(f"Added {alias} ({contact_info}) to {theme_name} notifications for {days}.")
         return True
 
-    def send_notification(self, theme_name, context, test_mode=False):
+    @staticmethod
+    def _contact_of(sub):
+        """Extracts the contact string from a subscriber entry (dict or legacy string)."""
+        return sub.get("contact") if isinstance(sub, dict) else sub
+
+    def remove_subscriber(self, contact_info, theme_name):
+        """Removes a contact from a single theme. Returns True if a subscription was removed."""
+        self.subscribers = self._load_subscribers()
+        if theme_name not in self.subscribers:
+            return False
+
+        original = self.subscribers[theme_name]
+        remaining = [s for s in original if self._contact_of(s) != contact_info]
+        removed = len(remaining) < len(original)
+
+        if remaining:
+            self.subscribers[theme_name] = remaining
+        else:
+            # Tidy up themes that no longer have any subscribers.
+            del self.subscribers[theme_name]
+
+        if removed:
+            self._save_subscribers()
+            print(f"Removed {contact_info} from {theme_name} notifications.")
+        return removed
+
+    def remove_all_subscriptions(self, contact_info):
+        """Removes a contact from every theme. Returns the list of themes they were removed from."""
+        self.subscribers = self._load_subscribers()
+        removed_from = []
+
+        for theme_name in list(self.subscribers.keys()):
+            original = self.subscribers[theme_name]
+            remaining = [s for s in original if self._contact_of(s) != contact_info]
+            if len(remaining) < len(original):
+                removed_from.append(theme_name)
+            if remaining:
+                self.subscribers[theme_name] = remaining
+            else:
+                del self.subscribers[theme_name]
+
+        if removed_from:
+            self._save_subscribers()
+            print(f"Removed {contact_info} from all notifications: {removed_from}.")
+        return removed_from
+
+    def get_subscriptions_for(self, contact_info):
+        """Returns the subscriptions for a contact as a list of
+        {theme_name, alias, days} dicts (across every theme)."""
+        self.subscribers = self._load_subscribers()
+        results = []
+        for theme_name, subs in self.subscribers.items():
+            for sub in subs:
+                if self._contact_of(sub) != contact_info:
+                    continue
+                if isinstance(sub, dict):
+                    results.append({
+                        "theme_name": theme_name,
+                        "alias": sub.get("alias", "Friend"),
+                        "days": sub.get("days", []),
+                    })
+                else:  # legacy bare-string entry
+                    results.append({"theme_name": theme_name, "alias": "Friend", "days": []})
+        return results
+
+    def _resolve_smtp_config(self):
+        """Resolves SMTP settings from the environment, falling back to email_config.
+
+        Returns a ``(server, port, sender, password)`` tuple, or ``None`` if any
+        required field is missing.
+        """
         server = os.getenv("SMTP_SERVER") or self.email_config.get("smtp_server")
         port = int(os.getenv("SMTP_PORT", self.email_config.get("smtp_port", 587)))
         sender = os.getenv("SMTP_SENDER_EMAIL") or self.email_config.get("sender_email")
         password = os.getenv("SMTP_SENDER_PASSWORD") or self.email_config.get("sender_password")
-        
+
         if not server or not sender or not password:
+            return None
+        return server, port, sender, password
+
+    def _connect_smtp(self, server, port, sender, password):
+        """Opens an authenticated SMTP session. Caller is responsible for closing it."""
+        smtp = smtplib.SMTP(server, port)
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.login(sender, password)
+        return smtp
+
+    def send_notification(self, theme_name, context, test_mode=False):
+        smtp_config = self._resolve_smtp_config()
+        if smtp_config is None:
             print("Warning: SMTP configuration is incomplete.")
             return
+        server, port, sender, password = smtp_config
 
         current_day = datetime.now().strftime("%A") # e.g., "Tuesday"
 
@@ -94,21 +182,24 @@ class NotificationService:
                 print(f"No subscribers scheduled for {current_day} for {theme_name}.")
                 return
             
+        webapp_port = int(os.getenv("WEBAPP_PORT", 5000))
+        base_url = f"http://{get_local_ip()}:{webapp_port}"
+
         try:
-            with smtplib.SMTP(server, port) as smtp:
-                smtp.ehlo()
-                smtp.starttls()
-                smtp.login(sender, password)
-                
+            with self._connect_smtp(server, port, sender, password) as smtp:
                 template = self.jinja_env.get_template('email_alert.html')
-                
+
                 for target in targets:
                     contact = target.get("contact")
                     alias = target.get("alias", "Friend")
-                    
+
                     target_context = context.copy()
                     target_context["alias"] = alias
-                    
+                    # One-click unsubscribe link for this specific recipient/theme.
+                    target_context["unsubscribe_url"] = (
+                        f"{base_url}/unsubscribe?contact={quote(contact)}&theme={quote(theme_name)}"
+                    )
+
                     html_body = template.render(**target_context)
                     
                     msg = MIMEMultipart("alternative")
@@ -126,21 +217,14 @@ class NotificationService:
 
     def send_test_email(self):
         """Sends a test email to the sender's own email to verify SMTP settings."""
-        server = os.getenv("SMTP_SERVER") or self.email_config.get("smtp_server")
-        port = int(os.getenv("SMTP_PORT", self.email_config.get("smtp_port", 587)))
-        sender = os.getenv("SMTP_SENDER_EMAIL") or self.email_config.get("sender_email")
-        password = os.getenv("SMTP_SENDER_PASSWORD") or self.email_config.get("sender_password")
-        
-        if not server or not sender or not password:
+        smtp_config = self._resolve_smtp_config()
+        if smtp_config is None:
             print("Warning: SMTP configuration is incomplete. Cannot send test notification.")
             return False, "SMTP config is incomplete."
-            
+        server, port, sender, password = smtp_config
+
         try:
-            with smtplib.SMTP(server, port) as smtp:
-                smtp.ehlo()
-                smtp.starttls()
-                smtp.login(sender, password)
-                
+            with self._connect_smtp(server, port, sender, password) as smtp:
                 msg = MIMEText("This is a test notification from Groundskeeper to verify your email setup.")
                 msg['Subject'] = "Groundskeeper: Test Email"
                 msg['From'] = sender

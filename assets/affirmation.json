@@ -1,42 +1,40 @@
 {
-  "positive_affirmations": [
-    "I am capable of achieving my goals and dreams.",
-    "I choose to be happy and to love myself today.",
-    "My potential to succeed is infinite and I will use it.",
-    "I am resilient and can handle any challenge that comes my way.",
-    "I am worthy of love, happiness, and complete success.",
-    "I trust my intuition and I always make wise decisions.",
-    "Every day, in every way, I am getting better and better.",
-    "I release all negativity and embrace the power of positivity.",
-    "I am grateful for all the wonderful things in my life.",
-    "I am confident in my abilities to create the life I desire.",
-    "I have the power to create change.",
-    "I am in charge of my life and my happiness.",
-    "I am strong, I am powerful, I am calm.",
-    "I believe in myself and my unique talents.",
-    "I am surrounded by love and support."
-  ],
-
-  "pointless_affirmations": [
-    "I am capable of successfully operating a microwave on the first try.",
-    "I choose to wear socks that mostly match today.",
-    "My potential to sit in this chair is infinite, and I will use it.",
-    "I am resilient and can handle mildly inconvenient traffic.",
-    "I am worthy of a perfectly mediocre cup of room-temperature water.",
-    "I trust my intuition to tell me when I am slightly hungry.",
-    "Every day, in every way, I am getting imperceptibly older.",
-    "I release all negativity, mostly because holding onto it takes too much energy.",
-    "I am grateful for the structural integrity of the floor beneath me.",
-    "I am confident in my ability to blink without actively thinking about it.",
-    "I have the power to create a slight, temporary dent in the sofa cushions.",
-    "I am in charge of selecting which streaming service to scroll through endlessly.",
-    "I am strong enough to open most jars on the second or third try.",
-    "I believe in my unique talent to immediately forget why I walked into a room.",
-    "I am surrounded by breathable air and varying levels of humidity.",
-    "I have the courage to politely decline an optional software update.",
-    "I will gracefully accept that I cannot change the weather today.",
-    "I am doing an adequate job of maintaining a basic level of hydration.",
-    "My body is a vessel that successfully converts snacks into mild enthusiasm.",
-    "I am perfectly content with being completely unextraordinary for the next ten minutes."
-  ]
+  "affirmations": {
+    "hyper_specific_goals": [
+      "I will successfully untangle my headphones in under 30 seconds.",
+      "Today, I will fold a fitted sheet into an actual square, or at least a convincing lump.",
+      "I am intensely focused on closing at least three of my 47 open browser tabs.",
+      "I will achieve inbox zero, even if it means declaring email bankruptcy.",
+      "I will confidently remember why I walked into the kitchen.",
+      "I am capable of opening this stubborn plastic packaging without a sharp tool.",
+      "I will successfully insert the USB drive correctly on the second try."
+    ],
+    "cosmic_existential": [
+      "I am a tiny speck of stardust, temporarily wearing a sweater.",
+      "The universe is 13.8 billion years old, which means my minor embarrassing moment yesterday does not matter.",
+      "My mistakes are completely invisible from space.",
+      "I possess the exact same number of bones as a skeleton. Powerful.",
+      "I am hurtling at 67,000 miles per hour through the solar system, even while sitting on this stool.",
+      "The sun is basically a giant nuclear furnace, and yet I am currently chilly.",
+      "I am successfully participating in gravity today."
+    ],
+    "aggressively_positive": [
+      "I am going to utterly dominate this cup of coffee!",
+      "My posture is a direct threat to my enemies!",
+      "I will breathe this air so hard it will thank me!",
+      "No one can stop me from enjoying this completely average Tuesday!",
+      "I am a terrifying force of mild convenience!",
+      "I will crush today's moderate expectations with ruthless efficiency!",
+      "My ability to stand in line is legendary and unmatched!"
+    ],
+    "pseudo_profound": [
+      "To walk forward, one must first lift their foot.",
+      "A cup that is half full is also half empty, but mostly, it is just a cup.",
+      "The future is exactly where the present goes to hide.",
+      "When you close your eyes, you cannot see.",
+      "A wet towel is simply a dry towel that has experienced water.",
+      "The longest distance between two points is an unread email.",
+      "Wherever you go, there you are, unless you are lost."
+    ]
+  }
 }

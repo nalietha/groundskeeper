@@ -51,8 +51,8 @@ class ControlService:
         self.add_binding("<Down>", self.navigate_down)
         self.add_binding("<Left>", self.navigate_left)
         self.add_binding("<Right>", self.navigate_right)
-        self.add_binding("<Return>", self.invoke_widget)
-        self.add_binding("<BackSpace>", self.go_back)
+        self.add_binding("<Return>", self.select)
+        self.add_binding("<BackSpace>", self.back)
         # --- Add bindings for the 'A' and 'B' action buttons ---
         self.add_binding("<KeyPress-a>", self.handle_action_a)
         self.add_binding("<KeyPress-b>", self.handle_action_b)
@@ -83,75 +83,52 @@ class ControlService:
             self.app.toggle_turbo_mode() # Trigger the action in the main app
             self.input_sequence = [] # Reset the sequence
 
-    # --- Update navigation methods to record key presses ---
+    # --- Navigation methods: record the key, then forward the intent to the
+    #     active screen. Screens decide what each intent means (see BaseScreen),
+    #     so adding a screen never requires editing this service. ---
+    def _dispatch(self, intent):
+        """Forwards an input intent (e.g. 'on_up') to the active screen."""
+        if not self.ui_context_active or not self.active_screen:
+            return
+        handler = getattr(self.active_screen, intent, None)
+        if callable(handler):
+            handler()
+
     def navigate_up(self, event):
         self._record_key('up')
-        if not self.ui_context_active or not self.active_screen: return "break"
-        if self.active_screen.__class__.__name__ == 'NameEntryView':
-            self.active_screen.change_char(1)
-        elif hasattr(self.active_screen, 'carousel'):
-            self.active_screen.carousel.go_previous()
-        elif hasattr(self.active_screen, 'navigate') and not hasattr(self.active_screen, 'carousel'):
-            self.active_screen.navigate(-1)
+        self._dispatch('on_up')
         return "break"
 
     def navigate_down(self, event):
         self._record_key('down')
-        if not self.ui_context_active or not self.active_screen: return "break"
-        if self.active_screen.__class__.__name__ == 'NameEntryView':
-            self.active_screen.change_char(-1)
-        elif hasattr(self.active_screen, 'carousel'):
-            self.active_screen.carousel.go_next()
-        elif hasattr(self.active_screen, 'navigate') and not hasattr(self.active_screen, 'carousel'):
-            self.active_screen.navigate(1)
+        self._dispatch('on_down')
         return "break"
 
     def navigate_left(self, event):
         self._record_key('left')
-        if not self.ui_context_active or not self.active_screen: return "break"
-        if self.active_screen.__class__.__name__ == 'NameEntryView':
-            self.active_screen.move_cursor(-1)
-        elif hasattr(self.active_screen, 'navigate'):
-            self.active_screen.navigate(-1)
+        self._dispatch('on_left')
         return "break"
 
     def navigate_right(self, event):
         self._record_key('right')
-        if not self.ui_context_active or not self.active_screen: return "break"
-        if self.active_screen.__class__.__name__ == 'NameEntryView':
-            self.active_screen.move_cursor(1)
-        elif hasattr(self.active_screen, 'navigate'):
-            self.active_screen.navigate(1)
+        self._dispatch('on_right')
         return "break"
-    # --- New handlers for A and B buttons ---
-    
+
+    # --- Select / Back, shared by <Return>/<BackSpace> and the A/B buttons ---
+    def select(self, event=None):
+        self._dispatch('on_select')
+        return "break"
+
+    def back(self, event=None):
+        self._dispatch('on_back')
+        return "break"
+
     def handle_action_a(self, event):
         self._record_key('a')
-        self.invoke_widget(event) # Also perform the normal action
+        self.select() # Also perform the normal action
         return "break"
 
     def handle_action_b(self, event):
         self._record_key('b')
-        self.go_back(event) # Also perform the normal action
-        return "break"
-
-    def invoke_widget(self, event):
-        # This function is now called by handle_action_a, so we don't record the key here
-        if not self.ui_context_active or not self.active_screen: return "break"
-        
-        if self.active_screen.__class__.__name__ == 'TitleView':
-            self.app.callbacks['show_main_menu']()
-        elif self.active_screen.__class__.__name__ == 'NameEntryView':
-            self.active_screen.advance_or_submit()
-        elif hasattr(self.active_screen, 'carousel'):
-            callback = self.active_screen.carousel.get_current_callback()
-            if callback: callback()
-        elif hasattr(self.active_screen, 'invoke_widget'):
-            self.active_screen.invoke_widget()
-        return "break"
-
-    def go_back(self, event):
-        # This function is now called by handle_action_b, so we don't record the key here
-        if self.ui_context_active and hasattr(self.active_screen, 'go_back'):
-            self.active_screen.go_back()
+        self.back() # Also perform the normal action
         return "break"

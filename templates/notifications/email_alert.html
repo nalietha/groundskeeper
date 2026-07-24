@@ -48,7 +48,14 @@
             {% endfor %}
         </div>
         {% endif %}
-        
+
+        {% if unsubscribe_url %}
+        <p style="font-size: 11px; color: #999999; text-align: center; margin: 25px 0 0 0; border-top: 1px solid #eaeaea; padding-top: 15px;">
+            Don't want {{ theme_name }} updates?
+            <a href="{{ unsubscribe_url }}" style="color: #999999;">Unsubscribe</a>
+        </p>
+        {% endif %}
+
     </div>
 </body>
 </html>

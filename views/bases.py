@@ -41,6 +41,44 @@ class BaseScreen(tk.Frame):
         if 'show_main_menu' in self.callbacks:
             self.callbacks['show_main_menu']()
 
+    # --- Input intents ---------------------------------------------------
+    # ControlService forwards raw button presses to these methods, so each
+    # screen owns its own input behavior. Defaults cover the common cases
+    # (a list of navigable buttons, or a screen holding a `carousel`); screens
+    # with bespoke input (e.g. NameEntryView) override the relevant handlers.
+
+    def _has_carousel(self):
+        return getattr(self, 'carousel', None) is not None
+
+    def on_up(self):
+        if self._has_carousel():
+            self.carousel.go_previous()
+        else:
+            self.navigate(-1)
+
+    def on_down(self):
+        if self._has_carousel():
+            self.carousel.go_next()
+        else:
+            self.navigate(1)
+
+    def on_left(self):
+        self.navigate(-1)
+
+    def on_right(self):
+        self.navigate(1)
+
+    def on_select(self):
+        if self._has_carousel():
+            callback = self.carousel.get_current_callback()
+            if callback:
+                callback()
+        else:
+            self.invoke_widget()
+
+    def on_back(self):
+        self.go_back()
+
 class TwoButtonScreen(BaseScreen):
     """The base for the StandbyView, which has a centered content area and two buttons."""
     def __init__(self, parent, callbacks, fonts, config, **kwargs):

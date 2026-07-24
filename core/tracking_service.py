@@ -2,6 +2,8 @@ import json
 import uuid
 from datetime import datetime
 
+from core.utils import load_json
+
 class TrackingService:
    
     def __init__(self, state_file, theme_service, joke_service=None, affirmation_service=None, newsletter_service=None):
@@ -18,25 +20,17 @@ class TrackingService:
         self._load_newsletter_state()
 
     def _load_newsletter_state(self):
-        try:
-            with open(self.state_file, 'r') as f:
-                data = json.load(f)
-                self.last_newsletter_date = data.get('last_newsletter_date')
-        except (FileNotFoundError, json.JSONDecodeError):
-            pass
+        data = load_json(self.state_file, default={})
+        self.last_newsletter_date = data.get('last_newsletter_date')
 
     def _load_tracked_items(self):
         """Loads items from the state file, converting timestamps back to datetime objects."""
-        try:
-            with open(self.state_file, 'r') as f:
-                data = json.load(f)
-                items_data = data.get('tracked_items', [])
-                for item in items_data:
-                    if 'start_time' in item and item['start_time']:
-                        item['start_time'] = datetime.fromisoformat(item['start_time'])
-                return items_data
-        except (FileNotFoundError, json.JSONDecodeError):
-            return []
+        data = load_json(self.state_file, default={})
+        items_data = data.get('tracked_items', [])
+        for item in items_data:
+            if 'start_time' in item and item['start_time']:
+                item['start_time'] = datetime.fromisoformat(item['start_time'])
+        return items_data
 
     def _save_tracked_items(self):
         items_to_save = []
@@ -82,13 +76,11 @@ class TrackingService:
         print("All tracked items have been reset.")
         
     def _get_newsletter_content(self, theme):
-        """Fetches joke and affirmation as a dictionary."""
-        content = {}
-        if getattr(self, 'joke_service', None):
-            content['joke'] = self.joke_service.get_joke(theme=theme)
-        if getattr(self, 'affirmation_service', None):
-            content['affirmation'] = self.affirmation_service.get_daily_affirmation()
-        return content
+        """Fetches basic notification content, delegating composition to the
+        newsletter service (which owns how content is assembled)."""
+        if self.newsletter_service:
+            return self.newsletter_service.get_basic_content(theme)
+        return {}
 
     def check_notifications(self, notification_service):
         now = datetime.now()

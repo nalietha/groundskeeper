@@ -227,29 +227,23 @@ class GroundskeeperApp:
             self.router.show_leaderboard()
 
 # region Debug Actions
-    def test_email_started(self):
+    def _send_test_email(self, main_message, label):
         theme = self.theme_service.get_theme(self.active_theme_name)
-        context = {"theme_name": theme.name, "main_message": f"[TEST] {theme.name} has just been started!"}
+        context = {"theme_name": theme.name, "main_message": main_message.format(name=theme.name)}
         if hasattr(self.tracking_service, '_get_newsletter_content'):
             context.update(self.tracking_service._get_newsletter_content(theme))
-        
+
         try:
             self.notification_service.send_notification(theme.name, context, test_mode=True)
-            return True, f"'Started' preview sent to your email!"
+            return True, f"'{label}' preview sent to your email!"
         except Exception as e:
             return False, f"Failed: {str(e)}"
 
+    def test_email_started(self):
+        return self._send_test_email("[TEST] {name} has just been started!", "Started")
+
     def test_email_ready(self):
-        theme = self.theme_service.get_theme(self.active_theme_name)
-        context = {"theme_name": theme.name, "main_message": f"[TEST] {theme.name} is now ready! Enjoy!"}
-        if hasattr(self.tracking_service, '_get_newsletter_content'):
-            context.update(self.tracking_service._get_newsletter_content(theme))
-            
-        try:
-            self.notification_service.send_notification(theme.name, context, test_mode=True)
-            return True, f"'Ready' preview sent to your email!"
-        except Exception as e:
-            return False, f"Failed: {str(e)}"
+        return self._send_test_email("[TEST] {name} is now ready! Enjoy!", "Ready")
 # endregion
 
 if __name__ == "__main__":

@@ -1,9 +1,9 @@
 # groundskeeper/core/game_service.py
-import os
 import json
 import importlib.util
 import pygame
 from pathlib import Path # Use pathlib for robust path handling
+from core.utils import load_json
 
 class GameService:
     def __init__(self, config):
@@ -109,15 +109,11 @@ class GameService:
         return score > scores[4].get("score", 0)
             
     def get_scores(self, game_name=""):
-        try:
-            with open(self.leaderboard_file, 'r') as f:
-                scores = json.load(f)
-            if game_name:
-                scores = [s for s in scores if s.get("game") == game_name]
-            scores.sort(key=lambda x: x.get("score", 0), reverse=True)
-            return scores
-        except (FileNotFoundError, json.JSONDecodeError):
-            return []
+        scores = load_json(self.leaderboard_file, default=[])
+        if game_name:
+            scores = [s for s in scores if s.get("game") == game_name]
+        scores.sort(key=lambda x: x.get("score", 0), reverse=True)
+        return scores
 
     def save_score(self, game_name, player_name, score):
         scores = self.get_scores()

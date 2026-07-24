@@ -52,6 +52,22 @@ class NameEntryView(BaseScreen):
         self.update_labels()
         self.update_highlight()
 
+    # --- Input intents (arcade-style character entry) ---
+    def on_up(self):
+        self.change_char(1)
+
+    def on_down(self):
+        self.change_char(-1)
+
+    def on_left(self):
+        self.move_cursor(-1)
+
+    def on_right(self):
+        self.move_cursor(1)
+
+    def on_select(self):
+        self.advance_or_submit()
+
     def change_char(self, direction):
         """Changes the character at the current cursor position."""
         current_char_index = self.char_indices[self.cursor_pos]

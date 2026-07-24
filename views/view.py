@@ -2,23 +2,10 @@
 import tkinter as tk
 from tkinter import font as tkfont
 
-from views.affirmation import AffirmationView
-from views.joke import JokeView
-from views.update import UpdateView
-from views.settings import SettingsView
-from views.games import GamesView
-from views.loading import LoadingView
-from views.extras import ExtrasView
-from views.leaderboard import LeaderboardView
-from views.name_entry import NameEntryView
-from views.splash import SplashView
-from views.title import TitleView
 from views.statusbar import StatusBar
-from views.mainmenu import MainMenuView
-from views.standby import StandbyView
 
 class View:
-    def __init__(self, root, callbacks, config, control_service, extra_screens=None):
+    def __init__(self, root, callbacks, config, control_service, screen_classes):
         self.root = root
         self.callbacks = callbacks
         self.config = config
@@ -54,14 +41,7 @@ class View:
         }
         
         self.screens = {}
-        all_screens = [
-            SplashView, TitleView, StandbyView, MainMenuView, AffirmationView, 
-            JokeView, UpdateView, SettingsView, GamesView, ExtrasView, 
-            LoadingView, LeaderboardView, NameEntryView
-        ]
-        if extra_screens: all_screens.extend(extra_screens)
-
-        for F in all_screens:
+        for F in screen_classes:
             screen_name = F.__name__
             frame = F(self.container, callbacks, self.fonts, config)
             self.screens[screen_name] = frame

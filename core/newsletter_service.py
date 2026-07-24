@@ -45,6 +45,14 @@ class NewsletterService:
         except Exception:
             return None
 
+    def get_basic_content(self, theme):
+        """A minimal joke + affirmation pairing, used for one-off notifications
+        (e.g. the 'ready' alert) that don't warrant the full morning newsletter."""
+        return {
+            'joke': self.joke_service.get_joke(theme=theme),
+            'affirmation': self.affirmation_service.get_daily_affirmation(),
+        }
+
     def generate_morning_newsletter(self, theme):
         """Builds a randomized dictionary of content for the morning email."""
         content = {}

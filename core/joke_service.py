@@ -1,19 +1,18 @@
-import json
 import random
+
+from core.utils import load_json
 
 class JokeService:
     """
     Loads and provides jokes.
     """
     def __init__(self, filename="assets/jokes.json"):
-        self.jokes = []
-        try:
-            with open(filename, 'r', encoding='utf-8') as f:
-                self.jokes = json.load(f)
-            print(f"Successfully loaded {len(self.jokes)} jokes.")
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            print(f"Warning: Could not load jokes file '{filename}' ({e}).")
+        self.jokes = load_json(filename)
+        if self.jokes is None:
+            print(f"Warning: Could not load jokes file '{filename}'.")
             self.jokes = ["I tried to tell a joke, but I forgot the punchline."]
+        else:
+            print(f"Successfully loaded {len(self.jokes)} jokes.")
 
     def get_joke(self, theme=None):
         """

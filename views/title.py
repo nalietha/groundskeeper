@@ -22,6 +22,10 @@ class TitleView(BaseScreen):
             fallback_label = tk.Label(self, text="Press Start", font=("Press Start 2P", 20), fg="white", bg="black")
             fallback_label.pack(expand=True)
 
+    def on_select(self):
+        # The title/attract screen: any select press enters the main menu.
+        self.callbacks['show_main_menu']()
+
     def animate(self):
         """Cycles through the GIF frames."""
         frame = self.gif.get_frame()
