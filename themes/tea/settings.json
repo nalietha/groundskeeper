@@ -4,6 +4,7 @@
   "action_text": "Start Sipping",
   "start_phrase": "Steeped At:",
   "not_started_text": "Not steeped yet",
+  "paper_name": "THE STEEPING TIMES",
   "timer_ms": 300000,
   "timer_options": [
     { "label": "Green Tea (3m)", "ms": 180000 },

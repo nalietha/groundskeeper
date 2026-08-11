@@ -4,6 +4,7 @@
   "action_text": "Pizza's Here!",
   "start_phrase": "Arrival Time:",
   "not_started_text": "Not here yet",
+  "paper_name": "THE PIE POST",
   "timer_ms": 10800000,
   "colors": {
     "dim_bg": "#4d2600",

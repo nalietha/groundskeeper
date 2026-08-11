@@ -1,0 +1,20 @@
+{
+  "dial": {
+    "enabled": true,
+    "backend": "auto",
+
+    "_backend": "auto = encoder when RPi.GPIO is importable, otherwise the keyboard/wheel simulation. Force with 'encoder', 'keyboard', or 'null'.",
+
+    "clk_pin": 17,
+    "dt_pin": 27,
+    "steps_per_detent": 4,
+    "invert": false,
+
+    "_pins": "BCM numbering. Pick pins not already claimed by gpio_pins in appsettings.json.",
+    "_invert": "Set true if turning the knob clockwise moves the menu the wrong way -- cheaper than resoldering CLK and DT.",
+
+    "cw_key": "<period>",
+    "ccw_key": "<comma>",
+    "_keys": "Keyboard-simulation only. The mouse wheel also works and is the closest match to a detented knob."
+  }
+}

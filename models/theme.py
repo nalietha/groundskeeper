@@ -6,6 +6,9 @@ class Theme:
         self.start_phrase = data.get("start_phrase", "Last Start:")
         self.not_started_text = data.get("not_started_text", "Not Started")
         self.timer_ms = data.get("timer_ms", 60000)
+        # Masthead for the newsletter email. Falls back to a generic title so a
+        # new theme still gets a newspaper without extra configuration.
+        self.paper_name = data.get("paper_name", f"THE {self.name.upper()} GAZETTE")
         
         # --- Placeholders for standardized assets ---
         self.icon = None

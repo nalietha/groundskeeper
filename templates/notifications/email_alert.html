@@ -1,61 +1,233 @@
+{#
+  Break-room newspaper layout for the Groundskeeper newsletter.
+
+  Email rules this template sticks to, because clients (Outlook especially)
+  strip anything cleverer:
+    - tables for layout, never flexbox or grid
+    - inline styles only, no <style> block and no classes
+    - rules drawn as table-cell borders, since <hr> renders inconsistently
+    - websafe serif stack only; a webfont would silently fall back anyway
+
+  Every section is optional. A morning send fills the whole paper; the short
+  'ready' alert renders the same masthead over one story and one ad, so it
+  reads as a thin special edition rather than a different email.
+#}
+{% macro rule(weight, colour) -%}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+  <td style="border-top:{{ weight }}px solid {{ colour|default('#1a1a1a') }}; font-size:0; line-height:0;">&nbsp;</td>
+</tr></table>
+{%- endmacro %}
+
+{% macro heading(title) -%}
+{{ rule(2) }}
+<div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:11px; font-weight:bold; letter-spacing:3px; text-transform:uppercase; text-align:center; color:#1a1a1a; padding:7px 0 5px 0;">{{ title }}</div>
+{{ rule(1) }}
+{%- endmacro %}
+
+{% macro story(text) -%}
+<div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:15px; line-height:1.55; color:#1a1a1a; padding:10px 0 4px 0;">{{ text }}</div>
+{%- endmacro %}
+
+{% macro advert(ad) -%}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:16px 0 4px 0;">
+  <tr><td style="border:3px double #1a1a1a; padding:14px 16px; background-color:#efe6cf;">
+    <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:#6b6152; text-align:center; padding-bottom:8px;">Paid Advertisement</div>
+    <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:19px; font-weight:bold; letter-spacing:1px; text-align:center; color:#1a1a1a; line-height:1.2;">{{ ad.name }}</div>
+    <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:13px; font-style:italic; text-align:center; color:#3d3730; padding:7px 0 0 0; line-height:1.45;">{{ ad.tagline }}</div>
+
+    {% if ad.review and ad.review.quote %}
+    <div style="text-align:center; padding:12px 0 0 0;">
+      <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:17px; color:#1a1a1a; letter-spacing:2px;">{{ ad.review.stars_display }}</div>
+      <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:13px; color:#1a1a1a; padding:5px 0 0 0; line-height:1.45;">&ldquo;{{ ad.review.quote }}&rdquo;</div>
+      <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:11px; color:#6b6152; padding:3px 0 0 0;">&mdash; {{ ad.review.author }}</div>
+    </div>
+    {% endif %}
+
+    {% if ad.offer %}
+    <div style="border:1px dashed #6b6152; margin:13px 0 0 0; padding:7px 4px; text-align:center; font-family:Georgia,'Times New Roman',Times,serif; font-size:10px; font-weight:bold; letter-spacing:1px; color:#1a1a1a;">{{ ad.offer }}</div>
+    {% endif %}
+  </td></tr>
+</table>
+{%- endmacro %}
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; background-color: #f4f7f6; padding: 20px; margin: 0;">
-    <div style="background-color: #ffffff; padding: 30px; border-radius: 12px; max-width: 500px; margin: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
-        
-        <h2 style="color: #4CAF50; margin-top: 0;">Hey {{ alias }}! Your {{ theme_name }} Update ☕</h2>
-        <p style="font-size: 16px; color: #333333; line-height: 1.5;">{{ main_message }}</p>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {# Newsprint reads badly when a client force-inverts it, so opt out. #}
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light only">
+</head>
+<body style="margin:0; padding:0; background-color:#cfc4ab;">
 
-        {% if fun_fact %}
-        <div style="background-color: #f1f8e9; padding: 15px; border-radius: 8px; margin-top: 15px;">
-            <h3 style="color: #33691e; font-size: 13px; margin: 0 0 5px 0;">🧠 Fun Fact</h3>
-            <p style="margin: 0; color: #555;">{{ fun_fact }}</p>
-        </div>
-        {% endif %}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#cfc4ab;">
+<tr><td align="center" style="padding:22px 10px;">
 
-        {% if word_of_the_day %}
-        <div style="background-color: #e3f2fd; padding: 15px; border-radius: 8px; margin-top: 15px;">
-            <h3 style="color: #01579b; font-size: 13px; margin: 0 0 5px 0;">📖 Word of the Day</h3>
-            <p style="margin: 0; color: #555;">{{ word_of_the_day }}</p>
-        </div>
-        {% endif %}
+  <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px; background-color:#f6efdc; border:1px solid #b3a894;">
+  <tr><td style="padding:26px 24px 30px 24px;">
 
-        {% if horoscope %}
-        <div style="background-color: #f3e5f5; padding: 15px; border-radius: 8px; margin-top: 15px;">
-            <h3 style="color: #4a148c; font-size: 13px; margin: 0 0 5px 0;">🔮 Extremely Accurate Horoscope</h3>
-            <p style="margin: 0; color: #555;">{{ horoscope }}</p>
-        </div>
-        {% endif %}
+    <!-- ================= MASTHEAD ================= -->
+    {{ rule(1) }}
+    <div style="height:3px; font-size:0; line-height:0;">&nbsp;</div>
+    {{ rule(4) }}
 
-        {% if mindful_goal %}
-        <div style="background-color: #fff3e0; padding: 15px; border-radius: 8px; margin-top: 15px;">
-            <h3 style="color: #e65100; font-size: 13px; margin: 0 0 5px 0;">🌱 Mindful Goal</h3>
-            <p style="margin: 0; color: #555;">{{ mindful_goal }}</p>
-        </div>
-        {% endif %}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td align="left" style="font-family:Georgia,'Times New Roman',Times,serif; font-size:9px; letter-spacing:1px; text-transform:uppercase; color:#3d3730; padding:6px 0;">{{ edition_price|default('COMPLIMENTARY &middot; TAKE ONE') }}</td>
+        <td align="right" style="font-family:Georgia,'Times New Roman',Times,serif; font-size:9px; letter-spacing:1px; text-transform:uppercase; color:#3d3730; padding:6px 0;">
+          {% if volume %}VOL. {{ volume }} &middot; NO. {{ issue_number }}{% endif %}
+        </td>
+      </tr>
+    </table>
 
-        {% if leaderboard %}
-        <div style="background-color: #fce4ec; padding: 15px; border-radius: 8px; margin-top: 15px;">
-            <h3 style="color: #880e4f; font-size: 13px; margin: 0 0 10px 0;">🏆 Arcade High Scores</h3>
-            
-            {% for game, scores in leaderboard.items() %}
-                <h4 style="margin: 5px 0 2px 0; color: #333333; font-size: 12px; text-transform: uppercase;">{{ game }}</h4>
-                <ul style="margin: 0 0 10px 0; padding-left: 20px; color: #555555; font-size: 12px; list-style-type: square;">
-                {% for s in scores %}
-                    <li><b>{{ s.name }}</b>: {{ s.score }}</li>
-                {% endfor %}
-                </ul>
-            {% endfor %}
-        </div>
-        {% endif %}
+    {{ rule(1) }}
 
-        {% if unsubscribe_url %}
-        <p style="font-size: 11px; color: #999999; text-align: center; margin: 25px 0 0 0; border-top: 1px solid #eaeaea; padding-top: 15px;">
-            Don't want {{ theme_name }} updates?
-            <a href="{{ unsubscribe_url }}" style="color: #999999;">Unsubscribe</a>
-        </p>
-        {% endif %}
-
+    <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:40px; font-weight:bold; letter-spacing:2px; text-align:center; color:#1a1a1a; padding:16px 0 10px 0; line-height:1.05;">
+      {{ paper_name|default('THE BREAK ROOM GAZETTE') }}
     </div>
+
+    {{ rule(1) }}
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td align="center" style="font-family:Georgia,'Times New Roman',Times,serif; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#3d3730; padding:7px 0;">
+          {{ dateline|default('') }}{% if edition_label %} &nbsp;&middot;&nbsp; {{ edition_label }}{% endif %}
+        </td>
+      </tr>
+    </table>
+
+    <div style="height:2px; font-size:0; line-height:0;">&nbsp;</div>
+    {{ rule(4) }}
+
+    {% if alias %}
+    <!-- Mailing label, the way a posted paper carries one -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:14px;">
+      <tr><td align="center" style="border:1px solid #6b6152; background-color:#e8dec5; padding:6px 10px; font-family:'Courier New',Courier,monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#3d3730;">
+        Subscriber Copy &nbsp;&mdash;&nbsp; {{ alias }}
+      </td></tr>
+    </table>
+    {% endif %}
+
+    <!-- ================= LEAD STORY ================= -->
+    {% if main_message %}
+    <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:27px; font-weight:bold; line-height:1.2; text-align:center; color:#1a1a1a; padding:24px 0 8px 0;">
+      {{ main_message }}
+    </div>
+    <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:10px; font-style:italic; letter-spacing:1px; text-align:center; color:#6b6152; padding-bottom:14px;">
+      By Our Break Room Correspondent
+    </div>
+    {{ rule(2) }}
+    {% endif %}
+
+    <!-- ================= QUOTABLE QUOTE ================= -->
+    {% if quotable_quote %}
+    {{ heading('Quotable Quote') }}
+    <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:16px; font-style:italic; line-height:1.5; text-align:center; color:#1a1a1a; padding:14px 12px 6px 12px;">
+      &ldquo;{{ quotable_quote.text }}&rdquo;
+    </div>
+    <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:11px; text-align:center; color:#6b6152; padding-bottom:8px;">&mdash; {{ quotable_quote.author }}</div>
+    {% endif %}
+
+    <!-- ================= FIRST ADVERTISEMENT ================= -->
+    {% if advertisements %}{{ advert(advertisements[0]) }}{% endif %}
+
+    <!-- ================= AMAZING BUT TRUE ================= -->
+    {% if fun_fact %}
+    {{ heading('Amazing But True') }}
+    {{ story(fun_fact) }}
+    {% endif %}
+
+    <!-- ================= WORD OF THE DAY ================= -->
+    {% if word_of_the_day %}
+    {{ heading('Word Of The Day') }}
+    {{ story(word_of_the_day) }}
+    {% endif %}
+
+    <!-- ================= HOROSCOPE ================= -->
+    {% if horoscope %}
+    {{ heading('The Stars, Such As They Are') }}
+    {{ story(horoscope) }}
+    {% endif %}
+
+    <!-- ================= MINDFUL GOAL ================= -->
+    {% if mindful_goal %}
+    {{ heading("Today's Assignment") }}
+    {{ story(mindful_goal) }}
+    {% endif %}
+
+    <!-- ================= THE FUNNY PAGE ================= -->
+    {% if joke %}
+    {{ heading('The Funny Page') }}
+    {{ story(joke) }}
+    {% endif %}
+
+    <!-- ================= A KIND WORD ================= -->
+    {% if affirmation %}
+    {{ heading('A Kind Word') }}
+    {{ story(affirmation) }}
+    {% endif %}
+
+    <!-- ================= SECOND ADVERTISEMENT ================= -->
+    {% if advertisements and advertisements|length > 1 %}{{ advert(advertisements[1]) }}{% endif %}
+
+    <!-- ================= FORECAST ================= -->
+    {% if forecast %}
+    {{ heading('Break Room Forecast') }}
+    {{ story(forecast) }}
+    {% endif %}
+
+    <!-- ================= ARCADE STANDINGS ================= -->
+    {% if leaderboard %}
+    {{ heading('Arcade Standings') }}
+    {% for game, scores in leaderboard.items() %}
+      <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:12px; font-weight:bold; letter-spacing:2px; text-transform:uppercase; color:#1a1a1a; padding:13px 0 5px 0;">{{ game }}</div>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        {% for s in scores %}
+        <tr>
+          <td width="26" style="font-family:Georgia,'Times New Roman',Times,serif; font-size:13px; color:#6b6152; padding:3px 0; border-bottom:1px dotted #b3a894;">{{ loop.index }}.</td>
+          <td style="font-family:Georgia,'Times New Roman',Times,serif; font-size:13px; color:#1a1a1a; padding:3px 0; border-bottom:1px dotted #b3a894;">{{ s.name }}</td>
+          <td align="right" style="font-family:Georgia,'Times New Roman',Times,serif; font-size:13px; font-weight:bold; color:#1a1a1a; padding:3px 0; border-bottom:1px dotted #b3a894;">{{ s.score }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% endfor %}
+    {% endif %}
+
+    <!-- ================= CLASSIFIEDS ================= -->
+    {% if classifieds %}
+    {{ heading('Classifieds') }}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="padding-top:10px;">
+      {% for ad in classifieds %}
+      {% if loop.index0 % 2 == 0 %}<tr>{% endif %}
+        <td width="50%" valign="top" style="width:50%; font-family:Georgia,'Times New Roman',Times,serif; font-size:11px; line-height:1.5; color:#3d3730; padding:0 10px 12px 0;">{{ ad }}</td>
+      {% if loop.index0 % 2 == 1 or loop.last %}
+        {% if loop.last and loop.index0 % 2 == 0 %}<td width="50%" style="width:50%;">&nbsp;</td>{% endif %}
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </table>
+    {% endif %}
+
+    <!-- ================= FOOTER ================= -->
+    <div style="height:8px; font-size:0; line-height:0;">&nbsp;</div>
+    {{ rule(4) }}
+    <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:10px; line-height:1.6; text-align:center; color:#6b6152; padding:12px 0 0 0;">
+      Printed on premises by <b>Groundskeeper</b>{% if theme_name %} &middot; {{ theme_name }} Desk{% endif %}.<br>
+      All businesses, reviews and star ratings herein are entirely fictional and exist for the amusement of the break room.
+    </div>
+
+    {% if unsubscribe_url %}
+    <div style="font-family:Georgia,'Times New Roman',Times,serif; font-size:10px; text-align:center; color:#6b6152; padding:12px 0 0 0;">
+      Cancel your {{ theme_name }} subscription at the front desk, or
+      <a href="{{ unsubscribe_url }}" style="color:#6b6152;">unsubscribe here</a>.
+    </div>
+    {% endif %}
+
+  </td></tr>
+  </table>
+
+</td></tr>
+</table>
+
 </body>
 </html>

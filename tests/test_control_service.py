@@ -70,6 +70,37 @@ class ControlServiceTests(unittest.TestCase):
         self.cs.handle_action_b(None)
         self.screen.on_back.assert_called_once()
 
+    # --- Rotational dial ----------------------------------------------------
+    def test_clockwise_rotation_navigates_down(self):
+        self.cs.dial_rotate(1)
+        self.screen.on_down.assert_called_once()
+        self.screen.on_up.assert_not_called()
+
+    def test_counter_clockwise_rotation_navigates_up(self):
+        self.cs.dial_rotate(-1)
+        self.screen.on_up.assert_called_once()
+        self.screen.on_down.assert_not_called()
+
+    def test_multi_step_rotation_applies_each_detent(self):
+        self.cs.dial_rotate(3)
+        self.assertEqual(self.screen.on_down.call_count, 3)
+
+    def test_zero_rotation_does_nothing(self):
+        self.cs.dial_rotate(0)
+        self.screen.on_up.assert_not_called()
+        self.screen.on_down.assert_not_called()
+
+    def test_dial_ignored_when_ui_inactive(self):
+        self.cs.ui_context_active = False
+        self.cs.dial_rotate(1)
+        self.screen.on_down.assert_not_called()
+
+    def test_dial_feeds_the_secret_code(self):
+        # Rotating counts toward the up/down portion of the sequence, so the
+        # code can be entered on a dial-only cabinet.
+        self.cs.dial_rotate(-2)
+        self.assertEqual(self.cs.input_sequence, ["up", "up"])
+
     # --- Konami code --------------------------------------------------------
     def test_konami_code_toggles_turbo(self):
         for key in ["up", "up", "down", "down", "left", "right", "left", "right", "b", "a"]:

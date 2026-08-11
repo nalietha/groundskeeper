@@ -4,6 +4,7 @@
   "action_text": "Open the Box!",
   "start_phrase": "Box Opened:",
   "not_started_text": "Box not opened",
+  "paper_name": "THE GLAZE GAZETTE",
   "timer_ms": 14400000,
   "colors": {
     "dim_bg": "#4a2c2a",

@@ -4,6 +4,7 @@
   "action_text": "Brew Coffee",
   "start_phrase": "Last Brewed:",
   "not_started_text": "Not brewed yet",
+  "paper_name": "THE DAILY GRIND",
   "timer_ms": 240000,
   "colors": {
     "dim_bg": "#2a1d1d",

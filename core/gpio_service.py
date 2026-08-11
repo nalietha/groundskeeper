@@ -34,7 +34,10 @@ class GPIOService:
     def stop(self):
         if RPI_AVAILABLE:
             self.stop_thread = True
-            self.thread.join()
+            # join() raises if the thread was never started, which is what
+            # happens when GPIO setup succeeded but start() was skipped.
+            if self.thread.is_alive():
+                self.thread.join()
             GPIO.cleanup()
             print("GPIO monitoring stopped and cleaned up.")
 

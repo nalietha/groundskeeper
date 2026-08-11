@@ -15,6 +15,7 @@ from core.game_service import GameService
 from core.tracking_service import TrackingService
 from core.gpio_service import GPIOService
 from core.control_service import ControlService
+from core.input_service import InputService
 from core.loading_service import LoadingService
 from core.notification_service import NotificationService
 from core.webapp_service import WebAppService
@@ -56,7 +57,10 @@ class GroundskeeperApp:
         self.updater = UpdateService()
         self.game_service = GameService(config)
         self.loading_service = LoadingService()
-        self.newsletter_service = NewsletterService(self.joke_service, self.affirmation_service, self.game_service)
+        self.newsletter_service = NewsletterService(
+            self.joke_service, self.affirmation_service, self.game_service,
+            deck_file="data/newsletter_deck.json"
+        )
         self.notification_service = NotificationService(getattr(self.config, 'EMAIL_CONFIG', {}))
         
         self.state_file = "data/state.json"
@@ -65,7 +69,10 @@ class GroundskeeperApp:
             self.affirmation_service, self.newsletter_service
         )
         self.gpio_service = GPIOService(config.GPIO_PINS)
+        self.gpio_service.start()
         self.control_service = ControlService(self)
+        self.input_service = InputService(self.root, self.control_service)
+        self.input_service.start()
 
         # --- 2. Build the Callbacks Dictionary ---
         self.callbacks = {
@@ -139,8 +146,13 @@ class GroundskeeperApp:
 
     def on_closing(self):
         self.tracking_service._save_tracked_items()
+        self.input_service.stop()
         self.gpio_service.stop()
         self.root.destroy()
+
+    def toggle_turbo_mode(self):
+        """Exposed on the app because ControlService reaches for it by name."""
+        self.router.toggle_turbo_mode()
 
     def periodic_check(self):
         self.update_standby_ui()

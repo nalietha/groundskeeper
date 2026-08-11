@@ -1,0 +1,518 @@
+{
+  "_comment": "Filler for the newsletter's newspaper layout. Every business here is invented, and the reviews are part of the joke -- keep it that way. Nothing in this file should name a real company or a real person. Entries are drawn deck-style (no repeat until the pool is exhausted), so pool size sets how long before a repeat: at 2 ads and 5 classifieds a send, this is roughly 4-5 weeks. Top up with `python creator/generate_classifieds.py`.",
+
+  "advertisements": [
+    {
+      "name": "MUG SHOT MUG REPAIR",
+      "tagline": "Chipped? Cracked? Emotionally distant? We fix mugs.",
+      "offer": "MENTION THIS AD FOR 10% OFF",
+      "review": { "quote": "They fixed my mug. It is now a different mug.", "author": "Denise T.", "stars": 4 }
+    },
+    {
+      "name": "GARY'S TAXIDERMY & TAX PREP",
+      "tagline": "Both kinds of returns. One waiting room.",
+      "offer": "WALK-INS WELCOME · APPOINTMENTS ENCOURAGED",
+      "review": { "quote": "I came in for the one and left with the other.", "author": "M. Halloran", "stars": 5 }
+    },
+    {
+      "name": "STEVE'S PLUMBING",
+      "tagline": "We will be there between 2 and 5. Possibly PM.",
+      "offer": "24-HOUR EMERGENCY LINE (RINGS IN STEVE'S CAR)",
+      "review": { "quote": "Steve arrived. That is more than I can say for the others.", "author": "A Grateful Homeowner", "stars": 4 }
+    },
+    {
+      "name": "NORTHSIDE SELF STORAGE",
+      "tagline": "We store things. That is the entire business.",
+      "offer": "FIRST MONTH FREE · SECOND MONTH ALSO A MONTH",
+      "review": { "quote": "My things went in and, I am told, remain there.", "author": "Ron P.", "stars": 5 }
+    },
+    {
+      "name": "THE SECOND CUP",
+      "tagline": "Bring in your first cup. We will pour a second one into it.",
+      "offer": "LOYALTY CARD: BUY 47, GET 1 SLIGHTLY WARMER",
+      "review": { "quote": "The concept troubled me. The execution won me over.", "author": "Fran D., Accounting", "stars": 5 }
+    },
+    {
+      "name": "BRIAN'S CHIROPRACTIC CONCEPTS",
+      "tagline": "Crack? Yes. Licensed? Let us focus on the cracking.",
+      "offer": "FREE CONSULTATION · NO REFUNDS · NO RECORDS",
+      "review": { "quote": "I heard a noise I had never heard before and I feel wonderful.", "author": "Anonymous, By Request", "stars": 2 }
+    },
+    {
+      "name": "LUANNE'S HOUSE OF CARPET",
+      "tagline": "Wall to wall. Occasionally further than that.",
+      "offer": "FREE MEASURING · MEASURING MAY BE APPROXIMATE",
+      "review": { "quote": "There is now carpet where there was not carpet.", "author": "The Vandermeers", "stars": 4 }
+    },
+    {
+      "name": "PRECISION LAWN CONCEPTS",
+      "tagline": "We have thought a great deal about your lawn.",
+      "offer": "ASK ABOUT OUR SEASONAL THINKING PACKAGE",
+      "review": { "quote": "They did not touch the lawn but they understood it deeply.", "author": "H. Whitaker", "stars": 3 }
+    },
+    {
+      "name": "THE BREAK ROOM FRIDGE CLEANOUT CO.",
+      "tagline": "Hazmat certified. Emotionally unprepared.",
+      "offer": "WE DO NOT ASK WHOSE IT WAS",
+      "review": { "quote": "They went in on a Friday. We heard nothing until Monday.", "author": "Facilities", "stars": 5 }
+    },
+    {
+      "name": "DAVE'S 24-HOUR DENTISTRY",
+      "tagline": "Open all night. Dave lives here now.",
+      "offer": "AFTER-HOURS RATES APPLY AT ALL HOURS",
+      "review": { "quote": "Dave seemed tired but the teeth are fine.", "author": "Colleen R.", "stars": 4 }
+    },
+    {
+      "name": "MOIST TOWELETTE DEPOT",
+      "tagline": "One aisle. One product. Total commitment.",
+      "offer": "BULK PRICING FOR THE TRULY PREPARED",
+      "review": { "quote": "I asked if they sold anything else. They asked me to leave.", "author": "T. Boyle", "stars": 5 }
+    },
+    {
+      "name": "VELVET THUNDER CAR WASH",
+      "tagline": "The car goes in dirty. The car comes out damp.",
+      "offer": "FREE AIR FRESHENER · SCENT NOT NEGOTIABLE",
+      "review": { "quote": "I did not expect to feel anything. I felt something.", "author": "Marco V.", "stars": 5 }
+    },
+    {
+      "name": "THE SPOON EMPORIUM",
+      "tagline": "Every spoon. Only spoons. Since forever.",
+      "offer": "TRADE IN YOUR OLD SPOON · NO QUESTIONS",
+      "review": { "quote": "I have been looking for a spoon like this my whole life.", "author": "Beatrice N.", "stars": 5 }
+    },
+    {
+      "name": "FILTER & SON",
+      "tagline": "Three generations of filtering. The son is on his way.",
+      "offer": "ESTABLISHED AT SOME POINT",
+      "review": { "quote": "The father filtered. The son will also filter.", "author": "A Neighbour", "stars": 4 }
+    },
+    {
+      "name": "HAROLD'S DISCOUNT SIGNAGE",
+      "tagline": "Signs, banners, and one very large arrow.",
+      "offer": "LETTERS SOLD SEPARATELY",
+      "review": { "quote": "The sign says HAROLD'S DISCOUNT SIGNAG. We are still discussing it.", "author": "Harold", "stars": 3 }
+    },
+    {
+      "name": "KETTLE & KIN, EST. UNCLEAR",
+      "tagline": "We boil water with a level of ceremony you are not ready for.",
+      "offer": "RESERVATIONS FOR PARTIES OF ONE",
+      "review": { "quote": "It took forty minutes and I would go again tomorrow.", "author": "Priya S.", "stars": 5 }
+    },
+    {
+      "name": "MIDTOWN OPTICAL & KEY CUTTING",
+      "tagline": "We will get one of the two exactly right.",
+      "offer": "WHILE-YOU-WAIT SERVICE · PLEASE WAIT",
+      "review": { "quote": "My glasses do not fit but my keys have never worked better.", "author": "Errol M.", "stars": 3 }
+    },
+    {
+      "name": "THE HOLD MUSIC INSTITUTE",
+      "tagline": "Composers standing by. Please continue to hold.",
+      "offer": "YOUR CALL IS IMPORTANT TO US",
+      "review": { "quote": "I called to complain and stayed for the third movement.", "author": "Unknown Caller", "stars": 5 }
+    },
+    {
+      "name": "THE LAMINATION STATION",
+      "tagline": "If it can be laminated, we have laminated it.",
+      "offer": "NO ITEM TOO SENTIMENTAL",
+      "review": { "quote": "I brought in a photograph. I now own a different, harder photograph.", "author": "Yolanda B.", "stars": 5 }
+    },
+    {
+      "name": "CONSOLIDATED PARKING CONCEPTS",
+      "tagline": "We think about parking so that you do not have to.",
+      "offer": "VALIDATION AVAILABLE · EMOTIONAL VALIDATION EXTRA",
+      "review": { "quote": "There was nowhere to park at their office, which I respect.", "author": "Dean W.", "stars": 4 }
+    },
+    {
+      "name": "ANGUS & DAUGHTER, FENCE CONSULTANTS",
+      "tagline": "The daughter does the consulting. Angus drives.",
+      "offer": "FREE ESTIMATE ON ANY BOUNDARY DISPUTE",
+      "review": { "quote": "She was right about the fence and about several other things.", "author": "The Pemberton Estate", "stars": 5 }
+    },
+    {
+      "name": "THE WEDNESDAY BAKERY",
+      "tagline": "Open Wednesdays. Baked Wednesdays. Eaten Wednesdays.",
+      "offer": "CLOSED THE OTHER SIX DAYS · DO NOT KNOCK",
+      "review": { "quote": "I went on a Tuesday and learned a hard lesson.", "author": "Kwame A.", "stars": 4 }
+    },
+    {
+      "name": "TRI-COUNTY GUTTER PHILOSOPHY",
+      "tagline": "Where does the water go? We ask, so that you need not.",
+      "offer": "SEASONAL CONTEMPLATION PACKAGES",
+      "review": { "quote": "The gutters are unchanged but I sleep better now.", "author": "Ines F.", "stars": 4 }
+    },
+    {
+      "name": "MARGE'S EMERGENCY UPHOLSTERY",
+      "tagline": "It cannot wait until morning. Marge understands.",
+      "offer": "3AM CALLOUTS AT NO EXTRA CHARGE",
+      "review": { "quote": "Marge arrived before I finished explaining. The couch is perfect.", "author": "Gil H.", "stars": 5 }
+    },
+    {
+      "name": "THE FOLDING CHAIR OUTLET",
+      "tagline": "Chairs that fold. Chairs that have folded. Chairs that will fold.",
+      "offer": "BUY TWELVE, STORE THEM SOMEWHERE, FORGET THEM",
+      "review": { "quote": "I have twelve chairs and no plan. Ten out of ten.", "author": "Reggie O.", "stars": 5 }
+    },
+    {
+      "name": "BRENDA'S SMALL ENGINE REPAIR & PALMISTRY",
+      "tagline": "We will read your mower and, if you like, your future.",
+      "offer": "ONE READING FREE WITH EVERY CARBURETTOR",
+      "review": { "quote": "The mower runs. The other thing I am still thinking about.", "author": "Norm L.", "stars": 5 }
+    },
+    {
+      "name": "NORTHGATE DISCOUNT MATTRESS BARN",
+      "tagline": "Every mattress has been slept on. By us. For quality.",
+      "offer": "NO RETURNS FOR REASONS WE FIND OBVIOUS",
+      "review": { "quote": "The staff looked extremely well rested. That sold me.", "author": "Petra Z.", "stars": 4 }
+    },
+    {
+      "name": "THE STAPLER CLINIC",
+      "tagline": "Bring us the stapler. We will be honest with you about the stapler.",
+      "offer": "SECOND OPINIONS AVAILABLE · RARELY DIFFERENT",
+      "review": { "quote": "They told me what I already knew, but gently.", "author": "Office Manager, 4th Floor", "stars": 5 }
+    },
+    {
+      "name": "HALFWAY HARDWARE",
+      "tagline": "Located halfway. Stocked halfway. Open, roughly, halfway.",
+      "offer": "IF WE HAVE IT, WE HAVE ONE",
+      "review": { "quote": "They had exactly one of the thing and it was the wrong size.", "author": "Bev C.", "stars": 3 }
+    },
+    {
+      "name": "THE OFFICE PLANT HOSPICE",
+      "tagline": "We provide comfort and dignity in the final weeks.",
+      "offer": "HOME VISITS · NO JUDGEMENT ABOUT THE WATERING",
+      "review": { "quote": "They did not save it, but they were kind about it.", "author": "Second Floor, By the Window", "stars": 5 }
+    },
+    {
+      "name": "CLIVE'S DISCOUNT ACOUSTICS",
+      "tagline": "We make rooms sound like slightly different rooms.",
+      "offer": "FREE ECHO ASSESSMENT",
+      "review": { "quote": "The room does sound different. I could not tell you how.", "author": "Sandra E.", "stars": 4 }
+    },
+    {
+      "name": "THE PERPETUAL SIDEWALK SALE",
+      "tagline": "Everything must go. It has been going since 1987.",
+      "offer": "FINAL WEEK (ONGOING)",
+      "review": { "quote": "I bought a lamp in 2009 and the sign has not changed.", "author": "A Longtime Observer", "stars": 5 }
+    },
+    {
+      "name": "WANDA'S NOTARY & SMOOTHIE BAR",
+      "tagline": "Get it stamped. Get it blended. In whichever order suits.",
+      "offer": "COMBO PRICING ON DOCUMENTS AND MANGO",
+      "review": { "quote": "The deed is notarised and the smoothie was outstanding.", "author": "Rasheed T.", "stars": 5 }
+    },
+    {
+      "name": "THE THIRD-DRAWER-DOWN SPECIALISTS",
+      "tagline": "We organise the drawer that everyone else gave up on.",
+      "offer": "WE BRING OUR OWN GLOVES",
+      "review": { "quote": "They found a key. Nobody knows what it opens. Progress.", "author": "Household of Four", "stars": 5 }
+    },
+    {
+      "name": "GRIMSBY BROTHERS DEMOLITION & CAKE DECORATING",
+      "tagline": "We can do one of these two things very well indeed.",
+      "offer": "PLEASE SPECIFY WHICH WHEN BOOKING",
+      "review": { "quote": "I did not specify. I regret not specifying.", "author": "Withheld", "stars": 2 }
+    },
+    {
+      "name": "THE WHITEBOARD RESTORATION SOCIETY",
+      "tagline": "That ghost writing is not permanent. Probably. Let us look.",
+      "offer": "FREE ASSESSMENT · SOLEMN PROGNOSIS",
+      "review": { "quote": "They said the word 'SYNERGY' will outlive us all.", "author": "Conference Room B", "stars": 4 }
+    },
+    {
+      "name": "SOUTHFIELD ARTISANAL ICE",
+      "tagline": "Water, but harder, and considerably slower.",
+      "offer": "SUBSCRIPTION AVAILABLE · MELTS ON ARRIVAL",
+      "review": { "quote": "It is ice. It is very good ice. I cannot explain further.", "author": "Toby R.", "stars": 5 }
+    },
+    {
+      "name": "THE ERGONOMIC CONCERN COMPANY",
+      "tagline": "We have looked at how you are sitting. We have concerns.",
+      "offer": "FIRST INTERVENTION COMPLIMENTARY",
+      "review": { "quote": "They watched me for an hour and then simply sighed.", "author": "Desk 14", "stars": 4 }
+    },
+    {
+      "name": "PHIL'S 15-MINUTE OIL CHANGE",
+      "tagline": "Usually closer to forty. Phil is doing his best.",
+      "offer": "COFFEE WHILE YOU WAIT · YOU WILL WAIT",
+      "review": { "quote": "Phil apologised twice and I forgave him twice.", "author": "Lucia M.", "stars": 4 }
+    },
+    {
+      "name": "THE LOST GLOVE REGISTRY",
+      "tagline": "Every glove deserves a file. Every file deserves hope.",
+      "offer": "SUBMIT A GLOVE · WE WILL BE IN TOUCH",
+      "review": { "quote": "They matched my left glove after nine years. I wept.", "author": "Case Number 4,412", "stars": 5 }
+    },
+    {
+      "name": "MERIDIAN CORPORATE BALLOON SOLUTIONS",
+      "tagline": "Your event, but higher. Ask about our arch.",
+      "offer": "VOLUME DISCOUNTS · LITERALLY",
+      "review": { "quote": "The arch was larger than the venue. Everyone talked about it.", "author": "Events, Q3", "stars": 5 }
+    },
+    {
+      "name": "THE QUIET CARPET COMPANY",
+      "tagline": "You will not hear yourself approaching. Neither will they.",
+      "offer": "FREE SAMPLE · YOU WON'T HEAR IT ARRIVE",
+      "review": { "quote": "I have startled the same colleague four times this week.", "author": "Anonymous, Third Floor", "stars": 5 }
+    },
+    {
+      "name": "UNCLE RAY'S TAX ADVICE & BAIT",
+      "tagline": "Two things Uncle Ray knows a great deal about.",
+      "offer": "APRIL SPECIAL · ASK ABOUT THE MINNOWS",
+      "review": { "quote": "The refund was small but the fishing was excellent.", "author": "Nephew of Ray", "stars": 5 }
+    },
+    {
+      "name": "THE STANDING DESK RESISTANCE",
+      "tagline": "Sit down. We have chairs. We understand what you have been through.",
+      "offer": "NO QUESTIONS · NO LECTURES · JUST CHAIRS",
+      "review": { "quote": "I stood for two years. They took me in without a word.", "author": "A Returning Sitter", "stars": 5 }
+    },
+    {
+      "name": "CENTRAL VALLEY LADDER CONCEPTS",
+      "tagline": "Up is our business. Down remains your responsibility.",
+      "offer": "RENTAL BY THE DAY · RETURN AT GROUND LEVEL",
+      "review": { "quote": "I went up beautifully. The rest was on me, as agreed.", "author": "Gerald F.", "stars": 4 }
+    }
+  ],
+
+  "classifieds": [
+    "FOR SALE: Chair. Sat in once. Four dollars.",
+    "LOST: Enthusiasm. Last seen Monday morning. No reward offered.",
+    "WANTED: Someone to take the last cup so I am not the one who has to make more.",
+    "FREE: Half a birthday cake, kitchen counter. Was free at 9am. Still free. This is now concerning.",
+    "FOUND: One (1) spoon. Owner may claim it by describing it in detail.",
+    "NOTICE: Whoever labelled their lunch 'DO NOT EAT' has been heard.",
+    "FOR SALE: Desk plant, mostly conceptual at this point. Best offer.",
+    "SEEKING: The person who knows how the good kettle works. Please come forward.",
+    "REWARD: For information leading to the return of the large scissors.",
+    "PUBLIC APOLOGY: To everyone in the 2pm meeting. You know what I did.",
+    "FOR SALE: Novelty tie. Worn ironically. Now simply a tie.",
+    "WANTED: Second opinion on whether that noise is normal.",
+    "LOST: One umbrella, black, indistinguishable from every other umbrella.",
+    "NOTICE: The microwave and I have reached an understanding. Do not interfere.",
+    "FREE TO GOOD HOME: Three-ring binder. Two rings functional.",
+    "FOR SALE: Ergonomic mouse. Did not work. I remain unergonomic.",
+    "LOST: The good pen. You know the one. I know you know.",
+    "WANTED: Anyone who remembers what the recurring Thursday meeting is for.",
+    "NOTICE: The plant on the windowsill is not doing well and we all know it.",
+    "FOUND: A phone charger. It fits nothing any of us own.",
+    "FOR SALE: Standing desk. Barely stood at.",
+    "SEEKING: Closure regarding the missing office chair. Any information welcome.",
+    "FREE: Twelve identical conference tote bags. Take as many as you can carry.",
+    "NOTICE: To whoever keeps setting the thermostat to 19. We will find you.",
+    "WANTED: Someone to sit near the door and handle it.",
+    "LOST: My train of thought, somewhere around 11:15. Reward negotiable.",
+    "FOR SALE: Second monitor. Displays things. Adequate.",
+    "FOUND: A single earring in the stairwell. Held at reception. Untouched since March.",
+    "NOTICE: The photocopier is fine. It is you who must change.",
+    "SEEKING: The recipe for whatever was in the kitchen last Tuesday.",
+    "FREE: A box of pens that all write in the same disappointing blue.",
+    "WANTED: Volunteer to be the one who says the meeting could have been an email.",
+    "LOST: One (1) sense of urgency. Last seen shortly before the deadline moved.",
+    "FOR SALE: Desk fan. Two speeds, both wrong.",
+    "NOTICE: There is a birthday card going around. Sign it. Do not read the others first.",
+    "FOUND: An unlabelled USB stick. Nobody is brave enough.",
+    "SEEKING: Anyone who can explain what the fourth key on my keyring opens.",
+    "FREE: Motivational poster. No longer working on me. May work on you.",
+    "WANTED: The person who parks perfectly straight every day. Teach us.",
+    "LOST: The lid to the good travel mug. Grief counselling available.",
+    "FOR SALE: Whiteboard markers, assorted, all dry.",
+    "NOTICE: The lift makes that sound for everyone, not just you.",
+    "FOUND: Somebody's reading glasses. They have been on my head for three days.",
+    "SEEKING: A reason to keep the fax machine. Sentimental arguments accepted.",
+    "FREE: Half a jar of instant coffee. It is the emergency jar. Treat it with respect.",
+    "WANTED: Someone to confirm I did in fact send that email.",
+    "LOST: One glove. Right hand. Its partner is inconsolable.",
+    "FOR SALE: Wall calendar, still on February. Historically accurate.",
+    "NOTICE: Whoever keeps making the good coffee, please identify yourself.",
+    "FOUND: A very small screwdriver. Something out there is now loose.",
+    "SEEKING: The colleague who knows where the spare batteries are kept.",
+    "FREE: Assorted takeaway napkins. Glovebox quality.",
+    "WANTED: Advice on how to leave a conversation by the lift.",
+    "LOST: The will to reply-all. Please do not return it.",
+    "FOR SALE: Bluetooth speaker. Pairs with everything except what you want.",
+    "NOTICE: The parcel at reception has been there eleven days. It is humming.",
+    "FOUND: An excellent pen in the car park. I am keeping it.",
+    "SEEKING: Anyone who remembers the wifi password from before the change.",
+    "FREE: Novelty mug with a joke nobody has ever explained.",
+    "WANTED: One person willing to take the first biscuit.",
+    "LOST: My place in the queue, and with it my dignity.",
+    "FOR SALE: Filing cabinet. Contains files. Files not included.",
+    "NOTICE: The door is pull. It has always been pull. It says push.",
+    "FOUND: A hair tie on the printer. It has been there since the spring.",
+    "SEEKING: Someone to tell me the presentation went fine.",
+    "FREE: A spider plant with far more children than it can support.",
+    "WANTED: The name of whoever fixed the projector. We wish to thank them.",
+    "LOST: Contact lens, kitchen area. Please tread thoughtfully.",
+    "FOR SALE: Desk drawer organiser. Somehow made it worse.",
+    "NOTICE: The 'reserved' sign on that chair has no authority.",
+    "FOUND: An entire second set of keys to something.",
+    "SEEKING: Confirmation that everyone else also forgot about the training module.",
+    "FREE: Leftover sandwiches, meeting room 3. Move quickly and without pride.",
+    "WANTED: Someone to hold the other end of this.",
+    "LOST: One afternoon. Believed spent on formatting.",
+    "FOR SALE: Headphones. One side works. The good side.",
+    "NOTICE: We are not doing Secret Santa this year. We are doing it. But quietly.",
+    "FOUND: A laminated card that says CALM DOWN. It was working for someone.",
+    "SEEKING: The person who brings in the good biscuits. Please continue.",
+    "FREE: Office chair, spins excessively. Fun, but not sustainable.",
+    "WANTED: Clarification on whether the deadline is Friday or Friday.",
+    "LOST: A perfectly good idea, somewhere between the corridor and the desk.",
+    "FOR SALE: Laptop stand. Elevated nothing.",
+    "NOTICE: The kettle boils faster if you do not watch it. This is not true. Watch it.",
+    "FOUND: A jumper on the back of a chair since October. It is now the chair's.",
+    "SEEKING: A volunteer for the thing nobody has mentioned yet.",
+    "FREE: Four coasters, none of which match the table.",
+    "WANTED: Someone to explain the difference between the two shared drives.",
+    "LOST: My badge, again. Reception has stopped pretending to be surprised.",
+    "FOR SALE: Cable, unknown purpose, excellent condition.",
+    "NOTICE: If the printer says PC LOAD LETTER, we have all seen it and we are all afraid.",
+    "FOUND: Someone's lunch, clearly labelled, deeply respected.",
+    "SEEKING: The origin of the smell near the stairs. Leads welcome.",
+    "FREE: A pot plant that has outgrown its pot and its purpose.",
+    "WANTED: Someone else to be the first to leave.",
+    "LOST: The good stapler. Suspects have been identified.",
+    "FOR SALE: Desk lamp. Illuminates one very specific spot.",
+    "NOTICE: The meeting has moved. Nobody will tell you where.",
+    "FOUND: A biscuit tin containing, as feared, sewing supplies.",
+    "SEEKING: Anyone who understands the new expense system. Anyone at all.",
+    "FREE: Assorted cables from a device we no longer own.",
+    "WANTED: A witness to confirm the kitchen was already like that.",
+    "LOST: One water bottle, blue, exactly like everyone else's water bottle.",
+    "FOR SALE: Noticeboard. Comes with old notices. Historically significant.",
+    "NOTICE: Please stop putting metal in the microwave. This is the third notice.",
+    "FOUND: A meeting invite from six weeks ago that nobody declined.",
+    "SEEKING: The person who watered my plant while I was away. You are a hero.",
+    "FREE: A tin of sweets from a colleague's holiday. Flavours unknowable.",
+    "WANTED: Someone to agree that this is, in fact, fine.",
+    "LOST: The chair with the good lumbar support. It was here on Friday.",
+    "NOTICE: The vending machine took the money and we all watched it happen.",
+    "FOUND: An umbrella that is better than mine. I have made a decision.",
+    "FOR SALE: Mouse mat with a photograph of somebody's dog. Dog unknown to me."
+  ],
+
+  "quotes": [
+    { "text": "A journey of a thousand miles begins with somebody else making the coffee.", "author": "Attributed, Probably Wrongly" },
+    { "text": "The early bird gets the worm, but the second bird gets the good chair.", "author": "Folk Wisdom, Unverified" },
+    { "text": "Nothing is certain except death, taxes, and the printer being out of cyan.", "author": "A Modern Philosopher" },
+    { "text": "He who asks a question is a fool for five minutes. He who asks it in a reply-all is a fool forever.", "author": "Ancient Proverb, Recently Invented" },
+    { "text": "Give a man a mug and he drinks for a day. Teach a man to wash it and he will simply buy a new mug.", "author": "Unsourced" },
+    { "text": "The best time to start was twenty minutes ago. The second best time is after this cup.", "author": "Contested" },
+    { "text": "It is not the years in your life that count, it is the meetings that could have been an email.", "author": "Widely Misquoted" },
+    { "text": "Do not put off until tomorrow what you can put off until slightly later today.", "author": "Traditional" },
+    { "text": "A watched kettle never boils, which is why we have all agreed to look away.", "author": "Household Science, Disputed" },
+    { "text": "Know thyself. Then update the shared calendar accordingly.", "author": "Adapted, Badly" },
+    { "text": "The unexamined lunch is not worth eating, but it is worth eating anyway.", "author": "A Philosopher At Lunch" },
+    { "text": "Fortune favours the bold, and also whoever gets to the good biscuits first.", "author": "Loosely Translated" },
+    { "text": "Every problem is simple once someone else has solved it in front of you.", "author": "Anonymous" },
+    { "text": "The road to the deadline is paved with slightly optimistic estimates.", "author": "Project Folklore" },
+    { "text": "There are two hard things: naming things, and deciding whose turn it is to wash up.", "author": "Adapted From Somewhere" },
+    { "text": "Speak softly and carry a fully charged laptop.", "author": "Revised For The Era" },
+    { "text": "A problem shared is a problem now discussed at length by four people.", "author": "Break Room Proverb" },
+    { "text": "You miss one hundred percent of the emails you archive without reading, which is the point.", "author": "Attributed To An Optimist" },
+    { "text": "It is better to have brewed and let go cold than never to have brewed at all.", "author": "Romantic, Reworked" },
+    { "text": "The wise person knows they know nothing. The wiser person knows where the spare toner is.", "author": "Contested Attribution" },
+    { "text": "Time flies like an arrow. The afternoon does not.", "author": "Half-Remembered" },
+    { "text": "In the middle of difficulty lies opportunity, and also a great many unread messages.", "author": "Physicist, Allegedly" },
+    { "text": "Measure twice. Cut once. Apologise afterwards regardless.", "author": "Workshop Wisdom" },
+    { "text": "The first cup wakes the body. The third cup wakes something else entirely.", "author": "A Cautionary Voice" },
+    { "text": "Whatever you are, be a good one, ideally before eleven in the morning.", "author": "Misattributed, Sincerely Meant" },
+    { "text": "Progress is impossible without change, and change is impossible without a meeting about it.", "author": "Reluctantly Observed" },
+    { "text": "Perfection is achieved not when there is nothing left to add, but when the meeting ends early.", "author": "Aviator, Approximately" },
+    { "text": "The pessimist complains about the wind. The optimist adjusts the thermostat. Both are ignored.", "author": "Office Meteorology" },
+    { "text": "Success is going from failure to failure without losing your place in the queue.", "author": "Attributed To A Statesman" },
+    { "text": "Do one thing every day that scares you, such as checking the shared inbox.", "author": "Wrongly Credited" },
+    { "text": "The only true wisdom is knowing that the meeting will overrun.", "author": "Classical, Adapted" },
+    { "text": "A rolling chair gathers no moss but does drift steadily leftward.", "author": "Observed, Repeatedly" },
+    { "text": "Be the change you wish to see, starting with the fridge.", "author": "Heavily Paraphrased" },
+    { "text": "Genius is one percent inspiration and ninety-nine percent finding the right file.", "author": "Inventor, Roughly" },
+    { "text": "Ask not what your break room can do for you. Ask who finished the milk.", "author": "Presidential, Repurposed" },
+    { "text": "Everything comes to those who wait, except the lift, which comes to those who have taken the stairs.", "author": "Building Proverb" },
+    { "text": "Hope is the thing with feathers. Optimism is the thing with a Friday deadline.", "author": "Poetic, Then Ruined" },
+    { "text": "You cannot step in the same river twice, nor attend the same recurring meeting twice, though it will feel like it.", "author": "Pre-Socratic, Updated" },
+    { "text": "The greatest glory is not in never falling, but in never being seen falling.", "author": "Sagely, Reworded" },
+    { "text": "Well begun is half done. Poorly begun is also, technically, half done.", "author": "Encouraging, In A Way" },
+    { "text": "Necessity is the mother of invention. Deadlines are the more insistent parent.", "author": "Common Saying, Extended" },
+    { "text": "Simplicity is the ultimate sophistication, which is why the instructions are four pages long.", "author": "Renaissance, Ironically" },
+    { "text": "If you want to go fast, go alone. If you want to go far, book the larger meeting room.", "author": "Proverb, Corporate Edition" },
+    { "text": "There is no such thing as a free lunch, but there is such a thing as a leftover one.", "author": "Economist, Pragmatised" },
+    { "text": "Life is what happens while you are waiting for the file to upload.", "author": "Songwriter, Approximately" },
+    { "text": "The truth will set you free, but first it will require a follow-up email.", "author": "Scriptural, Amended" },
+    { "text": "Not all who wander are lost. Some are looking for meeting room 4B.", "author": "Fantasy Literature, Repurposed" },
+    { "text": "It always seems impossible until it is done, and then it seems like it took too long.", "author": "Statesman, Uncharitably Revised" },
+    { "text": "To err is human. To blame the software is also human.", "author": "Poetic Justice" },
+    { "text": "A stitch in time saves nine, but nobody has ever confirmed this figure.", "author": "Sceptically Noted" },
+    { "text": "Better to light a candle than curse the darkness, though the fire alarm disagrees.", "author": "Proverbial, Regrettably Tested" },
+    { "text": "The mind is not a vessel to be filled but a fire to be kindled, ideally after breakfast.", "author": "Classical, Timed Differently" },
+    { "text": "Great things are done by a series of small things brought together, mostly by one person on a Thursday.", "author": "Painter, Realistically" },
+    { "text": "We are what we repeatedly do. Mostly that is refreshing the inbox.", "author": "Philosopher, Diminished" },
+    { "text": "The journey of self-discovery begins with the question: whose yoghurt is this?", "author": "Modern, Unattributable" },
+    { "text": "Patience is bitter, but its fruit is a properly steeped cup.", "author": "Old Saying, Reassigned" },
+    { "text": "Hard work beats talent when talent does not read the brief.", "author": "Athletic, Adapted" },
+    { "text": "One cannot think well, love well, or sleep well if one has not had a decent lunch.", "author": "Novelist, Slightly Altered" },
+    { "text": "The only thing we have to fear is the calendar invite with no agenda.", "author": "Presidential, Modernised" },
+    { "text": "Change is the only constant, along with the temperature complaint.", "author": "Ancient And Ongoing" }
+  ],
+
+  "forecasts": [
+    "Fluorescent, with a chance of meetings. Winds calm. Morale variable.",
+    "Overcast in the open-plan area, clearing near the window seats by noon.",
+    "Warm front moving through the break room. Cold front in the fridge.",
+    "Scattered enthusiasm early, giving way to widespread 3pm haze.",
+    "Mild throughout, with isolated pockets of unexplained beeping.",
+    "High pressure system centred on the printer. Avoid if possible.",
+    "Clear and productive until approximately 11:40am. Conditions deteriorate thereafter.",
+    "Humid near the kettle. Bring a second shirt if presenting.",
+    "Bright and still, with a light drizzle of notifications after lunch.",
+    "Unseasonably cheerful. Enjoy it. It will not last past Wednesday.",
+    "Persistent low cloud over the inbox. Visibility poor until Thursday.",
+    "Gusty conditions near the revolving door. Hold your papers.",
+    "Sunny intervals between meetings, though the intervals are brief.",
+    "Cold and unforgiving in the north corridor. Pack a cardigan.",
+    "Turbulent around the coffee machine between 9 and 10. Approach with patience.",
+    "Settled and quiet. Suspiciously so. Something is coming.",
+    "Light frost on the shared calendar. Nothing is thawing until Monday.",
+    "A band of low motivation moving in from the west, clearing by Friday.",
+    "Warm, close, and faintly smelling of somebody's soup.",
+    "Fair conditions overall, with localised drama near the stationery cupboard.",
+    "Heavy showers of email expected mid-morning. Take shelter where you can.",
+    "Dry and still. The plants are not enjoying it and neither are we.",
+    "A cold snap around the 2pm review. Dress accordingly.",
+    "Hazy with occasional clarity. The clarity is not to be relied upon.",
+    "Blustery near the fire exit. Someone has propped it open again.",
+    "Steady and unremarkable, which is the best forecast we have issued all month.",
+    "Patchy fog over the project timeline. Expect delays.",
+    "Rising temperatures in meeting room 2. Ventilation has been requested.",
+    "Calm until the deadline reminder, then increasingly stormy.",
+    "Mostly clear, with a small but persistent cloud over the expense system.",
+    "Chilly start, warming considerably once the good coffee arrives.",
+    "Isolated thunder from the direction of the finance department.",
+    "Overcast and reflective. Good conditions for putting things off.",
+    "Unstable air near the whiteboard. Ideas may condense without warning.",
+    "A gentle breeze of goodwill, expected to die out shortly after lunch.",
+    "Grey, but a productive sort of grey. Lean into it.",
+    "Sharp frost on morale following the reorganisation announcement.",
+    "Warm and drowsy after 2pm. Operating heavy spreadsheets is discouraged.",
+    "Sudden downpour of urgent requests possible. Keep the afternoon loose.",
+    "Bright, breezy, and entirely undeserved. Take the win.",
+    "Localised flooding in the kitchen. Somebody has overfilled something again.",
+    "Clear skies over the car park. Storm system parked over the inbox.",
+    "Static in the air near the photocopier. Do not touch the handle first.",
+    "Balmy near the radiator, arctic three desks away. As always.",
+    "Drifting fog of half-remembered action items. Visibility improves by Wednesday.",
+    "A ridge of high pressure over the quarterly report. It will pass.",
+    "Freshening winds from the direction of new hires. Generally welcome.",
+    "Muggy and slow. The building is doing its best.",
+    "Bright spells interrupted by unscheduled catch-ups.",
+    "Cool and crisp. Ideal conditions for actually finishing something.",
+    "Low visibility around the org chart. Navigate by feel.",
+    "Squally near the shared printer. Two jobs are fighting.",
+    "Settled, warm, and dangerously comfortable. Set an alarm.",
+    "Heavy cloud with occasional breakthroughs. The breakthroughs are the point.",
+    "Rain expected outside. Inside, the usual fluorescent noon.",
+    "A cold front arriving with the budget review. Layers advised.",
+    "Still air and long shadows. The building sounds different today.",
+    "Gentle warmth throughout. Nobody has complained about the temperature. Historic.",
+    "Blustery all day, with debris from last week's decisions still blowing about.",
+    "Fine and mild, with a chance of someone bringing in cake."
+  ]
+}

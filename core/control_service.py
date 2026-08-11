@@ -104,6 +104,18 @@ class ControlService:
         self._dispatch('on_down')
         return "break"
 
+    def dial_rotate(self, steps):
+        """Applies a signed detent count from the rotational dial.
+
+        Clockwise reads as 'down' and counter-clockwise as 'up', matching how a
+        scroll wheel moves a list. Because this routes through the same
+        navigate_* methods as the arrow buttons, the dial also feeds the secret
+        code and needs no per-screen support.
+        """
+        move = self.navigate_down if steps > 0 else self.navigate_up
+        for _ in range(abs(int(steps))):
+            move(None)
+
     def navigate_left(self, event):
         self._record_key('left')
         self._dispatch('on_left')

@@ -2,3 +2,4 @@ __pycache__/
 .venv/
 .env
 data/*.json
+newsletter_preview.html
